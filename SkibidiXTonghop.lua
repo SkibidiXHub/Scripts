@@ -651,11 +651,12 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Naknohack/Nakhubredz/
 }
 
 loadstring(game:HttpGet(" https://raw.githubusercontent.com/SkibidiHub111/Ghoul/refs/heads/main/Ghoul"))()
-
-
-
-Cyborg
-getgenv().Config = {
+  end
+  })
+  AddButton(Tab2o, {
+     Name = "Auto Cyborg",
+    Callback = function()
+	  getgenv().Config = {
     ["Enable"] = true,
     ["Hop Limit"] = 30,
     ["TweenSpeed"] = 230,
