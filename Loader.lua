@@ -2530,75 +2530,75 @@ L_1_[93] = {
 		})
 	}),
 	["Settings"] = L_1_[38]:MakeTab({
-		["Title"] = "Tab Cài Đặt",
+		["Title"] = "Tab Settings",
 		["Icon"] = L_1_[2]({
 			"rbxassetid://7734053";
 			"495"
 		})
 	});
 	["Fish"] = L_1_[38]:MakeTab({
-		["Title"] = "Tab Câu Cá";
+		["Title"] = "Tab Fishing";
 		["Icon"] = L_1_[2]({
 			"rbxassetid://1276640";
 			"59821666"
 		})
 	}),
 	["Quests"] = L_1_[38]:MakeTab({
-		["Title"] = "Tab Nhiệm Vụ Và Vật Phẩm";
+		["Title"] = "Tab Quest And Items";
 		["Icon"] = L_1_[2]({
 			"rbxassetid://1307562",
 			"2619"
 		})
 	}),
 	["SeaEvent"] = L_1_[38]:MakeTab({
-		["Title"] = "Tab Biển";
+		["Title"] = "Tab Sea Event";
 		["Icon"] = "waves"
 	});
 	["Race"] = L_1_[38]:MakeTab({
-		["Title"] = "Tab Đảo Bí Ẩn Và Tộc",
+		["Title"] = "Tab Mirage And Race",
 		["Icon"] = L_1_[2]({
 			"rbxassetid://1116288",
 			"9532"
 		})
 	}),
 	["Prehistoric"] = L_1_[38]:MakeTab({
-		["Title"] = "Tab Volcano Sự Kiện";
+		["Title"] = "Tab Volcano Event";
 		["Icon"] = "tent"
 	}),
 	["Esp"] = L_1_[38]:MakeTab({
-		["Title"] = "Tab Chỉ Số Và Esp";
+		["Title"] = "Tab Stats And Esp";
 		["Icon"] = L_1_[2]({
 			"rbxassetid://7040410";
 			"130"
 		})
 	});
 	["Raids"] = L_1_[38]:MakeTab({
-		["Title"] = "Tab Trái Và Raid";
+		["Title"] = "Tab Fruits And Raid";
 		["Icon"] = L_1_[2]({
 			"rbxassetid://1115598";
 			"6081"
 		})
 	}),
 	["Combat"] = L_1_[38]:MakeTab({
-		["Title"] = "Tab Cài Đặt Người Chơi",
+		["Title"] = "Tab Local Player",
 		["Icon"] = L_1_[2]({
 			"rbxassetid://1307565",
 			"1575"
 		})
 	}),
 	["Travel"] = L_1_[38]:MakeTab({
-		["Title"] = "Tab Dịch Chuyển";
+		["Title"] = "Tab Teleport";
 		["Icon"] = "locate"
 	});
 	["Shop"] = L_1_[38]:MakeTab({
-		["Title"] = "Tab Cửa Hàng";
+		["Title"] = "Tab Shopping";
 		["Icon"] = L_1_[2]({
 			"rbxassetid://6031265",
 			"976"
 		})
 	}),
 	["Misc"] = L_1_[38]:MakeTab({
-		["Title"] = "Tab Linh Tinh",
+		["Title"] = "Tab Miscellaneous",
 		["Icon"] = L_1_[2]({
 			"rbxassetid://1070978",
 			"3577"
