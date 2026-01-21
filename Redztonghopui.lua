@@ -1,9 +1,9 @@
-local redzlib = loadstring(game:HttpGet("https://raw.githubusercontent.com/SLK-gaming/New-Gui/refs/heads/main/New-Redz.lua"))()
+local redzlib = loadstring(game:HttpGet("https://raw.githubusercontent.com/daucobonhi/UiRedzV5/refs/heads/main/DemoUi.lua"))();
 
    local Window = redzlib:MakeWindow({
-  Title = "TrongNguyen Hub",
-  SubTitle = "By TrongNguyen",
-  SaveFolder = "Redz Mod.lua"
+   Title = "TrongNguyen Hub",
+   SubTitle = "By TrongNguyen",
+   SaveFolder = "BloxFruits.lua"
 })
 Windows:AddMinimizeButton({
   Button = { Image = "rbxassetid://13115173160430", BackgroundTransparency = 0 },
