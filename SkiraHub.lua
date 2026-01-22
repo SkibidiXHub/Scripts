@@ -2224,7 +2224,7 @@ L_1_[41] = Instance["new"]("ImageButton")
 L_1_[41]["Size"] = UDim2["new"](0, 50, 0, 50)
 L_1_[41]["Position"] = UDim2["new"](.15, 0, .15, 0)
 L_1_[41]["Image"] = L_1_[2]({
-	"rbxassetid://12510657480597",
+	"rbxassetid://125106574805976",
 })
 L_1_[41][L_1_[2]({
 	"BackgroundTransparen";
