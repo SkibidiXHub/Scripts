@@ -11,14 +11,16 @@ Windows:AddMinimizeButton({
 })
 
 local TabDiscord = Windows:MakeTab({"Blox Fruits","home"})
-local TabFarm = Windows:MakeTab({"Kaitun Blox Fruits","star"})
+local TabMain = Windows:MakeTab({"Kaitun Blox Fruits","star"})
 local TabFarm = Windows:MakeTab({"99 Night","night"})
+Main:AddSection("Main Farm")
 
-local Tabdiscord:AddButton({
-    Title = "Death Step",
-    Callback = function()
-        local ReplicatedStorage = game:GetService("ReplicatedStorage")
-        local CommF_ = ReplicatedStorage.Remotes.CommF_
-        CommF_:InvokeServer("BuyDeathStep")
-    end
+local TabMain:AddButton({
+  Name = "Kaitun Skira Hub",
+  Description = "",
+  Default = false,
+  Callback = function()
+    repeat wait() until game:IsLoaded() and game.Players.LocalPlayer
+loadstring(game:HttpGet("https://raw.githubusercontent.com/SkibidiXHub/Scripts/refs/heads/main/ChestTPSkira.lua"))()
+  end
 })
