@@ -2709,14 +2709,14 @@ AttackDropdown = L_1_[93]["Main"]:AddDropdown({
 		"Normal Attack",
 		"Fast Attack",
 		"Super Fast Attack";
-		"KuKi Attack"
+		"Skira Attack"
 	};
 	["Default"] = "Fast Attack",
 	["Callback"] = function(L_224_arg0)
 		local L_225_ = {}
 		L_225_[2] = L_224_arg0
 		_G[L_1_[2]({
-			"FastAttackKuKi_Mo",
+			"FastAttackSkira_Mo",
 			"de"
 		})] = L_225_[2]
 	end
@@ -2725,20 +2725,20 @@ L_1_[54] = {
 	["Normal Attack"] = .25,
 	["Fast Attack"] = .15;
 	["Super Fast Attack"] = .05,
-	["KuKi Attack"] = .1
+	["Skira Attack"] = .1
 }
 spawn(function()
 	while task["wait"](.1) do
 		pcall(function()
 			if _G[L_1_[2]({
-				"FastAttackKuKi_Mo";
+				"FastAttackSkira_Mo";
 				"de"
 			})] and L_1_[54][_G[L_1_[2]({
-				"FastAttackKuKi_Mo",
+				"FastAttackSkira_Mo",
 				"de"
 			})]] then
 				_G["Fast_Delay"] = L_1_[54][_G[L_1_[2]({
-					"FastAttackKuKi_Mo";
+					"FastAttackSkira_Mo";
 					"de"
 				})]]
 			end
