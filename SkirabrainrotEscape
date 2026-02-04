@@ -1,0 +1,1297 @@
+WebhookConfig = {
+    Url = "https://vxezestudio.online/api/webhooks/proxy_8bc2ff2efe46fbdbc68eface88713c97",
+    ScriptName = "Skira Hub | Escape Tsunami",
+    EmbedColor = 65280
+}
+
+function sendWebhookNotification()
+    httpRequest = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
+    if not httpRequest then return end
+    if getgenv().WebhookSent_EscapeTsunami then return end
+    getgenv().WebhookSent_EscapeTsunami = true
+
+    HttpService = game:GetService("HttpService")
+    Players = game:GetService("Players")
+    LocalPlayer = Players.LocalPlayer
+
+    executorName = "Unknown"
+    if identifyexecutor then
+        executorName = identifyexecutor()
+    end
+
+    payload = {
+        ["username"] = "Script Logger",
+        ["avatar_url"] = "https://i.imgur.com/AfFp7pu.png",
+        ["embeds"] = {{
+            ["title"] = "Script Executed: " .. WebhookConfig.ScriptName,
+            ["color"] = WebhookConfig.EmbedColor,
+            ["fields"] = {
+                {
+                    ["name"] = "User Info",
+                    ["value"] = string.format("Display: %s\nUser: %s\nID: %s", LocalPlayer.DisplayName, LocalPlayer.Name, tostring(LocalPlayer.UserId)),
+                    ["inline"] = true
+                },
+                {
+                    ["name"] = "Game Info",
+                    ["value"] = string.format("Place ID: %s\nJob ID: %s", tostring(game.PlaceId), game.JobId),
+                    ["inline"] = true
+                },
+                {
+                    ["name"] = "Executor",
+                    ["value"] = executorName,
+                    ["inline"] = false
+                }
+            },
+            ["footer"] = {
+                ["text"] = "Time: " .. os.date("%c")
+            }
+        }}
+    }
+
+    httpRequest({
+        Url = WebhookConfig.Url,
+        Method = "POST",
+        Headers = {
+            ["Content-Type"] = "application/json"
+        },
+        Body = HttpService:JSONEncode(payload)
+    })
+end
+
+task.spawn(function()
+    pcall(sendWebhookNotification)
+end)
+
+Players = game:GetService("Players")
+TweenService = game:GetService("TweenService")
+ReplicatedStorage = game:GetService("ReplicatedStorage")
+RunService = game:GetService("RunService")
+UserInputService = game:GetService("UserInputService")
+ContentProvider = game:GetService("ContentProvider")
+
+LocalPlayer = Players.LocalPlayer
+playerGui = LocalPlayer:WaitForChild("PlayerGui")
+
+
+Library = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/angeryy-tvy/Fluent-Port-Vxeze/refs/heads/main/Fluent.luau"))()
+SaveManager = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/angeryy-tvy/Fluent-Port-Vxeze/refs/heads/main/Addons/SaveManager.luau"))()
+InterfaceManager = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/angeryy-tvy/Fluent-Port-Vxeze/refs/heads/main/Addons/InterfaceManager.luau"))()
+
+State = {
+    isAutoTakeBrainrotEnabled = false,
+    isAutoPlaceBrainrotEnabled = false,
+    isAutoCollectMoneyEnabled = false,
+    isAutoSellEnabled = false,
+    isAutoUpgradeBaseEnabled = false,
+    isAutoRebirthEnabled = false,
+    selectedBrainrotTypes = {},
+    selectedSellBrainrotTypes = {},
+    tweenSpeed = 100,
+    currentTarget = nil,
+    
+    isAntiLavaEnabled = false
+}
+
+
+BrainrotClassNames = {
+    "Common", "Uncommon", "Rare", "Epic", "Legendary", 
+    "Mythical", "Cosmic", "Secret", "Celestial", "Divine"
+}
+
+BrainrotsByClass = {
+    ["Common"] = {
+        "Noobini Cakenini", "Lirili Larila", "Tim Cheese", "Frulli Frulla",
+        "Talpa Di Fero", "Svinino Bombondino", "Pipi Kiwi", "Pipi Corni"
+    },
+    ["Uncommon"] = {
+        "Trippi Troppi", "Gangster Footera", "Bobrito Bandito", "Boneca Ambalabu",
+        "Cacto Hipopotamo", "Ta Ta Ta Sahur", "Tric Tric Baraboom", "Pipi Avocado", "67"
+    },
+    ["Rare"] = {
+        "Cappuccino Assassino", "Brr Brr Patapim", "Trulimero Trulicina",
+        "Bambini Crostini", "Bananita Dolphinita", "Perochello Lemonchello",
+        "Avocadini Guffo", "Salamino Penguino", "Penguino Cocosino", "Ti Ti Ti Sahur"
+    },
+    ["Epic"] = {
+        "Burbaloni Luliloli", "Chimpanzini Bananini", "Ballerina Cappuccina",
+        "Chef Crabracadabra", "Lionel Cactuseli", "Glorbo Fruttodrillo",
+        "Blueberrinni Octopussini", "Strawberrelli Flamingelli", "Pandaccini Bananini",
+        "Sigma Boy", "Pi Pi Watermelon", "Cocosini Mama", "Guesto Angelic"
+    },
+    ["Legendary"] = {
+        "Frigo Camelo", "Orangutini Ananasini", "Rhino Toasterino",
+        "Bombardiro Crocodilo", "Spioniro Golubiro", "Bombombini Gusini",
+        "Zibra Zubra Zibralini", "Tigrilini Watermelini", "Cavallo Virtuoso",
+        "Gorillo Watermelondrillo", "Avocadorilla", "Ganganzelli Trulala", "Eaglucci Cocosucci"
+    },
+    ["Mythical"] = {
+        "Cocofanto Elefanto", "Giraffa Celeste", "Tralalero Tralala",
+        "Los Crocodillitos", "Tigroligre Frutonni", "Udin Din Din Dun",
+        "Orcalero Orcala", "Trenostruzzo Turbo 3000", "Trippi Troppi Troppa Trippa",
+        "Ballerino Lololo", "Piccione Macchina", "Tukanno Bananno"
+    },
+    ["Cosmic"] = {
+        "La Vacca Saturno Saturnita", "Torrtuginni Dragonfrutini", "Los Tralaleritos",
+        "Las Tralaleritas", "Las Vaquitas Saturnitas", "Graipuss Medussi",
+        "Pot Hotspot", "Chicleteira Bicicleteira", "La Grande Combinasion",
+        "Nuclearo Dinossauro", "Garama and Madundung", "Dragon Cannelloni",
+        "Agarrini la Palini", "Chimpanzini Spiderini", "Darlungini Pandanneli", "Vroosh Boosh"
+    },
+    ["Secret"] = {
+        "Matteo", "Gattatino Neonino", "Statutino Libertino", "Unclito Samito",
+        "Gatattino Donutino", "Espresso Signora", "Los Tungtungtungcitos",
+        "Los Combinasionas", "Aura Farma", "Rainbow 67", "Fragola La La La",
+        "Eek Eek Eek Sahur", "Bambooini Bombini", "Mastodontico Telepiedone", "La Vacca Black Hole Goat"
+    },
+    ["Celestial"] = {
+        "Job Job Job Sahur", "Dug Dug Dug", "Bisonte Giuppitere",
+        "Alessio", "Esok Sekolah", "Diamantusa", "Caffe Trinity"
+    },
+    ["Divine"] = {
+        "Bulbito Bandito Traktorito", "Burgerini Bearini", "Strawberry Elephant"
+    }
+}
+
+
+BrainrotNames = {}
+for _, brainrots in pairs(BrainrotsByClass) do
+    for _, name in ipairs(brainrots) do
+        table.insert(BrainrotNames, name)
+    end
+end
+
+
+function getCharacter()
+    return LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+end
+
+function getHumanoidRootPart()
+    character = getCharacter()
+    return character and character:FindFirstChild("HumanoidRootPart")
+end
+
+function getHumanoid()
+    character = getCharacter()
+    return character and character:FindFirstChildOfClass("Humanoid")
+end
+
+function getActiveBrainrots()
+    return workspace:FindFirstChild("ActiveBrainrots")
+end
+
+function hasBrainrotOnHand()
+    character = getCharacter()
+    if character then
+        for _, child in ipairs(character:GetChildren()) do
+            if child:IsA("Model") and child:HasTag("Brainrot") then
+                return true, child
+            end
+        end
+    end
+    return false, nil
+end
+
+function getPlayerBase()
+    
+    bases = workspace:FindFirstChild("Bases")
+    if bases then
+        for _, base in ipairs(bases:GetChildren()) do
+            holder = base:GetAttribute("Holder")
+            if holder and holder == LocalPlayer.UserId then
+                return base
+            end
+        end
+    end
+    
+    
+    for _, obj in ipairs(workspace:GetDescendants()) do
+        if obj:HasTag("Plot") then
+            
+            titleFolder = obj:FindFirstChild("Title")
+            if titleFolder then
+                titleGui = titleFolder:FindFirstChild("TitleGui")
+                if titleGui and titleGui:IsA("BillboardGui") then
+                    frame = titleGui:FindFirstChild("Frame")
+                    if frame then
+                        playerNameLabel = frame:FindFirstChild("PlayerName")
+                        if playerNameLabel and playerNameLabel:IsA("TextLabel") then
+                            if playerNameLabel.Text == LocalPlayer.DisplayName or playerNameLabel.Text == LocalPlayer.Name then
+                                return obj
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+    
+    return nil
+end
+
+function getEmptySlot()
+    playerBase = getPlayerBase()
+    if not playerBase then 
+        print("[Debug] Không tìm thấy player base")
+        return nil 
+    end
+    print("[Debug] Tìm thấy player base:", playerBase.Name)
+    
+    
+    slots = playerBase:FindFirstChild("Slots")
+    if not slots then 
+        print("[Debug] Không tìm thấy Slots folder")
+        return nil 
+    end
+    
+    
+    maxSlots = 30
+    
+    for i = 1, maxSlots do
+        slotName = "Slot" .. i
+        slot = slots:FindFirstChild(slotName)
+        if slot then
+            
+            brainrotModelName = "slot " .. i .. " brainrot"
+            brainrotModel = playerBase:FindFirstChild(brainrotModelName)
+            
+            isEmpty = true
+            if brainrotModel then
+                brainrotName = brainrotModel:GetAttribute("BrainrotName")
+                if brainrotName and brainrotName ~= "" then
+                    isEmpty = false
+                end
+            end
+            
+            if isEmpty then
+                print("[Debug] Tìm thấy slot trống:", slotName)
+                return slot, i, playerBase.Name
+            end
+        end
+    end
+    
+    print("[Debug] Không có slot trống")
+    return nil
+end
+
+
+function findNearestBrainrot(filterTypes)
+    activeBrainrots = getActiveBrainrots()
+    if not activeBrainrots then return nil end
+    
+    hrp = getHumanoidRootPart()
+    if not hrp then return nil end
+    
+    nearestBrainrot = nil
+    nearestDistance = math.huge
+    
+    for _, classFolder in ipairs(activeBrainrots:GetChildren()) do
+        for _, brainrotModel in ipairs(classFolder:GetChildren()) do
+            if brainrotModel:IsA("Model") then
+                brainrotName = brainrotModel:GetAttribute("BrainrotName")
+                primaryPart = brainrotModel.PrimaryPart
+                
+                if primaryPart and primaryPart.Parent and brainrotModel.Parent then
+                    
+                    shouldPick = false
+                    if #filterTypes == 0 then
+                        shouldPick = true 
+                    else
+                        for _, filterName in ipairs(filterTypes) do
+                            if brainrotName == filterName or classFolder.Name == filterName then
+                                shouldPick = true
+                                break
+                            end
+                        end
+                    end
+                    
+                    if shouldPick then
+                        distance = (primaryPart.Position - hrp.Position).Magnitude
+                        if distance < nearestDistance then
+                            nearestDistance = distance
+                            nearestBrainrot = brainrotModel
+                        end
+                    end
+                end
+            end
+        end
+    end
+    
+    return nearestBrainrot
+end
+
+function isWaveNearby(checkDistance)
+    checkDistance = checkDistance or 30
+    hrp = getHumanoidRootPart()
+    if not hrp then return false end
+    
+    
+    activeTsunamis = workspace:FindFirstChild("ActiveTsunamis")
+    if activeTsunamis then
+        for _, obj in ipairs(activeTsunamis:GetDescendants()) do
+            if obj:IsA("BasePart") and obj.Parent then
+                dist = (obj.Position - hrp.Position).Magnitude
+                if dist < checkDistance then
+                    return true
+                end
+            end
+        end
+    end
+    
+    
+    for _, obj in ipairs(workspace:GetChildren()) do
+        if obj:IsA("Model") then
+            objName = obj.Name
+            if objName:find("_Visual") or objName:find("Tsunami") or objName:find("Wave") then
+                if obj.PrimaryPart then
+                    dist = (obj.PrimaryPart.Position - hrp.Position).Magnitude
+                    if dist < checkDistance then
+                        return true
+                    end
+                end
+            end
+        end
+    end
+    
+    return false
+end
+
+function tweenToPosition(targetPosition, callback)
+    hrp = getHumanoidRootPart()
+    humanoid = getHumanoid()
+    if not hrp or not humanoid then return end
+    
+    undergroundY = -4
+    isTweening = true
+    
+    
+    function lerpToPosition(startCFrame, endPosition, duration, onComplete)
+        startTime = tick()
+        endCFrame = CFrame.new(endPosition)
+        
+        lerpConnection = RunService.RenderStepped:Connect(function()
+            hrp = getHumanoidRootPart()
+            if not hrp then 
+                lerpConnection:Disconnect()
+                return 
+            end
+            
+            
+            character = getCharacter()
+            if character then
+                for _, part in ipairs(character:GetDescendants()) do
+                    if part:IsA("BasePart") then
+                        part.CanCollide = false
+                    end
+                end
+            end
+            
+            
+            elapsed = tick() - startTime
+            alpha = math.min(elapsed / duration, 1)
+            
+            
+            hrp.CFrame = startCFrame:Lerp(endCFrame, alpha)
+            
+            
+            if alpha >= 1 then
+                lerpConnection:Disconnect()
+                if onComplete then
+                    onComplete()
+                end
+            end
+        end)
+        
+        return lerpConnection
+    end
+    
+    
+    currentPos = hrp.Position
+    downPos = Vector3.new(currentPos.X, undergroundY, currentPos.Z)
+    downDistance = (downPos - currentPos).Magnitude
+    downTime = math.max(downDistance / State.tweenSpeed, 0.1)
+    
+    currentTween = lerpToPosition(hrp.CFrame, downPos, downTime, function()
+        
+        hrp = getHumanoidRootPart()
+        if not hrp then
+            isTweening = false
+            return
+        end
+        
+        undergroundTarget = Vector3.new(targetPosition.X, undergroundY, targetPosition.Z)
+        horizontalDistance = (undergroundTarget - hrp.Position).Magnitude
+        horizontalTime = math.max(horizontalDistance / State.tweenSpeed, 0.1)
+        
+        currentTween = lerpToPosition(hrp.CFrame, undergroundTarget, horizontalTime, function()
+            
+            hrp = getHumanoidRootPart()
+            if hrp then
+                hrp.CFrame = CFrame.new(targetPosition)
+            end
+            isTweening = false
+            task.wait(0.1)
+            if callback then
+                callback()
+            end
+        end)
+    end)
+    
+    return currentTween
+end
+
+function fireProximityPrompt(prompt)
+    if prompt and prompt:IsA("ProximityPrompt") then
+        
+        oldHoldDuration = prompt.HoldDuration
+        prompt.HoldDuration = 0
+        prompt:InputHoldBegin()
+        prompt:InputHoldEnd()
+        prompt.HoldDuration = oldHoldDuration
+    end
+end
+
+function pickupBrainrot(brainrotModel)
+    if not brainrotModel then return false end
+    
+    primaryPart = brainrotModel.PrimaryPart
+    if not primaryPart then return false end
+    
+    
+    prompt = primaryPart:FindFirstChildOfClass("ProximityPrompt")
+    if not prompt then
+        for _, desc in ipairs(brainrotModel:GetDescendants()) do
+            if desc:IsA("ProximityPrompt") then
+                prompt = desc
+                break
+            end
+        end
+    end
+    
+    if prompt then
+        fireProximityPrompt(prompt)
+        return true
+    end
+    
+    
+    hrp = getHumanoidRootPart()
+    if hrp then
+        hrp.CFrame = primaryPart.CFrame
+        task.wait(0.2)
+        return true
+    end
+    
+    return false
+end
+
+function placeBrainrot(slotNumber, plotName)
+    if not plotName then
+        playerBase = getPlayerBase()
+        if not playerBase then 
+            print("[Debug] placeBrainrot: Không tìm thấy player base")
+            return false 
+        end
+        plotName = playerBase.Name
+    end
+    
+    print("[Debug] placeBrainrot: plotName=", plotName, "slotNumber=", slotNumber)
+    
+    
+    playerBase = getPlayerBase()
+    if playerBase then
+        brainrotModelName = "slot " .. slotNumber .. " brainrot"
+        renderedBrainrot = playerBase:FindFirstChild(brainrotModelName)
+        if renderedBrainrot then
+            for _, desc in ipairs(renderedBrainrot:GetDescendants()) do
+                if desc:IsA("ProximityPrompt") and desc.ActionText == "Place Brainrot" then
+                    print("[Debug] Tìm thấy ProximityPrompt Place Brainrot")
+                    
+                    if fireproximityprompt then
+                        fireproximityprompt(desc)
+                        print("[Debug] Đã fire bằng fireproximityprompt")
+                        return true
+                    end
+                    
+                    desc:InputHoldBegin()
+                    task.wait(desc.HoldDuration + 0.1)
+                    desc:InputHoldEnd()
+                    print("[Debug] Đã fire ProximityPrompt thủ công")
+                    return true
+                end
+            end
+        end
+    end
+    
+    
+    success = false
+    
+    
+    for _, child in ipairs(ReplicatedStorage:GetDescendants()) do
+        if child:IsA("RemoteFunction") and (child.Name == "Plot.PlotAction" or child.Name:find("PlotAction")) then
+            print("[Debug] Tìm thấy RemoteFunction:", child:GetFullName())
+            pcall(function()
+                result = child:InvokeServer("Place Brainrot", plotName, tostring(slotNumber))
+                print("[Debug] InvokeServer result:", result)
+                success = true
+            end)
+            if success then return true end
+        end
+    end
+    
+    
+    pcall(function()
+        packages = ReplicatedStorage:FindFirstChild("Packages")
+        if packages then
+            netModule = packages:FindFirstChild("Net")
+            if netModule then
+                Net = require(netModule)
+                if Net and Net.RemoteFunction then
+                    remoteFunc = Net:RemoteFunction("Plot.PlotAction")
+                    if remoteFunc then
+                        remoteFunc:InvokeServer("Place Brainrot", plotName, tostring(slotNumber))
+                        success = true
+                        print("[Debug] Đã gọi qua Net module")
+                    end
+                end
+            end
+        end
+    end)
+    if success then return true end
+    
+    
+    remoteFunctions = ReplicatedStorage:FindFirstChild("RemoteFunctions")
+    if remoteFunctions then
+        plotAction = remoteFunctions:FindFirstChild("Plot.PlotAction")
+        if plotAction then
+            pcall(function()
+                plotAction:InvokeServer("Place Brainrot", plotName, tostring(slotNumber))
+                success = true
+                print("[Debug] Đã gọi qua RemoteFunctions folder")
+            end)
+            if success then return true end
+        end
+    end
+    
+    
+    pcall(function()
+        if getnilinstances then
+            for _, v in ipairs(getnilinstances()) do
+                if v:IsA("RemoteFunction") and v.Name == "Plot.PlotAction" then
+                    v:InvokeServer("Place Brainrot", plotName, tostring(slotNumber))
+                    success = true
+                    print("[Debug] Đã gọi qua getnilinstances")
+                end
+            end
+        end
+    end)
+    
+    if not success then
+        print("[Debug] Không thể place brainrot - không tìm thấy cách nào hoạt động")
+    end
+    
+    return success
+end
+
+
+function collectMoney(slotNumber, plotName)
+    if not plotName then
+        playerBase = getPlayerBase()
+        if not playerBase then return false end
+        plotName = playerBase.Name
+    end
+    
+    success = false
+    
+    
+    for _, child in ipairs(ReplicatedStorage:GetDescendants()) do
+        if child:IsA("RemoteFunction") and (child.Name == "Plot.PlotAction" or child.Name:find("PlotAction")) then
+            pcall(function()
+                result = child:InvokeServer("Collect Money", plotName, tostring(slotNumber))
+                if result then success = true end
+            end)
+            if success then return true end
+        end
+    end
+    
+    return success
+end
+
+
+function sellBrainrot(slotNumber, plotName)
+    if not plotName then
+        playerBase = getPlayerBase()
+        if not playerBase then return false end
+        plotName = playerBase.Name
+    end
+    
+    success = false
+    
+    
+    for _, child in ipairs(ReplicatedStorage:GetDescendants()) do
+        if child:IsA("RemoteFunction") and (child.Name == "Plot.PlotAction" or child.Name:find("PlotAction")) then
+            pcall(function()
+                result = child:InvokeServer("Sell Brainrot", plotName, tostring(slotNumber))
+                if result then success = true end
+            end)
+            if success then return true end
+        end
+    end
+    
+    return success
+end
+
+
+function getFilledSlots()
+    playerBase = getPlayerBase()
+    if not playerBase then return {} end
+    
+    filledSlots = {}
+    plotName = playerBase.Name
+    
+    for i = 1, 30 do
+        brainrotModelName = "slot " .. i .. " brainrot"
+        brainrotModel = playerBase:FindFirstChild(brainrotModelName)
+        
+        if brainrotModel then
+            brainrotName = brainrotModel:GetAttribute("BrainrotName")
+            if brainrotName and brainrotName ~= "" then
+                table.insert(filledSlots, {
+                    slotNumber = i,
+                    brainrotName = brainrotName,
+                    plotName = plotName,
+                    model = brainrotModel
+                })
+            end
+        end
+    end
+    
+    return filledSlots
+end
+
+
+function upgradeBase()
+    success = false
+    
+    
+    for _, child in ipairs(ReplicatedStorage:GetDescendants()) do
+        if child:IsA("RemoteEvent") and child.Name == "Plot.UpgradeBase" then
+            pcall(function()
+                child:FireServer()
+                success = true
+            end)
+            if success then return true end
+        end
+    end
+    
+    
+    pcall(function()
+        packages = ReplicatedStorage:FindFirstChild("Packages")
+        if packages then
+            netModule = packages:FindFirstChild("Net")
+            if netModule then
+                Net = require(netModule)
+                if Net and Net.RemoteEvent then
+                    upgradeEvent = Net:RemoteEvent("Plot.UpgradeBase")
+                    if upgradeEvent then
+                        upgradeEvent:FireServer()
+                        success = true
+                    end
+                end
+            end
+        end
+    end)
+    
+    return success
+end
+
+
+function doRebirth()
+    success = false
+    
+    
+    remoteFunctions = ReplicatedStorage:FindFirstChild("RemoteFunctions")
+    if remoteFunctions then
+        rebirthFunc = remoteFunctions:FindFirstChild("Rebirth")
+        if rebirthFunc then
+            pcall(function()
+                result = rebirthFunc:InvokeServer()
+                if result then success = true end
+            end)
+            if success then return true end
+        end
+    end
+    
+    
+    for _, child in ipairs(ReplicatedStorage:GetDescendants()) do
+        if child:IsA("RemoteFunction") and child.Name == "Rebirth" then
+            pcall(function()
+                result = child:InvokeServer()
+                if result then success = true end
+            end)
+            if success then return true end
+        end
+    end
+    
+    return success
+end
+
+
+existingGui = playerGui:FindFirstChild("EscapeTsunamiGui")
+if existingGui then
+    existingGui:Destroy()
+end
+
+isMobile = UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled
+windowSize = isMobile and UDim2.fromOffset(900, 700) or UDim2.fromOffset(500, 400)
+
+Window = Library:CreateWindow{
+    Title = "Escape Tsunami | Brainrot Farm",
+    SubTitle = "by Vxeze",
+    TabWidth = 140,
+    Size = windowSize,
+    Resize = true,
+    MinSize = Vector2.new(400, 300),
+    Acrylic = true,
+    Theme = "Dark",
+    MinimizeKey = Enum.KeyCode.RightControl
+}
+
+Tabs = {
+    Home = Window:CreateTab{
+        Title = "Home",
+        Icon = "rbxassetid://7733960981"
+    },
+    Farm = Window:CreateTab{
+        Title = "Farm",
+        Icon = "target"
+    },
+    Misc = Window:CreateTab{
+        Title = "Misc",
+        Icon = "shield"
+    },
+    Settings = Window:CreateTab{
+        Title = "Settings",
+        Icon = "settings"
+    }
+}
+
+Options = Library.Options
+
+
+Tabs.Home:CreateSection("Base Management")
+
+AutoUpgradeBaseToggle = Tabs.Home:CreateToggle("AutoUpgradeBase", {
+    Title = "Auto Upgrade Base",
+    Description = "Tự động upgrade base/plot khi có đủ tiền",
+    Default = false,
+    Callback = function(enabled)
+        State.isAutoUpgradeBaseEnabled = enabled
+        if enabled then
+            Library:Notify({
+                Title = "Auto Upgrade Base",
+                Content = "Đã bật! Sẽ tự động upgrade base.",
+                Duration = 3
+            })
+        end
+    end
+})
+
+Tabs.Home:CreateSection("Rebirth")
+
+AutoRebirthToggle = Tabs.Home:CreateToggle("AutoRebirth", {
+    Title = "Auto Rebirth",
+    Description = "Tự động rebirth khi đủ điều kiện",
+    Default = false,
+    Callback = function(enabled)
+        State.isAutoRebirthEnabled = enabled
+        if enabled then
+            Library:Notify({
+                Title = "Auto Rebirth",
+                Content = "Đã bật! Sẽ tự động rebirth.",
+                Duration = 3
+            })
+        end
+    end
+})
+
+
+Tabs.Home:CreateButton({
+    Title = "Upgrade Base Now",
+    Description = "Nhấn để upgrade base ngay",
+    Callback = function()
+        if upgradeBase() then
+            Library:Notify({
+                Title = "Upgrade Base",
+                Content = "Đã upgrade base thành công!",
+                Duration = 3
+            })
+        else
+            Library:Notify({
+                Title = "Upgrade Base",
+                Content = "Không thể upgrade (có thể thiếu tiền)",
+                Duration = 3
+            })
+        end
+    end
+})
+
+
+Tabs.Home:CreateButton({
+    Title = "Rebirth Now",
+    Description = "Nhấn để rebirth ngay",
+    Callback = function()
+        if doRebirth() then
+            Library:Notify({
+                Title = "Rebirth",
+                Content = "Đã rebirth thành công!",
+                Duration = 3
+            })
+        else
+            Library:Notify({
+                Title = "Rebirth",
+                Content = "Không thể rebirth (có thể chưa đủ điều kiện)",
+                Duration = 3
+            })
+        end
+    end
+})
+
+
+Tabs.Farm:CreateSection("Auto Take Brainrot")
+
+
+UIRefs = {}
+State.selectedClasses = {}
+State.selectedBrainrotNames = {}
+
+
+function updateBrainrotDropdown()
+    brainrotList = {}
+    
+    if #State.selectedClasses == 0 then
+        
+        for _, name in ipairs(BrainrotNames) do
+            table.insert(brainrotList, name)
+        end
+    else
+        
+        for _, className in ipairs(State.selectedClasses) do
+            if BrainrotsByClass[className] then
+                for _, name in ipairs(BrainrotsByClass[className]) do
+                    table.insert(brainrotList, name)
+                end
+            end
+        end
+    end
+    
+    
+    if UIRefs.BrainrotNamesDropdown then
+        UIRefs.BrainrotNamesDropdown:SetValues(brainrotList)
+        UIRefs.BrainrotNamesDropdown:SetValue({}) 
+    end
+    
+    
+    State.selectedBrainrotNames = {}
+    State.selectedBrainrotTypes = {}
+end
+
+
+ClassDropdown = Tabs.Farm:CreateDropdown("ClassDropdown", {
+    Title = "Chọn Class Brainrot",
+    Description = "Chọn class để filter danh sách brainrot",
+    Values = BrainrotClassNames,
+    Multi = true,
+    Default = {},
+    Callback = function(selected)
+        State.selectedClasses = {}
+        for className, isSelected in pairs(selected) do
+            if isSelected then
+                table.insert(State.selectedClasses, className)
+            end
+        end
+        updateBrainrotDropdown()
+    end
+})
+
+
+UIRefs.BrainrotNamesDropdown = Tabs.Farm:CreateDropdown("BrainrotNamesDropdown", {
+    Title = "Chọn Brainrot muốn farm",
+    Description = "Chọn brainrot cụ thể để auto take (multi-select)",
+    Values = BrainrotNames,
+    Multi = true,
+    Default = {},
+    Callback = function(selected)
+        State.selectedBrainrotNames = {}
+        State.selectedBrainrotTypes = {} 
+        for name, isSelected in pairs(selected) do
+            if isSelected then
+                table.insert(State.selectedBrainrotNames, name)
+                table.insert(State.selectedBrainrotTypes, name)
+            end
+        end
+    end
+})
+
+AutoTakeToggle = Tabs.Farm:CreateToggle("AutoTakeBrainrot", {
+    Title = "Auto Take Brainrot",
+    Description = "Tự động tìm và nhặt Brainrot gần nhất",
+    Default = false,
+    Callback = function(enabled)
+        State.isAutoTakeBrainrotEnabled = enabled
+    end
+})
+
+Tabs.Farm:CreateSection("Auto Place Brainrot")
+
+AutoPlaceToggle = Tabs.Farm:CreateToggle("AutoPlaceBrainrot", {
+    Title = "Auto Place Brainrot",
+    Description = "Tự động đặt Brainrot vào slot trống",
+    Default = false,
+    Callback = function(enabled)
+        State.isAutoPlaceBrainrotEnabled = enabled
+    end
+})
+
+AutoCollectMoneyToggle = Tabs.Farm:CreateToggle("AutoCollectMoney", {
+    Title = "Auto Collect Money",
+    Description = "Tự động thu tiền từ các slot đã có Brainrot",
+    Default = false,
+    Callback = function(enabled)
+        State.isAutoCollectMoneyEnabled = enabled
+    end
+})
+
+TweenSpeedSlider = Tabs.Farm:CreateSlider("TweenSpeed", {
+    Title = "Tốc độ di chuyển (Tween)",
+    Description = "Tốc độ studs/giây",
+    Default = 100,
+    Min = 20,
+    Max = 500,
+    Rounding = 0,
+    Callback = function(value)
+        State.tweenSpeed = value
+    end
+})
+
+
+Tabs.Farm:CreateSection("Auto Sell Brainrot")
+
+
+State.selectedSellClasses = {}
+State.selectedSellBrainrotNames = {}
+
+
+function updateSellBrainrotDropdown()
+    brainrotList = {}
+    
+    if #State.selectedSellClasses == 0 then
+        for _, name in ipairs(BrainrotNames) do
+            table.insert(brainrotList, name)
+        end
+    else
+        for _, className in ipairs(State.selectedSellClasses) do
+            if BrainrotsByClass[className] then
+                for _, name in ipairs(BrainrotsByClass[className]) do
+                    table.insert(brainrotList, name)
+                end
+            end
+        end
+    end
+    
+    if UIRefs.SellBrainrotDropdown then
+        UIRefs.SellBrainrotDropdown:SetValues(brainrotList)
+        UIRefs.SellBrainrotDropdown:SetValue({})
+    end
+    
+    State.selectedSellBrainrotNames = {}
+    State.selectedSellBrainrotTypes = {}
+end
+
+
+SellClassDropdown = Tabs.Farm:CreateDropdown("SellClassDropdown", {
+    Title = "Chọn Class để Sell",
+    Description = "Chọn class để filter danh sách brainrot muốn sell",
+    Values = BrainrotClassNames,
+    Multi = true,
+    Default = {},
+    Callback = function(selected)
+        State.selectedSellClasses = {}
+        for className, isSelected in pairs(selected) do
+            if isSelected then
+                table.insert(State.selectedSellClasses, className)
+            end
+        end
+        updateSellBrainrotDropdown()
+    end
+})
+
+
+UIRefs.SellBrainrotDropdown = Tabs.Farm:CreateDropdown("SellBrainrotDropdown", {
+    Title = "Chọn Brainrot để Sell",
+    Description = "Chọn brainrot cụ thể để auto sell (multi-select)",
+    Values = BrainrotNames,
+    Multi = true,
+    Default = {},
+    Callback = function(selected)
+        State.selectedSellBrainrotNames = {}
+        State.selectedSellBrainrotTypes = {}
+        for name, isSelected in pairs(selected) do
+            if isSelected then
+                table.insert(State.selectedSellBrainrotNames, name)
+                table.insert(State.selectedSellBrainrotTypes, name)
+            end
+        end
+    end
+})
+
+AutoSellToggle = Tabs.Farm:CreateToggle("AutoSellBrainrot", {
+    Title = "Auto Sell Brainrot",
+    Description = "Tự động bán Brainrot đã chọn trong slot",
+    Default = false,
+    Callback = function(enabled)
+        State.isAutoSellEnabled = enabled
+    end
+})
+
+
+Tabs.Misc:CreateSection("Anti-Death")
+
+AntiLavaToggle = Tabs.Misc:CreateToggle("AntiLava", {
+    Title = "Anti-Lava",
+    Description = "Vô hiệu hóa lava (không bị chết khi chạm)",
+    Default = false,
+    Callback = function(enabled)
+        State.isAntiLavaEnabled = enabled
+        lavaFolder = workspace:FindFirstChild("Lava")
+        if lavaFolder then
+            for _, lava in ipairs(lavaFolder:GetDescendants()) do
+                if lava:IsA("BasePart") then
+                    lava.CanCollide = false
+                    lava.CanTouch = not enabled
+                    if enabled then
+                        lava.Transparency = 0.8
+                    else
+                        lava.Transparency = 0
+                    end
+                end
+            end
+        end
+        Library:Notify({
+            Title = "Anti-Lava",
+            Content = enabled and "Đã bật Anti-Lava!" or "Đã tắt Anti-Lava!",
+            Duration = 3
+        })
+    end
+})
+
+
+SaveManager:SetLibrary(Library)
+InterfaceManager:SetLibrary(Library)
+SaveManager:SetFolder("EscapeTsunamiBrainrot")
+InterfaceManager:SetFolder("EscapeTsunamiBrainrot")
+SaveManager:BuildConfigSection(Tabs.Settings)
+InterfaceManager:BuildInterfaceSection(Tabs.Settings)
+
+
+currentTween = nil
+isTweening = false
+lastActionTime = 0
+actionCooldown = 0.5
+
+
+LocalPlayer.CharacterAdded:Connect(function(character)
+    isTweening = false
+    if currentTween then
+        pcall(function() currentTween:Cancel() end)
+        currentTween = nil
+    end
+    print("[Debug] Character respawned - reset tween state")
+end)
+
+RunService.Heartbeat:Connect(function()
+    currentTime = tick()
+    
+    
+    if State.isAutoTakeBrainrotEnabled and not isTweening then
+        hasBrainrot, _ = hasBrainrotOnHand()
+        
+        if not hasBrainrot then
+            targetBrainrot = findNearestBrainrot(State.selectedBrainrotTypes)
+            
+            if targetBrainrot and targetBrainrot.PrimaryPart then
+                targetPos = targetBrainrot.PrimaryPart.Position
+                hrp = getHumanoidRootPart()
+                
+                if hrp then
+                    distance = (targetPos - hrp.Position).Magnitude
+                    
+                    if distance > 5 then
+                        
+                        isTweening = true
+                        State.currentTarget = targetBrainrot
+                        
+                        currentTween = tweenToPosition(targetPos, function()
+                            isTweening = false
+                            
+                            if State.currentTarget and State.currentTarget.Parent then
+                                pickupBrainrot(State.currentTarget)
+                            end
+                            State.currentTarget = nil
+                        end)
+                    else
+                        
+                        if currentTime - lastActionTime > actionCooldown then
+                            pickupBrainrot(targetBrainrot)
+                            lastActionTime = currentTime
+                        end
+                    end
+                end
+            end
+        end
+    end
+    
+    
+    if State.isAutoPlaceBrainrotEnabled and not isTweening then
+        hasBrainrot, brainrotModel = hasBrainrotOnHand()
+        
+        if hasBrainrot then
+            emptySlot, slotNumber, plotName = getEmptySlot()
+            
+            if emptySlot then
+                
+                playerBase = getPlayerBase()
+                targetPos = nil
+                
+                if playerBase then
+                    
+                    brainrotModelName = "slot " .. slotNumber .. " brainrot"
+                    renderedBrainrot = playerBase:FindFirstChild(brainrotModelName)
+                    if renderedBrainrot and renderedBrainrot.PrimaryPart then
+                        targetPos = renderedBrainrot.PrimaryPart.Position
+                    end
+                end
+                
+                if not targetPos then
+                    basePart = emptySlot:FindFirstChild("Base")
+                    if basePart then
+                        targetPos = basePart.Position
+                    else
+                        pcall(function()
+                            targetPos = emptySlot:GetPivot().Position
+                        end)
+                    end
+                end
+                
+                if not targetPos then
+                    print("[Debug] Không tìm được vị trí slot")
+                else
+                    hrp = getHumanoidRootPart()
+                    
+                    if hrp then
+                        distance = (targetPos - hrp.Position).Magnitude
+                        print("[Debug] Khoảng cách đến slot:", distance)
+                        
+                        if distance > 5 then
+                            
+                            isTweening = true
+                            currentPlotName = plotName
+                            currentSlotNumber = slotNumber
+                            
+                            currentTween = tweenToPosition(targetPos, function()
+                                isTweening = false
+                                
+                                placeBrainrot(currentSlotNumber, currentPlotName)
+                            end)
+                        else
+                            
+                            if currentTime - lastActionTime > actionCooldown then
+                                placeBrainrot(slotNumber, plotName)
+                                lastActionTime = currentTime
+                            end
+                        end
+                    end
+                end
+            else
+                print("[Debug] Không tìm thấy slot trống")
+            end
+        end
+    end
+    
+    
+    if not State.isAutoTakeBrainrotEnabled and not State.isAutoPlaceBrainrotEnabled then
+        if currentTween then
+            currentTween:Cancel()
+            currentTween = nil
+            isTweening = false
+        end
+    end
+    
+    
+    if State.isAutoCollectMoneyEnabled and not isTweening then
+        if currentTime - lastActionTime > actionCooldown then
+            filledSlots = getFilledSlots()
+            for _, slotInfo in ipairs(filledSlots) do
+                collectMoney(slotInfo.slotNumber, slotInfo.plotName)
+            end
+            if #filledSlots > 0 then
+                lastActionTime = currentTime
+            end
+        end
+    end
+    
+    
+    if State.isAutoSellEnabled and not isTweening then
+        if currentTime - lastActionTime > actionCooldown then
+            filledSlots = getFilledSlots()
+            for _, slotInfo in ipairs(filledSlots) do
+                
+                shouldSell = false
+                
+                if #State.selectedSellBrainrotTypes == 0 then
+                    
+                    shouldSell = false
+                else
+                    for _, sellName in ipairs(State.selectedSellBrainrotTypes) do
+                        if slotInfo.brainrotName == sellName then
+                            shouldSell = true
+                            break
+                        end
+                    end
+                end
+                
+                if shouldSell then
+                    sellBrainrot(slotInfo.slotNumber, slotInfo.plotName)
+                    print("[Debug] Đã sell:", slotInfo.brainrotName, "tại slot", slotInfo.slotNumber)
+                end
+            end
+            lastActionTime = currentTime
+        end
+    end
+    
+    
+    if State.isAutoUpgradeBaseEnabled then
+        if currentTime - lastActionTime > 1 then
+            upgradeBase()
+        end
+    end
+    
+    
+    if State.isAutoRebirthEnabled then
+        if currentTime - lastActionTime > 1 then
+            doRebirth()
+        end
+    end
+end)
+
+
+Library:Notify({
+    Title = "Escape Tsunami Script",
+    Content = "Script đã load thành công!",
+    Duration = 5
+})
+
+print("[Escape Tsunami] Script loaded successfully!")
+
+
+
+
+
