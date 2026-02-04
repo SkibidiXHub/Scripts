@@ -744,8 +744,8 @@ isMobile = UserInputService.TouchEnabled and not UserInputService.KeyboardEnable
 windowSize = isMobile and UDim2.fromOffset(900, 700) or UDim2.fromOffset(500, 400)
 
 Window = Library:CreateWindow{
-    Title = "Escape Tsunami | Brainrot Farm",
-    SubTitle = "by Vxeze",
+    Title = "Skira Hub | Escape tsunami",
+    SubTitle = "by Skira",
     TabWidth = 140,
     Size = windowSize,
     Resize = true,
