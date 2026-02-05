@@ -3807,6 +3807,16 @@ local _ = v485:AddDropdown({
         _G.SelectWeapon = v506
     end
 })
+local _ = v485:AddDropdown({
+    Name = "Chọn UI",
+    Description = "Chọn Ui tùy",
+    Options = {"Small", "Medium", "Large", "Bigger"},
+    Default = "Large",
+    Flag = "Large",
+    Callback = function()
+    
+    end
+})
 local _ = v485:AddSection({"Main Farm"})
 v485:AddToggle({
     Name = "Auto Farm Level 1-2650",
