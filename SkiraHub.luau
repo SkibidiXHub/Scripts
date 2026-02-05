@@ -16,7 +16,7 @@ local function NotificacaoNightMystic(titulo, mensagem)
     local success = pcall(function()
         local TweenService = Services.TweenService
         local CoreGui = Services.CoreGui
-        local LogoID = "rbxassetid://115377474207871"
+        local LogoID = "rbxassetid://125106574805976"
 
         local ScreenGui = Instance.new("ScreenGui")
         ScreenGui.Name = "NM_Notify"
@@ -103,7 +103,7 @@ NotificacaoNightMystic("Abacaxi Hub", "Script carregado com sucesso!")
 -- SAVE SYSTEM (Optimized)
 -- ========================================
 local HttpService = Services.HttpService
-local FolderName = "Abacaxi Hub"
+local FolderName = "Skira Hub"
 local FileName = "Settings.json"
 local FullPath = FolderName .. "/" .. FileName
 
