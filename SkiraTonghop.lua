@@ -801,7 +801,7 @@ Tab12o:AddButton({
     loadstring(game:HttpGet("https://rise-evo.xyz/apiv3/ServerFinder.lua"))()
   end
   })
-Tab13o:AddToogle({
+Tab13o:AddToggle({
      Name = "Fix lag 50%",
     Callback = function() 
     -- FPS Boost Script | Client-side
