@@ -278,7 +278,7 @@ end
 local KeySettings = {
     -- Thêm bao nhiêu key tùy thích, ngăn cách bằng dấu phẩy
 RealKey = {"Skira-A21-K48-J12",},  -- Đổi Key của bạn ở đây
-    KeyLink = "https://discord.com/invite/V9xq5t5UhM", -- Đổi Link lấy key ở đây
+    KeyLink = "Skira-A21-K48-J12", -- Đổi Link lấy key ở đây
     FileName = "DacCau_Key.txt" -- Tên file lưu key
 }
 
@@ -903,19 +903,6 @@ Tab12o:AddButton({
         CurrentSound.Looped = true; CurrentSound:Play()
     end })
     
-Tab6o:AddSocialLink({ 
-    Title = "Follow TikTok", 
-    Description = "huyscriptth",
-    Logo = "rbxassetid://134852113716171", 
-    Link = "https://www.tiktok.com/@huyscriptth?_r=1&_t=ZS-9384IhtjOUr"
-})
-Tab6o:AddSocialLink({ 
-    Title = "Follow TikTok", 
-    Description = "huyckvkne",
-    Logo = "rbxassetid://125701776396252", 
-    Link = "https://www.tiktok.com/@huyckvkne?_r=1&_t=ZS-93V91mgzcjR"
-})
-
     -- Tab 6: Update
     Tab6o:AddButton({ Name = "Tb Update", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/Huylovemy/Redz/refs/heads/main/Tb"))() end })
 end
@@ -963,7 +950,7 @@ local function StartKeySystem()
     UIStroke.Parent = MainFrame
 
     local Title = Instance.new("TextLabel")
-    Title.Text = "Bear Hub - Key System"
+    Title.Text = "Skira Hub - Key System"
     Title.Size = UDim2.new(1, 0, 0, 40)
     Title.BackgroundTransparency = 1
     Title.TextColor3 = Color3.fromRGB(255, 255, 255)
