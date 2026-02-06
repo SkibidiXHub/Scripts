@@ -344,6 +344,7 @@ local function RunMenu()
     local Tab10o = Window:MakeTab({ Title = "Auto fruit", Icon = "rbxassetid://10709797985" })
     local Tab11o = Window:MakeTab({ Title = "Auto chest", Icon = "rbxassetid://10709797985" })
     local Tab12o = Window:MakeTab({ Title = "Hop sever", Icon = "rbxassetid://10709797985" })
+    local Tab13o = Window:MakeTab({ Title = "Settings", Icon = "rbxassetid://1848354536" })
     local TabMusic = Window:MakeTab({ Title = "Nhạc (Music)", Icon = "rbxassetid://4483345998" })
     local CurrentSound = nil
     local Tab6o = Window:MakeTab({ Title = "Update", Icon = "rbxassetid://10723407335" })
@@ -798,6 +799,55 @@ Tab12o:AddButton({
      Name = "Rise-Evo",
     Callback = function() 
     loadstring(game:HttpGet("https://rise-evo.xyz/apiv3/ServerFinder.lua"))()
+  end
+  })
+Tab13o:AddToogle({
+     Name = "Fix lag 50%",
+    Callback = function() 
+    -- FPS Boost Script | Client-side
+-- Đặt trong StarterPlayer > StarterPlayerScripts (LocalScript)
+
+local Players = game:GetService("Players")
+local Lighting = game:GetService("Lighting")
+local RunService = game:GetService("RunService")
+
+-- Giảm hiệu ứng ánh sáng
+Lighting.GlobalShadows = false
+Lighting.FogEnd = 9e9
+Lighting.Brightness = 1
+
+-- Tắt hiệu ứng nặng
+for _, v in pairs(Lighting:GetChildren()) do
+	if v:IsA("BlurEffect") or
+	   v:IsA("SunRaysEffect") or
+	   v:IsA("BloomEffect") or
+	   v:IsA("DepthOfFieldEffect") then
+		v.Enabled = false
+	end
+end
+
+-- Tối ưu vật thể trong Workspace
+for _, obj in pairs(workspace:GetDescendants()) do
+	if obj:IsA("BasePart") then
+		obj.Material = Enum.Material.Plastic
+		obj.Reflectance = 0
+	elseif obj:IsA("Decal") or obj:IsA("Texture") then
+		obj.Transparency = 1
+	elseif obj:IsA("ParticleEmitter") or
+		   obj:IsA("Trail") or
+		   obj:IsA("Smoke") or
+		   obj:IsA("Fire") then
+		obj.Enabled = false
+	end
+end
+
+-- Giảm chất lượng render
+settings().Rendering.QualityLevel = Enum.QualityLevel.Level01
+
+-- FPS ổn định hơn
+RunService:Set3dRenderingEnabled(true)
+
+print("FPS Boost Loaded!")
   end
   })
      -- 1. NÚT DỪNG NHẠC
