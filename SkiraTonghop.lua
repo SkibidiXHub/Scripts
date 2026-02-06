@@ -348,6 +348,8 @@ local function RunMenu()
     local TabMusic = Window:MakeTab({ Title = "Nhạc (Music)", Icon = "rbxassetid://4483345998" })
     local CurrentSound = nil
     local Tab6o = Window:MakeTab({ Title = "Update", Icon = "rbxassetid://10723407335" })
+Tab1:AddSection("PvP")
+
 Tab1o:AddButton({
      Name = "CentuDox.xyz",
     Callback = function() 
@@ -403,6 +405,8 @@ Tab1o:AddButton({
  loadstring(Game:HttpGet("https://raw.githubusercontent.com/VanThanhIOS/OniiChanVanThanhIOS/refs/heads/main/oniichanpakavanthanhios"))()
   end
   })  
+Tab2:AddSection("Script Farm")
+
 Tab2o:AddButton({
      Name = "Rise-evo",
     Callback = function() 
@@ -804,50 +808,13 @@ Tab12o:AddButton({
 Tab13o:AddToggle({
      Name = "Fix lag 50%",
     Callback = function() 
-    -- FPS Boost Script | Client-side
--- Đặt trong StarterPlayer > StarterPlayerScripts (LocalScript)
-
-local Players = game:GetService("Players")
-local Lighting = game:GetService("Lighting")
-local RunService = game:GetService("RunService")
-
--- Giảm hiệu ứng ánh sáng
-Lighting.GlobalShadows = false
-Lighting.FogEnd = 9e9
-Lighting.Brightness = 1
-
--- Tắt hiệu ứng nặng
-for _, v in pairs(Lighting:GetChildren()) do
-	if v:IsA("BlurEffect") or
-	   v:IsA("SunRaysEffect") or
-	   v:IsA("BloomEffect") or
-	   v:IsA("DepthOfFieldEffect") then
-		v.Enabled = false
-	end
-end
-
--- Tối ưu vật thể trong Workspace
-for _, obj in pairs(workspace:GetDescendants()) do
-	if obj:IsA("BasePart") then
-		obj.Material = Enum.Material.Plastic
-		obj.Reflectance = 0
-	elseif obj:IsA("Decal") or obj:IsA("Texture") then
-		obj.Transparency = 1
-	elseif obj:IsA("ParticleEmitter") or
-		   obj:IsA("Trail") or
-		   obj:IsA("Smoke") or
-		   obj:IsA("Fire") then
-		obj.Enabled = false
-	end
-end
-
--- Giảm chất lượng render
-settings().Rendering.QualityLevel = Enum.QualityLevel.Level01
-
--- FPS ổn định hơn
-RunService:Set3dRenderingEnabled(true)
-
-print("FPS Boost Loaded!")
+    
+  end
+  })
+Tab13o:AddToggle({
+     Name = "Fast attack",
+    Callback = function()
+    
   end
   })
      -- 1. NÚT DỪNG NHẠC
