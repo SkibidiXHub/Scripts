@@ -1,355 +1,73 @@
-local MarketplaceService = game:GetService("MarketplaceService")
-local UserInputService = game:GetService("UserInputService")
-local TweenService = game:GetService("TweenService")
-local HttpService = game:GetService("HttpService")
-local RunService = game:GetService("RunService")
-local CoreGui = game:GetService("CoreGui")
-local Players = game:GetService("Players")
-local Player = Players.LocalPlayer
-local PlayerMouse = Player:GetMouse()
-
-local Bearlib = {
-    Themes = {
-        QuangHuy = {
-            ["Color Hub 1"] = ColorSequence.new({
-                ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255,255,255)),
-                ColorSequenceKeypoint.new(1.00, Color3.fromRGB(0,0,0))
-            }),
-            ["Color Hub 2"] = Color3.fromRGB(255,255,255),
-            ["Color Stroke"] = Color3.fromRGB(255,255,255),
-            ["Color Theme"] = Color3.fromRGB(0,0,0),
-            ["Color Text"] = Color3.fromRGB(0,0,0),
-            ["Color Dark Text"] = Color3.fromRGB(0,0,0)
-        }
-    },
-    Info = { Version = "1.1.0" },
-    Save = { UISize = {550, 315}, TabSize = 160, Theme = "QuangHuy" },
-    Settings = {}, Connection = {}, Instances = {}, Elements = {}, Options = {}, Flags = {}, Tabs = {},
-    Icons = {
-        ["sword"] = "rbxassetid://125106574805976",
-        ["swords"] = "rbxassetid://125106574805976",
-        ["moon"] = "rbxassetid://125106574805976"
-    }
-}
-
-local ViewportSize = workspace.CurrentCamera.ViewportSize
-local UIScale = ViewportSize.Y / 450
-local Settings = Bearlib.Settings
-local Flags = Bearlib.Flags
-local SetProps, SetChildren, InsertTheme, Create
-do
-    InsertTheme = function(Instance, Type) table.insert(Bearlib.Instances, {Instance = Instance, Type = Type}) return Instance end
-    SetChildren = function(Instance, Children) if Children then table.foreach(Children, function(_,Child) Child.Parent = Instance end) end return Instance end
-    SetProps = function(Instance, Props) if Props then table.foreach(Props, function(prop, value) Instance[prop] = value end) end return Instance end
-    Create = function(...)
-        local args = {...}
-        local new = Instance.new(args[1])
-        local Children = {}
-        if type(args[2]) == "table" then SetProps(new, args[2]) SetChildren(new, args[3])
-        elseif typeof(args[2]) == "Instance" then new.Parent = args[2] SetProps(new, args[3]) SetChildren(new, args[4]) end
-        return new
-    end
-end
-
-local ScreenGui = Create("ScreenGui", CoreGui, { Name = "Bear Library Main" }, { Create("UIScale", { Scale = UIScale, Name = "Scale" }) })
-local ScreenFind = CoreGui:FindFirstChild(ScreenGui.Name)
-if ScreenFind and ScreenFind ~= ScreenGui then ScreenFind:Destroy() end
-
-function Bearlib:MakeWindow(Configs)
-    local WTitle = Configs[1] or Configs.Name or Configs.Title or "Bear Hub V1"
-    local WMiniText = Configs[2] or Configs.SubTitle or "by : Skira Hub"
-    Settings.ScriptFile = Configs[3] or Configs.SaveFolder or false
-    
-    local UISizeX, UISizeY = unpack(Bearlib.Save.UISize)
-    local MainFrame = InsertTheme(Create("ImageButton", ScreenGui, {
-        Size = UDim2.fromOffset(UISizeX, UISizeY),
-        Position = UDim2.new(0.5, -UISizeX/2, 0.5, -UISizeY/2),
-        BackgroundTransparency = 1,
-        Name = "Skira Hub"
-    }), "Main")
-    
-    -- Tạo Gradient và Stroke
-    local UIGradient = InsertTheme(Create("UIGradient", MainFrame, { Color = Bearlib.Themes.QuangHuy["Color Hub 1"], Rotation = 45 }), "Gradient")
-    local UIStroke = InsertTheme(Create("UIStroke", MainFrame, { Color = Bearlib.Themes.QuangHuy["Color Stroke"], Thickness = 1.8, ApplyStrokeMode = "Border" }), "Stroke")
-    local UICorner = Create("UICorner", MainFrame, { CornerRadius = UDim.new(0, 7) })
-
-    -- Cho phép kéo thả (Drag)
-    local Dragging, DragInput, DragStart, StartPos
-    local function Update(input)
-        local delta = input.Position - DragStart
-        MainFrame.Position = UDim2.new(StartPos.X.Scale, StartPos.X.Offset + delta.X, StartPos.Y.Scale, StartPos.Y.Offset + delta.Y)
-    end
-    MainFrame.InputBegan:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-            Dragging = true; DragStart = input.Position; StartPos = MainFrame.Position
-            input.Changed:Connect(function() if input.UserInputState == Enum.UserInputState.End then Dragging = false end end)
-        end
-    end)
-    MainFrame.InputChanged:Connect(function(input) if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then if Dragging then Update(input) end end end)
-
-    local Components = Create("Folder", MainFrame, { Name = "Components" })
-    local TopBar = Create("Frame", Components, { Size = UDim2.new(1, 0, 0, 28), BackgroundTransparency = 1, Name = "Top Bar" })
-    
-    -- Tiêu đề
-    InsertTheme(Create("TextLabel", TopBar, {
-        Position = UDim2.new(0, 15, 0.5), AnchorPoint = Vector2.new(0, 0.5), AutomaticSize = "XY",
-        Text = WTitle, TextXAlignment = "Left", TextSize = 12, TextColor3 = Bearlib.Themes.QuangHuy["Color Text"],
-        BackgroundTransparency = 1, Font = Enum.Font.GothamMedium, Name = "Title"
-    }, {
-        InsertTheme(Create("TextLabel", {
-            Size = UDim2.fromScale(0, 1), AutomaticSize = "X", AnchorPoint = Vector2.new(0, 1), Position = UDim2.new(1, 5, 0.9),
-            Text = WMiniText, TextColor3 = Bearlib.Themes.QuangHuy["Color Dark Text"], BackgroundTransparency = 1,
-            TextXAlignment = "Left", TextYAlignment = "Bottom", TextSize = 8, Font = Enum.Font.Gotham, Name = "SubTitle"
-        }), "DarkText")
-    }), "Text")
-
-    local MainScroll = InsertTheme(Create("ScrollingFrame", Components, {
-        Size = UDim2.new(0, Bearlib.Save.TabSize, 1, -TopBar.Size.Y.Offset),
-        ScrollBarImageColor3 = Bearlib.Themes.QuangHuy["Color Theme"], Position = UDim2.new(0, 0, 1, 0),
-        AnchorPoint = Vector2.new(0, 1), ScrollBarThickness = 1.5, BackgroundTransparency = 1,
-        ScrollBarImageTransparency = 0.2, CanvasSize = UDim2.new(), AutomaticCanvasSize = "Y",
-        ScrollingDirection = "Y", BorderSizePixel = 0, Name = "Tab Scroll"
-    }, {
-        Create("UIPadding", { PaddingLeft = UDim.new(0, 10), PaddingRight = UDim.new(0, 10), PaddingTop = UDim.new(0, 10), PaddingBottom = UDim.new(0, 10) }),
-        Create("UIListLayout", { Padding = UDim.new(0, 5) })
-    }), "ScrollBar")
-
-    local Containers = Create("Frame", Components, {
-        Size = UDim2.new(1, -MainScroll.Size.X.Offset, 1, -TopBar.Size.Y.Offset),
-        AnchorPoint = Vector2.new(1, 1), Position = UDim2.new(1, 0, 1, 0),
-        BackgroundTransparency = 1, ClipsDescendants = true, Name = "Containers"
-    })
-
-    -- Close Button
-    local CloseButton = Create("ImageButton", TopBar, {
-        Size = UDim2.new(0, 14, 0, 14), Position = UDim2.new(1, -10, 0.5), AnchorPoint = Vector2.new(1, 0.5),
-        BackgroundTransparency = 1, Image = "rbxassetid://125106574805976", Name = "Close"
-    })
-    CloseButton.MouseButton1Click:Connect(function() ScreenGui:Destroy() end)
-
-    local Window = {}
-    
-    function Window:Minimize()
-        MainFrame.Visible = not MainFrame.Visible
-    end
-
-    function Window:MakeTab(Configs)
-        local TName = Configs.Title or "Tab"
-        local TIcon = Configs.Icon or ""
-        
-        local TabSelect = Create("TextButton", MainScroll, {
-            Size = UDim2.new(1, 0, 0, 24), BackgroundColor3 = Bearlib.Themes.QuangHuy["Color Hub 2"],
-            BackgroundTransparency = 0.5, Text = ""
-        })
-        Create("UICorner", TabSelect, {CornerRadius = UDim.new(0, 6)})
-
-        local LabelTitle = Create("TextLabel", TabSelect, {
-            Size = UDim2.new(1, -10, 1, 0), Position = UDim2.new(0, 10, 0, 0), BackgroundTransparency = 1,
-            Text = TName, Font = Enum.Font.GothamMedium, TextXAlignment = "Left", TextSize = 10
-        })
-
-        local Container = Create("ScrollingFrame", Containers, {
-            Size = UDim2.new(1, 0, 1, 0), BackgroundTransparency = 1, ScrollBarThickness = 2,
-            AutomaticCanvasSize = "Y", Visible = false
-        })
-        Create("UIListLayout", Container, { Padding = UDim.new(0, 5) })
-        Create("UIPadding", Container, { PaddingTop = UDim.new(0, 10), PaddingLeft = UDim.new(0, 10) })
-
-        TabSelect.MouseButton1Click:Connect(function()
-            for _, v in pairs(Containers:GetChildren()) do if v:IsA("ScrollingFrame") then v.Visible = false end end
-            Container.Visible = true
-        end)
-        
-        -- Mặc định hiện tab đầu tiên nếu chưa có
-        if #Containers:GetChildren() == 1 then Container.Visible = true end
-
-        local Tab = {}
-        function Tab:AddButton(Configs)
-            local BName = Configs.Name or "Button"
-            local Callback = Configs.Callback or function() end
-
-            local ButtonFrame = Create("TextButton", Container, {
-                Size = UDim2.new(1, -20, 0, 30), BackgroundColor3 = Bearlib.Themes.QuangHuy["Color Hub 2"],
-                Text = "", AutoButtonColor = false
-            })
-            Create("UICorner", ButtonFrame, {CornerRadius = UDim.new(0, 6)})
-            
-            local TitleL = Create("TextLabel", ButtonFrame, {
-                Size = UDim2.new(1, -10, 1, 0), Position = UDim2.new(0, 10, 0, 0),
-                BackgroundTransparency = 1, Text = BName, TextXAlignment = "Left",
-                Font = Enum.Font.GothamBold, TextSize = 11
-            })
-
-            ButtonFrame.MouseButton1Click:Connect(Callback)
-        end
-            function Tab:AddSocialLink(Configs)
-        local Title = Configs.Title or "Social"
-        local Desc = Configs.Description or ""
-        local Logo = Configs.Logo or "" 
-        local Link = Configs.Link or ""
-
-        local ContainerFrame = Create("Frame", Container, {
-            Size = UDim2.new(1, -20, 0, 65),
-            BackgroundTransparency = 1,
-            Name = "SocialLink"
-        })
-
-        local MainFrame = Create("Frame", ContainerFrame, {
-            Size = UDim2.new(1, 0, 1, 0),
-            BackgroundColor3 = Bearlib.Themes.QuangHuy["Color Hub 2"], 
-        })
-        Create("UICorner", MainFrame, {CornerRadius = UDim.new(0, 6)})
-
-        local Icon = Create("ImageLabel", MainFrame, {
-            Size = UDim2.new(0, 45, 0, 45),
-            Position = UDim2.new(0, 10, 0.5),
-            AnchorPoint = Vector2.new(0, 0.5),
-            BackgroundTransparency = 1,
-            Image = Logo
-        })
-        Create("UICorner", Icon, {CornerRadius = UDim.new(0, 8)})
-        Create("UIStroke", Icon, {Color = Bearlib.Themes.QuangHuy["Color Stroke"], Thickness = 1, ApplyStrokeMode = "Border"})
-
-        Create("TextLabel", MainFrame, {
-            Size = UDim2.new(1, -140, 0, 20),
-            Position = UDim2.new(0, 65, 0, 12),
-            BackgroundTransparency = 1,
-            Text = Title,
-            Font = Enum.Font.GothamBold,
-            TextColor3 = Bearlib.Themes.QuangHuy["Color Text"],
-            TextSize = 13,
-            TextXAlignment = "Left"
-        })
-
-        Create("TextLabel", MainFrame, {
-            Size = UDim2.new(1, -140, 0, 20),
-            Position = UDim2.new(0, 65, 0, 32),
-            BackgroundTransparency = 1,
-            Text = Desc,
-            Font = Enum.Font.Gotham,
-            TextColor3 = Bearlib.Themes.QuangHuy["Color Dark Text"],
-            TextSize = 11,
-            TextXAlignment = "Left"
-        })
-
-        local CopyBtn = Create("TextButton", MainFrame, {
-            Size = UDim2.new(0, 80, 0, 28),
-            Position = UDim2.new(1, -10, 0.5),
-            AnchorPoint = Vector2.new(1, 0.5),
-            BackgroundColor3 = Color3.fromRGB(0, 255, 100),
-            Text = "Copy Link",
-            Font = Enum.Font.GothamBold,
-            TextColor3 = Color3.fromRGB(0, 0, 0),
-            TextSize = 11
-        })
-        Create("UICorner", CopyBtn, {CornerRadius = UDim.new(0, 6)})
-
-        local ClickDelay = false
-        CopyBtn.MouseButton1Click:Connect(function()
-            setclipboard(Link)
-            if ClickDelay then return end
-            ClickDelay = true
-
-            local OldText = CopyBtn.Text
-            local OldColor = CopyBtn.BackgroundColor3
-
-            CopyBtn.Text = "Copied!"
-            CopyBtn.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-            CopyBtn.TextColor3 = Color3.fromRGB(200, 200, 200)
-
-            task.wait(2)
-
-            CopyBtn.Text = OldText
-            CopyBtn.BackgroundColor3 = OldColor
-            CopyBtn.TextColor3 = Color3.fromRGB(0, 0, 0)
-            ClickDelay = false
-        end)
-    end
-        return Tab
-    end
-    return Window
-end
-
---[[ 
-    PHẦN 2: KEY SYSTEM & LOGIC MENU (ĐÃ CẬP NHẬT AUTO KEY)
-]]
-
--- CẤU HÌNH KEY TẠI ĐÂY
-local KeySettings = {
-    -- Thêm bao nhiêu key tùy thích, ngăn cách bằng dấu phẩy
-RealKey = {"Skira-A21-K48-J12",},  -- Đổi Key của bạn ở đây
-    KeyLink = "Skira-A21-K48-J12", -- Đổi Link lấy key ở đây
-    FileName = "DacCau_Key.txt" -- Tên file lưu key
-}
-
--- Hàm chạy Menu Chính (Giữ nguyên logic cũ của bạn)
-local function RunMenu()
-    local Window = Bearlib:MakeWindow({
-        Title = "Skira Hub | Tổng hợp",
-        SubTitle = "Make by Skira",
-        SaveFolder = "BearConfig.json"
-    })
-    
-    -- Xóa GUI cũ nếu có
-    if game.CoreGui:FindFirstChild("SkiraHub_Toggle_Square") then
-        game.CoreGui:FindFirstChild("SkiraHub_Toggle_Square"):Destroy()
-    end
-
-    -- Tạo nút Toggle
-    local ToggleGui = Instance.new("ScreenGui")
-    ToggleGui.Name = "BearHub_Toggle_Square"
-    ToggleGui.Parent = game.CoreGui
-
-    local ToggleBtn = Instance.new("ImageButton")
-    ToggleBtn.Name = "ToggleButton"
-    ToggleBtn.Size = UDim2.new(0, 25, 0, 25)
-    ToggleBtn.Position = UDim2.new(0.10, 0, 0.10, 0)
-    ToggleBtn.Image = "rbxassetid://125106574805976" 
-    ToggleBtn.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-    ToggleBtn.BackgroundTransparency = 0.5
-    ToggleBtn.Active = true 
-    ToggleBtn.Draggable = true 
-    ToggleBtn.Parent = ToggleGui
-
-    local UICorner = Instance.new("UICorner")
-    UICorner.CornerRadius = UDim.new(0.25, 0) 
-    UICorner.Parent = ToggleBtn
-
-    local UIStroke = Instance.new("UIStroke")
-    UIStroke.Thickness = 1
-    UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-    UIStroke.Parent = ToggleBtn
-    
-    local TweenService = game:GetService("TweenService")
-    local rainbowInfo = TweenInfo.new(2, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, -1, true)
-    local rainbowTween = TweenService:Create(UIStroke, rainbowInfo, {Color = Color3.fromHSV(1, 1, 1)})
-    rainbowTween:Play()
-
-    ToggleBtn.MouseButton1Click:Connect(function()
-        pcall(function()
-            Window:Minimize()
-        end)
-    end)
-
-    ------ Tabs
-    local Tab1o = Window:MakeTab({ Title = "PvP", Icon = "Sword" })
-    local Tab2o = Window:MakeTab({ Title = "Farm", Icon = "rbxassetid://10709769508" })
-    local Tab3o = Window:MakeTab({ Title = "Redz face", Icon = "rbxassetid://10734944444" })
-    local Tab4o = Window:MakeTab({ Title = "Banana fake", Icon = "rbxassetid://10709797985" })
-    local Tab5o = Window:MakeTab({ Title = "Xeter hub", Icon = "rbxassetid://10709797985" })
-    local Tab6o = Window:MakeTab({ Title = "Rubu", Icon = "rbxassetid://10709797985" })
-    local Tab7o = Window:MakeTab({ Title = "Attack", Icon = "rbxassetid://10709797985" })
-    local Tab8o = Window:MakeTab({ Title = "Shop", Icon = "rbxassetid://10709797985" })
-    local Tab9o = Window:MakeTab({ Title = "Auto bounty", Icon = "rbxassetid://10709797985" })
-    local Tab10o = Window:MakeTab({ Title = "Auto fruit", Icon = "rbxassetid://10709797985" })
-    local Tab11o = Window:MakeTab({ Title = "Auto chest", Icon = "rbxassetid://10709797985" })
-    local Tab12o = Window:MakeTab({ Title = "Hop sever", Icon = "rbxassetid://10709797985" })
-    local Tab13o = Window:MakeTab({ Title = "Settings", Icon = "rbxassetid://1848354536" })
-    local TabMusic = Window:MakeTab({ Title = "Nhạc (Music)", Icon = "rbxassetid://4483345998" })
-    local CurrentSound = nil
-    local Tab6o = Window:MakeTab({ Title = "Update", Icon = "rbxassetid://10723407335" })
-Tab1:AddSection("PvP")
-
+local bearlib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Huylovemy/Bearlid/refs/heads/Bearlib/Bearlib.txt"))()
+local Window = bearlib:MakeWindow({
+    Title = "Skira hub Freemium |Tổng Hợp",
+    SubTitle = "Chúc mừng Tết",
+    SaveFolder = false,
+    Image = "125106574805976"
+})
+------ Tab
+local Tab0o = Window:MakeTab({
+    Title = "info",
+    Icon = "rbxassetid://10723415903"
+})
+local Tab1o = Window:MakeTab({
+    Title = "Blox fruit",
+    Icon = "rbxassetid://10709761889"
+})
+local Tab2o = Window:MakeTab({
+    Title = "Fix Lag",
+    Icon = "rbxassetid://10723375890"
+})
+local Tab3o = Window:MakeTab({
+    Title = "99 night",
+    Icon = "rbxassetid://10734897102"
+})
+local Tab4o = Window:MakeTab({
+    Title = "Sever",
+    Icon = "rbxassetid://10734949856"
+})
+local Tab5o = Window:MakeTab({
+    Title = "tsunami for brainrots",
+    Icon = "rbxassetid://10747376931"
+})
+local Tab6o = Window:MakeTab({
+    Title = "Steal a brainrot",
+    Icon = "rbxassetid://10734921935"
+})
+local Tab7o = Window:MakeTab({
+    Title = "Fisch",
+    Icon = "rbxassetid://10734941354"
+})
+local Tab8o = Window:MakeTab({
+    Title = "Doors",
+    Icon = "rbxassetid://10723407389"
+})
+local Tab9o = Window:MakeTab({
+    Title = "The forge",
+    Icon = "rbxassetid://10723405360"
+})
+local Tab10o = Window:MakeTab({
+    Title = "Plants vs brainrot",
+    Icon = "rbxassetid://10747363016"
+})
+local Tab11o = Window:MakeTab({
+    Title = "Zombie attacks",
+    Icon = "rbxassetid://10723396107"
+})
+local Tab12o = Window:MakeTab({
+    Title = "bee swarm simulator",
+    Icon = "rbxassetid://10747830374"
+})
+local Tab13o = Window:MakeTab({
+    Title = "King legacy",
+    Icon = "rbxassetid://10709818626"
+})
+local Tab20o = Window:MakeTab({
+    Title = "Khác",
+    Icon = "rbxassetid://10734887072"
+})
+-----Trong tab
+Tab1o:AddSection({"PvP"})
 Tab1o:AddButton({
      Name = "CentuDox.xyz",
     Callback = function() 
@@ -405,95 +123,103 @@ Tab1o:AddButton({
  loadstring(Game:HttpGet("https://raw.githubusercontent.com/VanThanhIOS/OniiChanVanThanhIOS/refs/heads/main/oniichanpakavanthanhios"))()
   end
   })  
-Tab2:AddSection("Script Farm")
-
-Tab2o:AddButton({
+Tab1o:AddSection({"Farm"})
+Tab1o:AddButton({
      Name = "Rise-evo",
     Callback = function() 
  loadstring(game:HttpGet("https://rise-evo.xyz/apiv3/main.lua"))()
   end
   })  
-Tab2o:AddButton({
+Tab1o:AddButton({
      Name = "Quan Tum Onyx",
     Callback = function() 
        loadstring(game:HttpGet("https://raw.githubusercontent.com/flazhy/QuantumOnyx/refs/heads/main/QuantumOnyx.lua"))()
   end
   })
-Tab2o:AddButton({
+Tab1o:AddButton({
      Name = "Teddy Hud",
     Callback = function()
       repeat wait() until game:IsLoaded() and game.Players.LocalPlayer
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Teddyseetink/Haidepzai/refs/heads/main/TeddyHub.lua"))()
   end
   })
-Tab2o:AddButton({
+Tab1o:AddButton({
      Name = "Anhdepzai hub",
     Callback = function() 
       loadstring(game:HttpGet("https://raw.githubusercontent.com/AnDepZaiHub/AnDepZaiHubBeta/refs/heads/main/AnDepZaiHubBeta.lua"))()
   end
   })
-Tab2o:AddButton({
+Tab1o:AddButton({
      Name = "Leaf hub",
     Callback = function() 
         repeat task.wait() until game:IsLoaded() and game.Players.LocalPlayer
         loadstring(game:HttpGet("https://github.com/LeafHubAcademy/LeafHub/raw/refs/heads/main/Leaf.lua"))()
     end
   })
-Tab2o:AddButton({
+Tab1o:AddButton({
      Name = "Aurora",
     Callback = function() 
        loadstring(game:HttpGet("https://raw.githubusercontent.com/Jadelly261/BloxFruits/main/Aurora"))()
   end
   })
-Tab2o:AddButton({
+Tab1o:AddButton({
      Name = "NHT X hub",
     Callback = function() 
  loadstring(game:HttpGet("https://raw.githubusercontent.com/trongdeptraihucscript/Main/refs/heads/main/Hoangtrongdepzai.lua"))()
   end
   })  
-Tab2o:AddButton({
+Tab1o:AddButton({
      Name = "Bear hub",
     Callback = function() 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Huylovemy/Huyscript/refs/heads/main/newscript.txt"))()
   end
   })  
-Tab2o:AddButton({
+Tab1o:AddButton({
      Name = "Night hud",
     Callback = function()
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/WhiteX1208/Scripts/refs/heads/main/BF-Beta.lua"))()
   end
   })
-Tab2o:AddButton({
+Tab1o:AddButton({
      Name = "Tuấn Anh IOS",
     Callback = function()
 	  loadstring(game:HttpGet("https://raw.githubusercontent.com/AnhTuanDzai-Hub/TuanAnhIOS/refs/heads/main/TuanAnhIOS.lua"))()
   end
   })
-Tab3o:AddButton({
+Tab1o:AddSection({"Redz fake"})
+Tab1o:AddButton({
      Name = "Gravity Hud",
     Callback = function() 
      loadstring(game:HttpGet("https://raw.githubusercontent.com/Devs-GravityHub/BloxFruit/refs/heads/main/Main.lua "))()
   end
   })
-Tab3o:AddButton({
+Tab1o:AddButton({
      Name = "Blue X Hud",
     Callback = function()
 	  loadstring(game:HttpGet("https://raw.githubusercontent.com/Dev-BlueX/BlueX-Hub/refs/heads/main/Main.lua"))()
   end
   })
-Tab3o:AddButton({
+Tab1o:AddButton({
+     Name = "Dragon hub",
+    Callback = function()
+    repeat wait() until game:IsLoaded() and game.Players.LocalPlayer
+getgenv().team = "Pirates" -- Pirates or Marines
+loadstring(game:HttpGet("https://raw.githubusercontent.com/dragonhubdev/dragonwitheveryone/refs/heads/main/Main-BF.lua"))()
+  end
+  })
+Tab1o:AddButton({
      Name = "King Rùa",
     Callback = function() 
        loadstring(game:HttpGet("https://raw.githubusercontent.com/shinichi-dz/phucshinyeuem/refs/heads/main/KingRuaHub.lua"))()
   end
   })
-Tab3o:AddButton({
+Tab1o:AddButton({
      Name = "Trẩu V8",
     Callback = function()
 	  loadstring(game:HttpGet("https://raw.githubusercontent.com/traurobloxdeptrai/traukhoaito/refs/heads/main/traurobloxv8.lua"))()
   end
   })
-Tab3o:AddButton({
+Tab1o:AddButton({
      Name = "Bacon hub",
     Callback = function() 
     repeat wait() until game:IsLoaded() and game.Players.LocalPlayer
@@ -501,62 +227,64 @@ getgenv().team = "Pirates" -- Pirates or Marines
 loadstring(game:HttpGet("https://raw.githubusercontent.com/vinh129150/hack/refs/heads/main/BaconHub.lua"))()
   end
   })
-Tab3o:AddButton({
+Tab1o:AddButton({
      Name = "Đạt THG V3",
     Callback = function() 
        getgenv().Team = "Marines"
        loadstring(game:HttpGet("https://raw.githubusercontent.com/LuaCrack/DatThg/refs/heads/main/DatThgV3Eng"))()
   end
   })
-Tab3o:AddButton({
+Tab1o:AddButton({
      Name = "Đạt THG V4",
     Callback = function() 
      loadstring(game:HttpGet("https://github.com/LuaCrack/DatThg/raw/refs/heads/main/DatThgVnV4"))()
   end
   })
-Tab3o:AddButton({
+Tab1o:AddButton({
      Name = "Bear hub",
     Callback = function() 
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Huylovemy/Bearhudz/refs/heads/main/Bearhud.lua"))()
   end
   })
-Tab3o:AddButton({
+Tab1o:AddButton({
      Name = "Redz",
     Callback = function() 
  loadstring(game:HttpGet("https://raw.githubusercontent.com/huy384/redzHub/refs/heads/main/redzHub.lua"))()
   end
   })  
-Tab3o:AddButton({
+Tab1o:AddButton({
      Name = "Nana",
     Callback = function() 
  loadstring(game:HttpGet("https://raw.githubusercontent.com/NaNacuti/nanabeo/refs/heads/main/NaNaTVHub.lua"))()
   end
   })  
-Tab4o:AddButton({
+Tab1o:AddSection({"Banana fake"})
+Tab1o:AddButton({
      Name = "Zis chuối EEG",
     Callback = function()
       loadstring(game:HttpGet("https://raw.githubusercontent.com/LuaCrack/Zis/refs/heads/main/ZisChuoiEng"))()
   end
   })
-Tab4o:AddButton({
+Tab1o:AddButton({
      Name = "Banana KaiTom",
     Callback = function() 
         loadstring(game:HttpGet("https://raw.githubusercontent.com/kaitofixlag-hub/Scriptkaito/refs/heads/main/bananahubkaito.txt"))()
   end
   })
-Tab4o:AddButton({
+Tab1o:AddButton({
      Name = "Banana Chiriku",
     Callback = function() 
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Chiriku2013/BananaCatHub/refs/heads/main/BananaCatHub.lua"))()
   end
   })
-Tab4o:AddButton({
+Tab1o:AddButton({
      Name = "Abacaxi Hub",
     Callback = function() 
     loadstring(game:HttpGet("https://raw.githubusercontent.com/real33ms/BloxFruits/refs/heads/main/AbacaxiHubOfc.lua"))()
   end
   })
-Tab5o:AddButton({
+Tab1o:AddSection({"Xeter"})
+Tab1o:AddButton({
      Name = "Xeter V1",
     Callback = function()
 	  getgenv().Version = "V1"
@@ -564,7 +292,7 @@ getgenv().Team = "Marines"
 loadstring(game:HttpGet("https://raw.githubusercontent.com/TlDinhKhoi/Xeter/refs/heads/main/Main.lua"))()
   end
   })
-Tab5o:AddButton({
+Tab1o:AddButton({
      Name = "Xeter V2",
     Callback = function()
 	  getgenv().Version = "V2"
@@ -572,7 +300,7 @@ getgenv().Team = "Marines"
 loadstring(game:HttpGet("https://raw.githubusercontent.com/TlDinhKhoi/Xeter/refs/heads/main/Main.lua"))()
   end
   })
-Tab5o:AddButton({
+Tab1o:AddButton({
      Name = "Xeter V3",
     Callback = function()
 	  getgenv().Version = "V3"
@@ -580,7 +308,7 @@ getgenv().Team = "Marines"
 loadstring(game:HttpGet("https://raw.githubusercontent.com/TlDinhKhoi/Xeter/refs/heads/main/Main.lua"))()
   end
   })
-Tab5o:AddButton({
+Tab1o:AddButton({
      Name = "Xeter V4",
     Callback = function()
 	  getgenv().Version = "V4"
@@ -588,38 +316,42 @@ getgenv().Team = "Marines"
 loadstring(game:HttpGet("https://raw.githubusercontent.com/TlDinhKhoi/Xeter/refs/heads/main/Main.lua"))()
   end
   })
-Tab6o:AddButton({
+Tab1o:AddSection({"Farm"})
+Tab1o:AddButton({
      Name = "RubuV5",
     Callback = function() 
        loadstring(game:HttpGet("https://raw.githubusercontent.com/Bubu2k/Rubutv/refs/heads/main/rubuhubv5.lua"))()
   end
   })
-Tab6o:AddButton({
+Tab1o:AddButton({
      Name = "RubuV6",
     Callback = function() 
      repeat wait() until game:IsLoaded() and game.Players.LocalPlayer
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Teddyseetink/RUBU/refs/heads/main/RUBUV6.lua"))()
   end
   })
-Tab7o:AddButton({
+Tab1o:AddSection({"Attak m1"})
+Tab1o:AddButton({
      Name = "V1",
     Callback = function() 
     loadstring(game:HttpGet("https://raw.githubusercontent.com/Huylovemy/Attack-/refs/heads/main/Aura"))()
   end
   })
-Tab7o:AddButton({
+Tab1o:AddButton({
      Name = "V2",
     Callback = function() 
    loadstring(game:HttpGet("https://pandadevelopment.net/virtual/file/e9c206fd76482ee2"))()
   end
   })
-Tab8o:AddButton({
+Tab1o:AddSection({"Shop"})
+Tab1o:AddButton({
      Name = "Bear hub",
     Callback = function() 
         loadstring(game:HttpGet("https://luacrack.site/index.php/Quanghuy/raw/Melle"))()
   end
   })
-Tab9o:AddButton({
+Tab1o:AddSection({"Auto bounty"})
+Tab1o:AddButton({
      Name = "3TOC(Melle+sword)",
     Callback = function() 
         repeat task.wait() until game:IsLoaded() and game.Players.LocalPlayer
@@ -752,19 +484,21 @@ getgenv().Config = {
 loadstring(game:HttpGet("https://raw.githubusercontent.com/LuaAnarchist/3TOC-HUB/refs/heads/main/Auto_Bounty.luau"))()
   end
   })
-Tab10o:AddButton({
+Tab1o:AddSection({"Auto Lụm Fruit"})
+Tab1o:AddButton({
      Name = "Void hub",
     Callback = function() 
         loadstring(game:HttpGet("https://raw.githubusercontent.com/VoidDeveloper67/VoidHub/refs/heads/main/FruitFarmer"))()
   end
   })
-Tab10o:AddButton({
+Tab1o:AddButton({
      Name = "Marit Hub",
     Callback = function() 
         loadstring(game:HttpGet("https://raw.githubusercontent.com/marisdeptrai/Script-Free/main/FruitFinder.lua"))()
   end
   })
-Tab11o:AddButton({
+Tab1o:AddSection({"Farm chest"})
+Tab1o:AddButton({
      Name = "TrongNguyen hub",
     Callback = function()
       repeat wait() until game:IsLoaded() and game.Players.LocalPlayer
@@ -772,26 +506,27 @@ Tab11o:AddButton({
 	  loadstring(game:HttpGet("https://raw.githubusercontent.com/trongdeptraihucscript/Main/refs/heads/main/TN-Tp-Chest.lua"))()
   end
   })
-Tab12o:AddButton({
+Tab1o:AddSection({"Hop sever"})
+Tab1o:AddButton({
      Name = "Teddy",
     Callback = function() 
        repeat task.wait() until game:IsLoaded() and game:GetService("Players") and game.Players.LocalPlayer and game.Players.LocalPlayer:FindFirstChild("PlayerGui")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Teddyseetink/Haidepzai/refs/heads/main/TEDDYHUB-FREEMIUM"))()
   end
   })
-Tab12o:AddButton({
+Tab1o:AddButton({
      Name = "Night hub v1",
     Callback = function() 
         loadstring(game:HttpGet("https://github.com/WhiteX1208/Scripts/blob/main/HopScript.luau?raw=true"))()
   end
   })
-Tab12o:AddButton({
+Tab1o:AddButton({
      Name = "Night hub v2",
     Callback = function() 
        loadstring(game:HttpGet("https://raw.githubusercontent.com/WhiteX1208/Scripts/refs/heads/main/HopScript.luau"))()
   end
   })
-Tab12o:AddButton({
+Tab1o:AddButton({
      Name = "Bacon hub",
     Callback = function() 
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer
@@ -799,253 +534,740 @@ getgenv().team = "Pirates" -- Pirates or Marines
 loadstring(game:HttpGet("https://raw.githubusercontent.com/vinh129150/hack/refs/heads/main/HopBoss.lua"))()
   end
   })
-Tab12o:AddButton({
+Tab1o:AddButton({
      Name = "Rise-Evo",
     Callback = function() 
     loadstring(game:HttpGet("https://rise-evo.xyz/apiv3/ServerFinder.lua"))()
   end
   })
-Tab13o:AddToggle({
-     Name = "Fix lag 50%",
-    Callback = function() 
-    
-  end
-  })
-Tab13o:AddToggle({
-     Name = "Fast attack",
+Tab2o:AddSection({"Fix Lag"})
+Tab2o:AddButton({
+     Name = "FixLagV2",
     Callback = function()
-    
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/TIKTOK-BOYCHOIGAME/PH-ICH-U/refs/heads/main/FIXLAGV2.BOYCHOIGAME"))()
   end
   })
-     -- 1. NÚT DỪNG NHẠC
-    TabMusic:AddButton({ Name = "🔇 Dừng Nhạc (Stop)", Callback = function()
-        if CurrentSound then 
-            CurrentSound:Stop() 
-            CurrentSound:Destroy() 
-            CurrentSound = nil 
+Tab2o:AddButton({
+     Name = "Duca Roblox",
+    Callback = function()
+     loadstring(game:HttpGet("https://raw.githubusercontent.com/minhducnek/DucaRoblox/refs/heads/main/FixLag.lua"))()
+  end
+  })
+Tab2o:AddSection({"Xoá fog (sương mù)"})
+Tab2o:AddButton({
+     Name = "Xoá fog",
+    Callback = function()
+local Lighting = game:GetService("Lighting")
+
+-- 1. Xử lý sương mù cổ điển (Legacy Fog)
+Lighting.FogStart = 0
+Lighting.FogEnd = 9e9 -- Đặt khoảng cách kết thúc sương mù cực lớn (9 tỷ)
+
+-- 2. Xử lý Atmosphere (Hiệu ứng khí quyển mới)
+for _, v in pairs(Lighting:GetChildren()) do
+	if v:IsA("Atmosphere") then
+		v:Destroy() -- Xóa luôn hiệu ứng khí quyển
+		-- Hoặc dùng: v.Density = 0 (nếu không muốn xóa hẳn)
+	end
+end
+
+-- 3. Tăng độ sáng (Tùy chọn, giúp nhìn rõ hơn vào ban đêm)
+Lighting.Brightness = 2
+Lighting.ClockTime = 14 -- Chỉnh thời gian sang ban ngày
+  end
+  })
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local FPS_GUI = nil
+
+local function MakeDraggable(gui)
+    local dragging
+    local dragInput
+    local dragStart
+    local startPos
+
+    local function update(input)
+        local delta = input.Position - dragStart
+        gui.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+    end
+
+    gui.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            dragging = true
+            dragStart = input.Position
+            startPos = gui.Position
+
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    dragging = false
+                end
+            end)
         end
-    end })
+    end)
 
-    -- 2. NÚT NHẬP ID TÙY Ý (Sẽ hiện 1 bảng nhỏ để nhập)
-    TabMusic:AddButton({ Name = "🎵 Nhập ID Nhạc (Custom)", Callback = function()
-        -- Tạo GUI nhập ID nhanh
-        if game.CoreGui:FindFirstChild("MusicPopup") then game.CoreGui.MusicPopup:Destroy() end
-        local SG = Instance.new("ScreenGui", game.CoreGui)
-        SG.Name = "MusicPopup"
-        
-        local Fr = Instance.new("Frame", SG)
-        Fr.Size = UDim2.new(0, 300, 0, 140)
-        Fr.Position = UDim2.new(0.5, -150, 0.5, -70)
-        Fr.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-        Fr.BorderSizePixel = 0
-        Fr.Active = true; Fr.Draggable = true
-        Instance.new("UICorner", Fr).CornerRadius = UDim.new(0, 8)
-        
-        -- Viền đẹp
-        local Stroke = Instance.new("UIStroke", Fr)
-        Stroke.Color = Color3.fromRGB(255, 255, 255)
-        Stroke.Thickness = 1
-        
-        local Title = Instance.new("TextLabel", Fr)
-        Title.Text = "Nhập ID Nhạc (Roblox Audio)"
-        Title.Size = UDim2.new(1, 0, 0, 30)
-        Title.TextColor3 = Color3.fromRGB(255,255,255)
-        Title.BackgroundTransparency = 1
-        Title.Font = Enum.Font.GothamBold; Title.TextSize = 14
+    gui.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+            dragInput = input
+        end
+    end)
 
-        local Box = Instance.new("TextBox", Fr)
-        Box.Size = UDim2.new(0.8, 0, 0, 40)
-        Box.Position = UDim2.new(0.1, 0, 0.3, 0)
-        Box.PlaceholderText = "Dán ID vào đây..."
-        Box.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-        Box.TextColor3 = Color3.fromRGB(255,255,255)
-        Box.Font = Enum.Font.Gotham
-        Instance.new("UICorner", Box)
+    UserInputService.InputChanged:Connect(function(input)
+        if input == dragInput and dragging then
+            update(input)
+        end
+    end)
+end
+Tab2o:AddSection({"FPS"})
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local FPS_GUI = nil
 
-        local PlayBtn = Instance.new("TextButton", Fr)
-        PlayBtn.Size = UDim2.new(0.4, 0, 0, 30)
-        PlayBtn.Position = UDim2.new(0.3, 0, 0.7, 0)
-        PlayBtn.Text = "PHÁT (PLAY)"
-        PlayBtn.BackgroundColor3 = Color3.fromRGB(0, 255, 100)
-        PlayBtn.Font = Enum.Font.GothamBold
-        Instance.new("UICorner", PlayBtn)
+-- Hàm hỗ trợ kéo thả (Draggable)
+local function MakeDraggable(gui)
+    local dragging, dragInput, dragStart, startPos
+    local function update(input)
+        local delta = input.Position - dragStart
+        gui.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+    end
+    gui.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            dragging = true
+            dragStart = input.Position
+            startPos = gui.Position
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then dragging = false end
+            end)
+        end
+    end)
+    gui.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+            dragInput = input
+        end
+    end)
+    UserInputService.InputChanged:Connect(function(input)
+        if input == dragInput and dragging then update(input) end
+    end)
+end
 
-        local Close = Instance.new("TextButton", Fr)
-        Close.Size = UDim2.new(0, 25, 0, 25)
-        Close.Position = UDim2.new(1, -30, 0, 5)
-        Close.Text = "X"
-        Close.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
-        Instance.new("UICorner", Close)
+-- Phần Toggle trong Tab
+pcall(function()
+    Tab2o:AddToggle({
+        Name = "Hiện FPS trên màn hình",
+        Default = false,
+        Callback = function(Value)
+            if Value then
+                -- KHI BẬT
+                if not FPS_GUI then
+                    FPS_GUI = Instance.new("ScreenGui")
+                    FPS_GUI.Name = "FPS_Overlay_System"
+                    FPS_GUI.Parent = game:GetService("CoreGui") -- Hoặc game.Players.LocalPlayer.PlayerGui
+                    
+                    local Label = Instance.new("TextLabel")
+                    Label.Parent = FPS_GUI
+                    
+                    -- CHỈNH SỬA GIAO DIỆN Ở ĐÂY
+                    Label.BackgroundTransparency = 1 -- Xóa khung nền (Trong suốt)
+                    Label.Position = UDim2.new(0.25, 0, 0, 0) -- Vị trí: Cách lề trái 25% (Né nút chat)
+                    Label.Size = UDim2.new(0, 100, 0, 30)
+                    Label.Font = Enum.Font.GothamBold
+                    Label.TextColor3 = Color3.fromRGB(255, 255, 255)
+                    Label.TextStrokeTransparency = 0.5 -- Thêm viền chữ đen để dễ nhìn
+                    Label.TextSize = 16 -- Tăng kích thước chữ một chút
+                    Label.BorderSizePixel = 0
+                    
+                    MakeDraggable(Label) -- Cho phép kéo thả vị trí
 
-        Close.MouseButton1Click:Connect(function() SG:Destroy() end)
-        
-        PlayBtn.MouseButton1Click:Connect(function()
-            local id = Box.Text
-            -- Xử lý ID nếu người dùng copy cả link
-            if string.find(id, "rbxassetid://") then
-                -- Đã đúng định dạng
-            elseif tonumber(id) then
-                id = "rbxassetid://" .. id
+                    -- Logic cập nhật FPS (3s một lần)
+                    local lastUpdate = 0
+                    RunService.RenderStepped:Connect(function(deltaTime)
+                        if FPS_GUI and FPS_GUI.Enabled then
+                            if tick() - lastUpdate >= 3 then
+                                local fps = math.floor(1 / deltaTime)
+                                Label.Text = "FPS: " .. fps
+                                
+                                -- Đổi màu chữ theo độ mượt
+                                if fps >= 50 then
+                                    Label.TextColor3 = Color3.fromRGB(0, 255, 127) -- Xanh
+                                elseif fps >= 30 then
+                                    Label.TextColor3 = Color3.fromRGB(255, 215, 0) -- Vàng
+                                else
+                                    Label.TextColor3 = Color3.fromRGB(255, 69, 58) -- Đỏ
+                                end
+                                lastUpdate = tick()
+                            end
+                        end
+                    end)
+                end
+                FPS_GUI.Enabled = true
+            else
+                -- KHI TẮT
+                if FPS_GUI then
+                    FPS_GUI.Enabled = false
+                end
             end
-            
-            if CurrentSound then CurrentSound:Stop() CurrentSound:Destroy() end
-            CurrentSound = Instance.new("Sound", workspace)
-            CurrentSound.SoundId = id
-            CurrentSound.Volume = 2
-            CurrentSound.Looped = true
-            CurrentSound:Play()
-            SG:Destroy()
-        end)
-    end })
+        end
+    })
+end)
+Tab2o:AddButton({
+     Name = "Fix Lag Nhẹ (Giữ hình ảnh đẹp)",
+    Callback = function()
+  local Lighting = game:GetService("Lighting")
+local Terrain = game:GetService("Workspace").Terrain
 
-    -- 3. CÁC BÀI NHẠC CÓ SẴN (Bấm là nghe)
-    TabMusic:AddButton({ Name = "🔥 Phonk Gaming (Mạnh)", Callback = function()
-        if CurrentSound then CurrentSound:Stop() CurrentSound:Destroy() end
-        CurrentSound = Instance.new("Sound", workspace)
-        CurrentSound.SoundId = "rbxassetid://1837879082" -- ID Phonk
-        CurrentSound.Looped = true; CurrentSound:Play()
-    end })
+-- 1. Tắt Bóng Đổ (Global Shadows)
+-- Đây là thứ nặng nhất nhưng tắt đi game vẫn nhìn rất ổn
+Lighting.GlobalShadows = false
+Lighting.FogEnd = 9e9 -- Xóa sương mù để nhìn xa hơn
 
-    TabMusic:AddButton({ Name = "🌸 Chill Lofi (Nhẹ)", Callback = function()
-        if CurrentSound then CurrentSound:Stop() CurrentSound:Destroy() end
-        CurrentSound = Instance.new("Sound", workspace)
-        CurrentSound.SoundId = "rbxassetid://9048375035" -- ID Chill
-        CurrentSound.Looped = true; CurrentSound:Play()
-    end })
-
-    TabMusic:AddButton({ Name = "😂 Nhạc Xiếc (Troll)", Callback = function()
-        if CurrentSound then CurrentSound:Stop() CurrentSound:Destroy() end
-        CurrentSound = Instance.new("Sound", workspace)
-        CurrentSound.SoundId = "rbxassetid://1848354536" 
-        CurrentSound.Looped = true; CurrentSound:Play()
-    end })
-    
-    -- Tab 6: Update
-    Tab6o:AddButton({ Name = "Tb Update", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/Huylovemy/Redz/refs/heads/main/Tb"))() end })
+-- 2. Tắt các hiệu ứng ánh sáng "lòe loẹt" (Post Processing)
+-- Giúp giảm tải cho GPU xử lý hiệu ứng làm mờ, chói nắng
+for _, v in pairs(Lighting:GetChildren()) do
+    if v:IsA("PostEffect") or v:IsA("BlurEffect") or v:IsA("SunRaysEffect") or v:IsA("BloomEffect") or v:IsA("DepthOfFieldEffect") then
+        v.Enabled = false
+    end
 end
-    
--- === KEY SYSTEM GIAO DIỆN & LOGIC ===
-local function StartKeySystem()
-    -- [AUTO KEY] Kiểm tra key đã lưu trước đó
-    if isfile(KeySettings.FileName) then
-        local SavedKey = readfile(KeySettings.FileName)
-        if table.find(KeySettings.RealKey, SavedKey) then
-            -- Nếu key đúng, bỏ qua bảng nhập và chạy menu luôn
-            RunMenu()
-            return
-        end
+
+-- 3. Tối ưu nhẹ mặt nước (Water)
+-- Chỉ tắt phản chiếu (bóng gương) trên nước, vẫn giữ sóng nước để nhìn cho thật
+Terrain.WaterReflectance = 0 
+-- Terrain.WaterWaveSize = 0 -- (Bỏ ghi chú dòng này nếu muốn nước phẳng lì)
+
+-- 4. Tối ưu cấu hình Render
+settings().Rendering.QualityLevel = "Level01" -- Đưa render về mức thấp nhất nhưng không can thiệp texture
+
+print("Đã kích hoạt Fix Lag Nhẹ: Giữ nguyên đồ họa, chỉ tắt bóng!")
+game.StarterGui:SetCore("SendNotification", {
+    Title = "Fix Lag Lite",
+    Text = "Đã tắt bóng đổ & hiệu ứng thừa!",
+    Duration = 3,
+})
+  end
+  })
+Tab2o:AddButton({
+     Name = "FPS Boost Siêu Cấp (Potato Mode)",
+    Callback = function()
+      -- Bắt đầu Script
+local decalsyeeted = true -- Đặt thành true để xóa luôn Texture/Decal (Giúp game mượt hơn nữa)
+local g = game
+local w = g.Workspace
+local l = g.Lighting
+local t = w.Terrain
+
+-- 1. Tối ưu hóa Địa hình & Ánh sáng
+t.WaterWaveSize = 0
+t.WaterReflectance = 0
+t.WaterTransparency = 0
+l.GlobalShadows = false
+l.FogEnd = 9e9
+l.Brightness = 0
+settings().Rendering.QualityLevel = "Level01"
+
+-- 2. Hàm tối ưu hóa từng vật thể
+local function ClearTextures(v)
+    -- Nếu là Part/Mesh: Chuyển về nhựa trơn, tắt bóng
+    if v:IsA("BasePart") then
+        v.Material = Enum.Material.SmoothPlastic
+        v.Reflectance = 0
+        v.CastShadow = false
     end
 
-    -- Xóa GUI Key cũ nếu có
-    if game.CoreGui:FindFirstChild("BearHubKeySystem") then
-        game.CoreGui:FindFirstChild("BearHubKeySystem"):Destroy()
+    -- Nếu là hiệu ứng hạt (Lửa, Khói, Pháo hoa...): Tắt hoặc Xóa
+    if v:IsA("ParticleEmitter") or v:IsA("Trail") then
+        v.Lifetime = NumberRange.new(0)
+    end
+    if v:IsA("Explosion") or v:IsA("Fire") or v:IsA("Smoke") or v:IsA("Sparkles") then
+        v.Enabled = false
     end
 
-    local KeyGui = Instance.new("ScreenGui")
-    KeyGui.Name = "BearHubKeySystem"
-    KeyGui.Parent = game.CoreGui
+    -- Nếu là Decal/Texture (Hình dán): Xóa nếu biến decalsyeeted = true
+    if decalsyeeted and (v:IsA("Decal") or v:IsA("Texture")) then 
+        v:Destroy()
+    end
+end
 
-    local MainFrame = Instance.new("Frame")
-    MainFrame.Name = "MainFrame"
-    MainFrame.Size = UDim2.new(0, 350, 0, 180)
-    MainFrame.Position = UDim2.new(0.5, -175, 0.5, -90)
-    MainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-    MainFrame.BorderSizePixel = 0
-    MainFrame.Active = true
-    MainFrame.Draggable = true
-    MainFrame.Parent = KeyGui
-
-    -- Trang trí
-    local UICorner = Instance.new("UICorner")
-    UICorner.CornerRadius = UDim.new(0, 8)
-    UICorner.Parent = MainFrame
-    
-    local UIStroke = Instance.new("UIStroke")
-    UIStroke.Color = Color3.fromRGB(255, 255, 255)
-    UIStroke.Thickness = 1
-    UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-    UIStroke.Parent = MainFrame
-
-    local Title = Instance.new("TextLabel")
-    Title.Text = "Skira Hub - Key System"
-    Title.Size = UDim2.new(1, 0, 0, 40)
-    Title.BackgroundTransparency = 1
-    Title.TextColor3 = Color3.fromRGB(255, 255, 255)
-    Title.Font = Enum.Font.GothamBold
-    Title.TextSize = 18
-    Title.Parent = MainFrame
-
-    local KeyInput = Instance.new("TextBox")
-    KeyInput.PlaceholderText = "Nhập Key vào đây..."
-    KeyInput.Text = ""
-    KeyInput.Size = UDim2.new(0.8, 0, 0, 35)
-    KeyInput.Position = UDim2.new(0.1, 0, 0.35, 0)
-    KeyInput.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-    KeyInput.TextColor3 = Color3.fromRGB(255, 255, 255)
-    KeyInput.Font = Enum.Font.Gotham
-    KeyInput.TextSize = 14
-    KeyInput.Parent = MainFrame
-    Instance.new("UICorner", KeyInput).CornerRadius = UDim.new(0, 6)
-
-    local CheckBtn = Instance.new("TextButton")
-    CheckBtn.Text = "Kiểm tra Key"
-    CheckBtn.Size = UDim2.new(0.35, 0, 0, 30)
-    CheckBtn.Position = UDim2.new(0.1, 0, 0.65, 0)
-    CheckBtn.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    CheckBtn.TextColor3 = Color3.fromRGB(0, 0, 0)
-    CheckBtn.Font = Enum.Font.GothamBold
-    CheckBtn.TextSize = 12
-    CheckBtn.Parent = MainFrame
-    Instance.new("UICorner", CheckBtn).CornerRadius = UDim.new(0, 6)
-
-    local GetKeyBtn = Instance.new("TextButton")
-    GetKeyBtn.Text = "Lấy Key (Copy Link)"
-    GetKeyBtn.Size = UDim2.new(0.35, 0, 0, 30)
-    GetKeyBtn.Position = UDim2.new(0.55, 0, 0.65, 0)
-    GetKeyBtn.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-    GetKeyBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-    GetKeyBtn.Font = Enum.Font.GothamBold
-    GetKeyBtn.TextSize = 12
-    GetKeyBtn.Parent = MainFrame
-    Instance.new("UICorner", GetKeyBtn).CornerRadius = UDim.new(0, 6)
-
-    local StatusText = Instance.new("TextLabel")
-    StatusText.Text = ""
-    StatusText.Size = UDim2.new(1, 0, 0, 20)
-    StatusText.Position = UDim2.new(0, 0, 0.85, 0)
-    StatusText.BackgroundTransparency = 1
-    StatusText.TextColor3 = Color3.fromRGB(255, 100, 100)
-    StatusText.Font = Enum.Font.Gotham
-    StatusText.TextSize = 12
-    StatusText.Parent = MainFrame
-
-    -- Logic Nút
-    GetKeyBtn.MouseButton1Click:Connect(function()
-        setclipboard(KeySettings.KeyLink)
-        StatusText.Text = "Đã copy link key vào bộ nhớ đệm!"
-        StatusText.TextColor3 = Color3.fromRGB(100, 255, 100)
-    end)
-
-    CheckBtn.MouseButton1Click:Connect(function()
-        if table.find(KeySettings.RealKey, KeyInput.Text) then
-            -- [AUTO KEY] Lưu Key khi nhập đúng
-            writefile(KeySettings.FileName, KeyInput.Text)
-            
-            StatusText.Text = "Key chính xác! Đang tải..."
-            StatusText.TextColor3 = Color3.fromRGB(100, 255, 100)
-            wait(1)
-            KeyGui:Destroy()
-            RunMenu() -- Chạy Hub sau khi nhập đúng key
-        else
-            StatusText.Text = "Sai Key! Vui lòng thử lại."
-            StatusText.TextColor3 = Color3.fromRGB(255, 100, 100)
-        end
+-- 3. Quét toàn bộ map hiện tại
+for _, v in pairs(w:GetDescendants()) do
+    pcall(function()
+        ClearTextures(v)
     end)
 end
 
--- Chạy Key System trước
-if game:IsLoaded() then
-    StartKeySystem()
-else
-    game.Loaded:Connect(StartKeySystem)
+-- Xóa hiệu ứng Lighting nặng
+for _, e in pairs(l:GetChildren()) do
+    if e:IsA("PostEffect") or e:IsA("BlurEffect") or e:IsA("SunRaysEffect") then
+        e.Enabled = false
+    end
 end
+
+-- 4. Tự động tối ưu các vật thể mới sinh ra (Anti-Lag liên tục)
+w.DescendantAdded:Connect(function(v)
+    pcall(function()
+        task.wait() -- Đợi load xong mới xóa
+        ClearTextures(v)
+    end)
+end)
+
+-- 5. Unlock FPS (Nếu Executor hỗ trợ)
+if setfpscap then
+    setfpscap(9999)
+end
+
+-- Thông báo
+game.StarterGui:SetCore("SendNotification", {
+    Title = "FPS Boost",
+    Text = "Đã kích hoạt chế độ siêu mượt!",
+    Duration = 5,
+})
+  end
+  })
+Tab2o:AddButton({
+     Name = "Siêu Giảm Lag (Extreme Potato Mode)",
+    Callback = function()
+      local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local Lighting = game:GetService("Lighting")
+
+-- 1. Xóa sương mù và ánh sáng
+Lighting.GlobalShadows = false
+Lighting.FogEnd = 9e9
+Lighting.Brightness = 0
+settings().Rendering.QualityLevel = "Level01"
+
+for _, v in pairs(Lighting:GetChildren()) do
+    if v:IsA("PostEffect") or v:IsA("Sky") or v:IsA("Atmosphere") then
+        v:Destroy()
+    end
+end
+
+-- 2. Hàm xử lý cực mạnh
+local function ExtremeOptimize(v)
+    pcall(function()
+        -- Biến mọi thứ thành nhựa trơn
+        if v:IsA("BasePart") then
+            v.Material = Enum.Material.SmoothPlastic
+            v.Reflectance = 0
+            v.CastShadow = false
+            v.TopSurface = Enum.SurfaceType.Smooth
+            v.BottomSurface = Enum.SurfaceType.Smooth
+        end
+
+        -- Xóa Texture của MeshPart (Giữ hình dáng nhưng mất chi tiết)
+        if v:IsA("MeshPart") then
+            v.TextureID = ""
+        end
+
+        -- Xóa hình ảnh dán
+        if v:IsA("Decal") or v:IsA("Texture") then
+            v:Destroy()
+        end
+
+        -- Xóa hiệu ứng hạt (Lửa, khói, nổ, v.v...)
+        if v:IsA("ParticleEmitter") or v:IsA("Trail") or v:IsA("Smoke") or v:IsA("Fire") or v:IsA("Sparkles") then
+            v:Destroy()
+        end
+
+        -- Xóa phụ kiện (Tóc, Mũ) và Quần áo nhân vật
+        -- Đây là phần giúp giảm lag nhiều nhất trong Blox Fruits/Game đông người
+        if v:IsA("Accessory") or v:IsA("Shirt") or v:IsA("Pants") or v:IsA("CharacterMesh") or v:IsA("ShirtGraphic") then
+            v:Destroy()
+        end
+        
+        -- Tắt Text 3D (Tên, Thanh máu trên đầu)
+        if v:IsA("BillboardGui") or v:IsA("SurfaceGui") then
+            v.Enabled = false 
+            -- Lưu ý: Nếu game dùng cái này cho nút bấm quan trọng, hãy xóa dòng này
+        end
+    end)
+end
+
+-- 3. Quét map và xử lý
+for _, v in pairs(Workspace:GetDescendants()) do
+    ExtremeOptimize(v)
+end
+
+for _, v in pairs(Lighting:GetDescendants()) do
+    ExtremeOptimize(v)
+end
+
+-- 4. Vòng lặp liên tục để xóa vật thể mới sinh ra (Anti-Lag Realtime)
+-- Dùng RunService để tối ưu hơn wait()
+game:GetService("RunService").Heartbeat:Connect(function()
+    -- Chỉ quét những thứ mới thêm vào để tránh lag do vòng lặp
+    -- Lưu ý: Roblox không hỗ trợ event DescendantAdded toàn cục tốt cho performance
+    -- Nên ta sẽ dùng cách xử lý thụ động khi có thể, hoặc chấp nhận quét nhẹ
+end)
+
+Workspace.DescendantAdded:Connect(function(v)
+    task.wait() -- Đợi 1 chút để load xong rồi mới xóa
+    ExtremeOptimize(v)
+end)
+
+-- Thông báo đã xong
+game.StarterGui:SetCore("SendNotification", {
+    Title = "Extreme Boost",
+    Text = "Chế độ siêu mượt (Trọc đầu) đã bật!",
+    Duration = 5,
+})
+  end
+  })
+Tab2o:AddButton({
+     Name = "Hư Vô(Invisible Map)",
+    Callback = function()
+      local Workspace = game:GetService("Workspace")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+-- Hàm kiểm tra xem Part có thuộc về Nhân vật hay Quái vật không
+local function isCharacter(part)
+    if part:FindFirstAncestorWhichIsA("Model") then
+        local model = part:FindFirstAncestorWhichIsA("Model")
+        -- Giữ lại Nhân vật người chơi và Quái (có Humanoid)
+        if model:FindFirstChild("Humanoid") then
+            return true
+        end
+    end
+    return false
+end
+
+-- Làm tàng hình mọi thứ trừ Nhân vật
+local function InvisibleMap()
+    for _, v in pairs(Workspace:GetDescendants()) do
+        if v:IsA("BasePart") then
+            -- Nếu không phải là người/quái thì làm tàng hình
+            if not isCharacter(v) then
+                v.Transparency = 1 
+                v.CanCollide = false -- Đi xuyên tường luôn (Cẩn thận rơi xuống biển nếu không bay)
+                if v:FindFirstChild("Texture") or v:FindFirstChild("Decal") then
+                    v:Destroy()
+                end
+            end
+        end
+    end
+end
+
+-- Chạy hàm
+InvisibleMap()
+
+-- Tự động làm tàng hình map mới load (cho Blox Fruits khi qua đảo mới)
+Workspace.DescendantAdded:Connect(function(v)
+    if v:IsA("BasePart") and not isCharacter(v) then
+        v.Transparency = 1
+        v.CanCollide = false
+    end
+end)
+
+print("Đã bật chế độ Hư Vô - Map đã tàng hình!")
+
+  end
+  })
+Tab3o:AddSection({"99 night in the forest"})
+Tab3o:AddButton({
+     Name = "Foxname Hud",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/caomod2077/Script/refs/heads/main/FoxnameHub.lua"))()
+  end
+  })
+Tab3o:AddButton({
+     Name = "Bear hub",
+    Callback = function() 
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Huylovemy/Night/refs/heads/main/99night"))()
+  end
+  })
+Tab3o:AddSection({"Kaitun Kc"})
+Tab3o:AddButton({
+     Name = "Gfarm",
+    Callback = function() 
+      loadstring(game:HttpGet('https://raw.githubusercontent.com/MQPS7/99-Night-in-the-Forset/refs/heads/main/Gfarm'))()
+  end
+  })
+Tab4o:AddSection({"Hop sv Low(sv ít người)"})
+Tab4o:AddButton({
+     Name = "Hop Sever",
+    Callback = function() 
+       loadstring(game:HttpGet("https://raw.githubusercontent.com/Huylovemy/Hop-sv/refs/heads/main/Huylovemy"))()
+  end
+  })
+Tab4o:AddSection({"Tele sever"})
+Tab4o:AddButton({
+     Name = "Hop Low Player / Ít Người",
+    Callback = function() 
+   local Http = game:GetService("HttpService")
+local TPS = game:GetService("TeleportService")
+local Api = "https://games.roblox.com/v1/games/"
+
+local _place = game.PlaceId
+local _servers = Api.._place.."/servers/Public?sortOrder=Asc&limit=100"
+
+function ListServers(cursor)
+   local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
+   return Http:JSONDecode(Raw)
+end
+
+local Server, Next; repeat
+   local Servers = ListServers(Next)
+   Server = Servers.data
+   Next = Servers.nextPageCursor
+   
+   for _, v in pairs(Server) do
+      -- Điều kiện: Server đang chơi (playing) > 0 VÀ khác server hiện tại
+      -- Và server chưa đầy (v.playing < v.maxPlayers)
+      if v.playing > 0 and v.playing < v.maxPlayers and v.id ~= game.JobId then
+         local s, e = pcall(function()
+            TPS:TeleportToPlaceInstance(_place, v.id, game.Players.LocalPlayer)
+         end)
+         if s then break end -- Nếu teleport thành công thì dừng
+      end
+   end
+   
+   task.wait(1)
+until not Next
+
+  end
+  })
+Tab4o:AddButton({
+     Name = "Hop High Player / Đông Người",
+    Callback = function() 
+      local Http = game:GetService("HttpService")
+local TPS = game:GetService("TeleportService")
+local Api = "https://games.roblox.com/v1/games/"
+
+local _place = game.PlaceId
+-- Thay đổi quan trọng: sortOrder=Desc (Sắp xếp giảm dần từ đông đến ít)
+local _servers = Api.._place.."/servers/Public?sortOrder=Desc&limit=100"
+
+function ListServers(cursor)
+   local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
+   return Http:JSONDecode(Raw)
+end
+
+local Server, Next; repeat
+   local Servers = ListServers(Next)
+   Server = Servers.data
+   Next = Servers.nextPageCursor
+   
+   for _, v in pairs(Server) do
+      -- Điều kiện: 
+      -- 1. Server chưa đầy (v.playing < v.maxPlayers) -> Quan trọng nhất
+      -- 2. Khác server hiện tại
+      if v.playing < v.maxPlayers and v.id ~= game.JobId then
+         local s, e = pcall(function()
+            TPS:TeleportToPlaceInstance(_place, v.id, game.Players.LocalPlayer)
+         end)
+         if s then break end -- Dừng vòng lặp nếu teleport thành công
+      end
+   end
+   
+   task.wait(1)
+until not Next
+
+  end
+  })
+Tab5o:AddSection({"tsunami for brainrots"})
+Tab5o:AddButton({
+     Name = "Kdml",
+    Callback = function() 
+        loadstring(game:HttpGet'https://raw.githubusercontent.com/anowerrrr333-star/scripts/refs/heads/main/kdml_escapetsunamiforbrainrots.lua')()
+  end
+  })
+Tab5o:AddButton({
+     Name = "OsakaTP2",
+    Callback = function() 
+     loadstring(game:HttpGet("https://raw.githubusercontent.com/osakaTP2/OsakaTP2/main/Escape%20tsunami%20for%20brainrotsMONEYV5"))()
+  end
+  })
+Tab5o:AddButton({
+     Name = "Escape",
+    Callback = function() 
+        loadstring(game:HttpGet("https://pastefy.app/ULaWpxKm/raw"))()
+  end
+  })
+Tab5o:AddButton({
+     Name = "Grad brainrot",
+    Callback = function() 
+        loadstring(game:HttpGet("https://overflow.cx/loader.html"))()
+  end
+  })
+Tab6o:AddSection({"Steal a brainrot"})
+Tab6o:AddButton({
+     Name = "Delfi",
+    Callback = function() 
+       loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/508ec5275ccf4cfb2233e2e042c30948.lua"))()
+  end
+  })
+Tab6o:AddButton({
+     Name = "Go to base",
+    Callback = function() 
+        loadstring(game:HttpGet("https://pastefy.app/z17fwDLp/raw"))()
+  end
+  })
+Tab6o:AddButton({
+     Name = "Frost hub",
+    Callback = function() 
+        loadstring(game:HttpGet("https://api.rubis.app/v2/scrap/LDNPBmwyjDSPkgYd/raw", true))()
+  end
+  })
+Tab7o:AddSection({"Fisch"})
+Tab7o:AddButton({
+     Name = "Speed hub",
+    Callback = function() 
+     loadstring(game:HttpGet("https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua", true))()
+  end
+  })
+Tab7o:AddButton({
+     Name = "Zenith hub",
+    Callback = function() 
+       loadstring(game:HttpGet("https://zenithhub.cloud/panel/script"))()
+  end
+  })
+Tab8o:AddSection({"Doors"})
+Tab8o:AddButton({
+     Name = "Sexsation",
+    Callback = function() 
+       loadstring(game:HttpGet("https://rawscripts.net/raw/FLOOR-2-DOORS-Sensation-V2-20105"))()
+  end
+  })
+Tab9o:AddSection({"The forge"})
+Tab9o:AddButton({
+     Name = "Speed hub",
+    Callback = function() 
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua", true))()
+  end
+  })
+  
+Tab9o:AddButton({
+     Name = "Cattaz hub",
+    Callback = function() 
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/nurvian/Catraz-HUB/refs/heads/main/Catraz/main.lua"))()
+  end
+  })
+Tab10o:AddSection({"Plants vs brainrot"})
+Tab10o:AddButton({
+     Name = "No1 Dev",
+    Callback = function() 
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/SkibidiHub111/Forge/refs/heads/main/No1Dev"))()
+  end
+  })
+Tab10o:AddButton({
+     Name = "Speed hub",
+    Callback = function() 
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua", true))()
+  end
+  })
+Tab11o:AddSection({"Zombie attacks"})
+Tab11o:AddButton({
+     Name = "Attack on zombie",
+    Callback = function()
+    loadstring(game:HttpGet("https://rawscripts.net/raw/Zombie-Attack-Zombie-Attack-1591"))()
+  end
+  })
+Tab11o:AddButton({
+     Name = "Galaxy Script",
+    Callback = function()
+    loadstring(game:HttpGet("https://visionary-cat-25285e.netlify.app/galaxy.lua"))()
+  end
+  })
+Tab11o:AddButton({
+     Name = "Synergy-Hub",
+    Callback = function()
+    loadstring(game:HttpGet("https://rawscripts.net/raw/Zombie-Attack-Synergy-Hub-73263"))()
+  end
+  })
+Tab12o:AddSection({"bee swarm simulator"})
+Tab12o:AddButton({
+     Name = "Kron_Hub",
+    Callback = function()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/DevKron/Kron_Hub/refs/heads/main/version_1.0'))("t.me/Demonic_scripts")
+  end
+  })
+Tab12o:AddButton({
+     Name = "atlas",
+    Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Chris12089/atlasbss/main/script.lua"))()
+  end
+  })
+Tab12o:AddButton({
+     Name = "Boncuti",
+    Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/binhvuong2424-ops/b9b4177ef826ac7c8ade9dbf6796eb4a/raw/4ed5e5e851f05c66a90c9fd4b5404046c5d37cda/BONCUTI-BEE-SWARM-SIMULATOR"))()
+  end
+  })
+Tab13o:AddSection({"King legacy"})
+Tab13o:AddButton({
+     Name = "OMG Hub",
+    Callback = function()
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/Omgshit/Scripts/main/MainLoader.lua"))()
+  end
+  })
+Tab20o:AddSection({"Khác"})
+Tab20o:AddButton({
+     Name = "Ring",
+    Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Huylovemy/Bearhudhop/refs/heads/main/Huylovewifemy"))()
+  end
+  })
+Tab20o:AddButton({
+     Name = "No Clip",
+    Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Huylovemy/Key/refs/heads/main/Noclip"))()
+  end
+  })
+Tab20o:AddButton({
+     Name = "Ply",
+    Callback = function()
+	  loadstring(game:HttpGet("https://raw.githubusercontent.com/Huylovemy/Bearhudply/refs/heads/main/Bearhud"))()
+  end
+  })
+Tab20o:AddButton({
+     Name = "Lucky",
+    Callback = function()
+	  loadstring(game:HttpGet("https://raw.githubusercontent.com/Ytzeno99/bufflucky/refs/heads/main/LucKyRadomFruit.lua"))()
+  end
+  })
+Tab20o:AddButton({
+     Name = "Ply",
+    Callback = function() 
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/huytong233-hue/Pls/refs/heads/main/Huyply"))()
+  end
+  })
+  Tab20o:AddButton({
+     Name = "Speed And Jump",
+    Callback = function() 
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Huylovemy/Key/refs/heads/main/S"))()
+  end
+  })
+  Tab20o:AddButton({
+     Name = "hitbox",
+    Callback = function() 
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Huylovemy/Hitboxgame/refs/heads/main/Hitboxgame"))()
+  end
+  })
+Tab20o:AddButton({
+     Name = "Ambot",
+    Callback = function() 
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Totocoems/Ace/main/Ace"))()
+  end
+  })
+Tab20o:AddButton({
+     Name = "ESP Và AIM",
+    Callback = function() 
+     loadstring(game:HttpGet("https://raw.githubusercontent.com/Huylovemy/Hack/refs/heads/main/Huydepzai209"))()
+  end
+  })
+Tab20o:AddButton({
+     Name = "God mod v1",
+    Callback = function() 
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/miglels33/God-Mode-Script/refs/heads/main/GodModeScript.md"))()
+  end
+  })
+Tab20o:AddButton({
+     Name = "God mod v2",
+    Callback = function() 
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Rawbr10/Roblox-Scripts/refs/heads/main/God%20Mode%20Script%20Universal"))()
+  end
+  })
+Tab20o:AddButton({
+     Name = "Huy mod",
+    Callback = function() 
+   loadstring(game:HttpGet("https://raw.githubusercontent.com/Huylovemy/Huy-mod/refs/heads/main/Huy%20mod"))()     
+  end
+  })
