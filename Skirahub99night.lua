@@ -927,7 +927,7 @@ pcall(function()
 end)
 local v226 = vu224
 vu224.EditOpenButton(v226, {
-    Title = "MinhNhat HUB - Open",
+    Title = "Skira Hub - Open",
     Icon = "monitor",
     CornerRadius = UDim.new(0, 6),
     StrokeThickness = 2,
@@ -2834,15 +2834,15 @@ local vu553 = "https://discord.com/api/v10/invites/" .. vu552 .. "?with_counts=t
 end)()
 Info:Divider()
 Info:Section({
-    Title = "MinhNhatHUB Information",
+    Title = "SkiraHub Information",
     TextXAlignment = "Center",
     TextSize = 17
 })
 Info:Divider()
 Info:Paragraph({
-    Title = "Main Owner",
-    Desc = "@nhataulhc86",
-    Image = "rbxassetid://119789418015420",
+    Title = "Tiktok",
+    Desc = "@hoanganhnebanmay",
+    Image = "rbxassetid://125106574805976",
     ImageSize = 30,
     Thumbnail = "",
     ThumbnailSize = 0,
@@ -2851,7 +2851,7 @@ Info:Paragraph({
 Info:Paragraph({
     Title = "Discord",
     Desc = "Join our discord for more scripts!",
-    Image = "rbxassetid://113191664721910",
+    Image = "rbxassetid://1131912938338",
     ImageSize = 30,
     Thumbnail = "",
     ThumbnailSize = 0,
@@ -2861,7 +2861,7 @@ Info:Paragraph({
             Icon = "copy",
             Title = "Copy Link",
             Callback = function()
-                setclipboard("https://discord.gg/2u4enVshHx")
+                setclipboard("https://discord.gg/h4xPD91Ce")
                 print("Copied discord link to clipboard!")
             end
         }
