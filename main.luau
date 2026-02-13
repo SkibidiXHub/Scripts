@@ -4244,7 +4244,7 @@ function CheckItemBPCRBPCR(p611)
     end
 end
 local vu616 = loadstring(game:HttpGet("https://raw.githubusercontent.com/farehamhz/RedzLib/main/RedzLib"))():MakeWindow({
-    ["Title"] = "redz Hub : Blox Fruits",
+    ["Title"] = "redz Hub : Blox Fruit",
     ["SubTitle"] = "by real_redz",
     ["SaveFolder"] = "Redz | redz lib v5.lua"
 })
@@ -4313,7 +4313,7 @@ local v632 = vu616.MakeTab(v631, {
 local v633 = vu616
 local v634 = vu616.MakeTab(v633, {
     "Auto Fishing",
-    "rbxassetid://"
+    "fishing"
 })
 local v635 = vu616
 local v636 = vu616.MakeTab(v635, {
@@ -4439,20 +4439,6 @@ v632:AddDropdown({
     ["Flag"] = "WeaponType",
     ["Callback"] = function(p671)
         _G.SelectWeapon = p671
-    end
-})
-v632:AddDropdown({
-    ["Name"] = "Seclect UI",
-    ["Description"] = "Chọn UI",
-    ["Options"] = {
-        "Small",
-        "Medium",
-        "Large",
-        "Bigger"
-    ["Default"] = "Large",
-    ["Flag"] = "Large",
-    ["Callback"] = function()
-    
     end
 })
 v632:AddSection({
