@@ -13,8 +13,8 @@ local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/
 local Window =
     Fluent:CreateWindow(
     {
-        Title = "Maru Hub : Blox Fruits",
-        SubTitle = "[ Premium ]",
+        Title = "Maru Hub Premium",
+        SubTitle = "[ Blox Fruits ]",
         TabWidth = 160,
         Size = UDim2.fromOffset(530, 350),
         Acrylic = false,
@@ -61,65 +61,28 @@ do
         end
     )
 
-	local screenGui = Instance.new("ScreenGui")
-	screenGui.Name = "ControlGUI"
-	screenGui.Parent = game.CoreGui
-
-	local toggleButton = Instance.new("ImageButton")
-	toggleButton.Size = UDim2.new(0, 50, 0, 50)
-	toggleButton.Position = UDim2.new(0.15, 0, 0.15, 0)
-	toggleButton.Image = "rbxassetid://113653485299271"
-	toggleButton.ScaleType = Enum.ScaleType.Fit
-	toggleButton.BackgroundTransparency = 1
-	toggleButton.Parent = screenGui
-
-
-	local isFluentVisible = true
-	local dragging, dragInput, dragStart, startPos
-
-	local function update(input)
-		local delta = input.Position - dragStart
-		toggleButton.Position = UDim2.new(
-			startPos.X.Scale,
-			startPos.X.Offset + delta.X,
-			startPos.Y.Scale,
-			startPos.Y.Offset + delta.Y
-		)
-	end
-
-	toggleButton.InputBegan:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.Touch or input.UserInputType == Enum.UserInputType.MouseButton1 then
-			dragging = true
-			dragStart = input.Position
-			startPos = toggleButton.Position
-			input.Changed:Connect(function()
-				if input.UserInputState == Enum.UserInputState.End then
-					dragging = false
-				end
-			end)
-		end
-	end)
-
-	toggleButton.InputChanged:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.Touch or input.UserInputType == Enum.UserInputType.MouseMovement then
-			dragInput = input
-		end
-	end)
-
-	game:GetService("UserInputService").InputChanged:Connect(function(input)
-		if dragging and input == dragInput then
-			update(input)
-		end
-	end)
-
-	toggleButton.MouseButton1Click:Connect(function()
-		isFluentVisible = not isFluentVisible
-		if isFluentVisible then
-			Window:Minimize(false)
-		else
-			Window:Minimize(true)
-		end
-	end)
+    local a = Instance.new("ScreenGui")
+    local b = Instance.new("ImageButton")
+    local c = Instance.new("UICorner")
+    a.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+    a.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    b.Parent = a
+    b.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    b.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    b.BorderSizePixel = 0
+    b.Position = UDim2.new(0.103761353, 0, 0.214939028, 0)
+    b.Size = UDim2.new(0, 55, 0, 55)
+    b.Draggable = true
+    b.Image = "rbxassetid://113653485299271"
+    c.Parent = b
+    local function d()
+        local e = Instance.new("LocalScript", b)
+        e.Parent.MouseButton1Click:Connect(
+            function()
+                game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.End, false, game)
+            end
+        )
+    end
     coroutine.wrap(d)()
 
     First_Sea = false
