@@ -4442,7 +4442,7 @@ v632:AddDropdown({
     end
 })
 v632:AddDropdown({
-    ["Name] = "Seclect UI",
+    ["Name"] = "Seclect UI",
     ["Description"] = "Chọn UI",
     ["Options"] = {
         "Small",
