@@ -4449,7 +4449,8 @@ v632:AddDropdown({
         "Medium",
         "Large",
         "Bigger"
-    ["Default"] = "Large
+    ["Default"] = "Large",
+    ["Flag"] = "Large",
     ["Callback"] = function()
     
     end
