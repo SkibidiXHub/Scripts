@@ -61,28 +61,42 @@ do
         end
     )
 
-    local a = Instance.new("ScreenGui")
-    local b = Instance.new("ImageButton")
-    local c = Instance.new("UICorner")
-    a.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-    a.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-    b.Parent = a
-    b.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    b.BorderColor3 = Color3.fromRGB(0, 0, 0)
-    b.BorderSizePixel = 0
-    b.Position = UDim2.new(0.103761353, 0, 0.214939028, 0)
-    b.Size = UDim2.new(0, 55, 0, 55)
-    b.Draggable = true
-    b.Image = "rbxassetid://113653485299271"
-    c.Parent = b
-    local function d()
-        local e = Instance.new("LocalScript", b)
-        e.Parent.MouseButton1Click:Connect(
-            function()
-                game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.End, false, game)
-            end
-        )
-    end
+-- Tạo ScreenGui
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "ImageButton"
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+-- Tạo Frame (Menu chính)
+local MainFrame = Instance.new("Frame")
+MainFrame.Size = UDim2.new(0, 300, 0, 200)
+MainFrame.Position = UDim2.new(0.5, -150, 0.5, -100)
+MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+MainFrame.Visible = false
+MainFrame.Parent = ScreenGui
+
+-- Bo góc cho menu
+local UICornerMain = Instance.new("UICorner")
+UICornerMain.CornerRadius = UDim.new(0, 20)
+UICornerMain.Parent = MainFrame
+
+-- Tạo ImageButton (nút mở menu)
+local ToggleButton = Instance.new("ImageButton")
+ToggleButton.Size = UDim2.new(0, 60, 0, 60)
+ToggleButton.Position = UDim2.new(0, 20, 0, 20)
+ToggleButton.Image = "rbxassetid://113653485299271" -- đổi ID theo ý bạn
+ToggleButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+ToggleButton.Parent = ScreenGui
+
+-- Bo góc cho nút
+local UICornerButton = Instance.new("UICorner")
+UICornerButton.CornerRadius = UDim.new(1, 0)
+UICornerButton.Parent = ToggleButton
+
+-- Bật / Tắt menu
+ToggleButton.MouseButton1Click:Connect(function()
+	MainFrame.Visible = not MainFrame.Visible
+end)
+
     coroutine.wrap(d)()
 
     First_Sea = false
