@@ -3913,22 +3913,6 @@ spawn(function()
         end
     end
 end)
-Farm:AddSection("Event Valentine")
-Farm:AddToggle({
-    Name = "Random Valentine",
-    Default = false,
-    Callback = function(Value)
-        getgenv().RandomDevilFruit = Value
-    end
-})
-Farm:AddToggle({
-    Name = "Farm Event",
-    Default = false,
-    Callback = function(Value)
-        getgenv().AutoFarm = Value
-        StopTween(getgenv().AutoFarm)
-    end
-})
 Farm:AddSection("Mastery Farm")
 Farm:AddDropdown({
     Name = "Select Method Mastery",
