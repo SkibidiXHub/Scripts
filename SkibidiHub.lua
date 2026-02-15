@@ -2559,7 +2559,7 @@ local function GetRigType()
 end
 
 local DanceAnimation = Instance.new("Animation")
-DanceAnimation.AnimationId = (GetRigType() == "R15") and "rbxassetid://698251653" or "rbxassetid://72042024"
+DanceAnimation.AnimationId = (GetRigType() == "R15") and "rbxassetid://125106574805976" or "rbxassetid://125106574805976"
 
 local function DanceLoop()
     while isDancing do
@@ -2695,7 +2695,7 @@ end
 Library = loadstring(game:HttpGet("https://luacrack.site/index.php/anhkhoarb500gmail.com/raw/LibraryObii.lua"))()
 
 Window = Library:CreateWindow({
-    Title = "Skibidi Hub",
+    Title = "Skibidi X Hub",
     Subtitle = "- Blox Fruit",
     Image = "rbxassetid://125106574805976"
 })
