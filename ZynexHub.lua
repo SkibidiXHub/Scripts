@@ -408,7 +408,7 @@ ImageLabel.Size = UDim2.new(0, 40, 0, 40)
 ImageLabel.BackgroundTransparency = 1
 ImageLabel.BorderSizePixel = 0
 ImageLabel.ImageColor3 = Color3.fromRGB(255, 255, 255)
-ImageLabel.Image = "rbxassetid://104944430379740" -- Asset ID bạn yêu cầu
+ImageLabel.Image = "rbxassetid://125106574805976" -- Asset ID bạn yêu cầu
 
 -- Biến và cài đặt
 local isToggled = false
@@ -3071,7 +3071,7 @@ local function GetRigType()
 end
 
 local DanceAnimation = Instance.new("Animation")
-DanceAnimation.AnimationId = (GetRigType() == "R15") and "rbxassetid://104944430379740" or "rbxassetid://104944430379740"
+DanceAnimation.AnimationId = (GetRigType() == "R15") and "rbxassetid://125106574805976" or "rbxassetid://125106574805976"
 
 local function DanceLoop()
     while isDancing do
@@ -3224,24 +3224,24 @@ local Window = Fluent:CreateWindow({
 local Tabs = {
     Info = Window:CreateTab{Title = "Tab Info User",Icon = "circle-user-round"},
     Webhook = Window:CreateTab{Title = "Tab Report And Ideas",Icon = "zap"},
-    Settings = Window:CreateTab{Title = "Tab Settings Farming",Icon = "rbxassetid://79932823311771"},
-    Status = Window:CreateTab{Title = "Tab Status",Icon = "rbxassetid://79932823311771"},
-    Shop = Window:CreateTab{Title = "Tab Shop",Icon = "rbxassetid://79932823311771"},
-    Main = Window:CreateTab{Title = "Tab Main Farming",Icon = "rbxassetid://79932823311771"},
-    Stack = Window:CreateTab{Title = "Tab Farming Stack",Icon = "rbxassetid://79932823311771"},
-    Server = Window:CreateTab{Title = "Tab Hop Server",Icon = "rbxassetid://79932823311771"},
-    Items = Window:CreateTab{Title = "Tab Items",Icon = "rbxassetid://79932823311771"},
-    Sea = Window:CreateTab{Title = "Tab Sea Event",Icon = "rbxassetid://79932823311771"},
+    Settings = Window:CreateTab{Title = "Tab Settings Farming",Icon = "rbxassetid://125106574805976"},
+    Status = Window:CreateTab{Title = "Tab Status",Icon = "rbxassetid://125106574805976"},
+    Shop = Window:CreateTab{Title = "Tab Shop",Icon = "rbxassetid://125106574805976"},
+    Main = Window:CreateTab{Title = "Tab Main Farming",Icon = "rbxassetid://125106574805976"},
+    Stack = Window:CreateTab{Title = "Tab Farming Stack",Icon = "rbxassetid://125106574805976"},
+    Server = Window:CreateTab{Title = "Tab Hop Server",Icon = "rbxassetid://125106574805976"},
+    Items = Window:CreateTab{Title = "Tab Items",Icon = "rbxassetid://125106574805976"},
+    Sea = Window:CreateTab{Title = "Tab Sea Event",Icon = "rbxassetid://125106574805976"},
     Dojo = Window:CreateTab{Title = "Tab Dojo Event",Icon = "bolt"},
-    Fruits = Window:CreateTab{Title = "Tab Fruits",Icon = "rbxassetid://79932823311771"},
+    Fruits = Window:CreateTab{Title = "Tab Fruits",Icon = "rbxassetid://125106574805976"},
     Rd = Window:CreateTab{Title = "Tab Raid And Dungeon",Icon = "atom"},
-    Race = Window:CreateTab{Title = "Tabs Upgrade Race",Icon = "rbxassetid://79932823311771"},
-    Teleport = Window:CreateTab{Title = "Tab Teleport Sea",Icon = "rbxassetid://79932823311771"},
+    Race = Window:CreateTab{Title = "Tabs Upgrade Race",Icon = "rbxassetid://125106574805976"},
+    Teleport = Window:CreateTab{Title = "Tab Teleport Sea",Icon = "rbxassetid://125106574805976"},
     Virtual = Window:CreateTab{Title = "Tab Virtual Player",Icon = "leaf"},
-    ListMisc = Window:CreateTab{Title = "Tab Local Player",Icon = "rbxassetid://79932823311771"}
+    ListMisc = Window:CreateTab{Title = "Tab Local Player",Icon = "rbxassetid://125106574805976"}
 }
 
-Tabs.Info:CreateSection("Link Tiro Hub")
+Tabs.Info:CreateSection("Link Zynex Hub")
 
 Tabs.Info:CreateButton{
     Title = "Zynex Tiktok",
