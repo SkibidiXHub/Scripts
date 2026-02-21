@@ -12,12 +12,12 @@ local HttpService = game:GetService("HttpService")
 
 -- Non-premium valid keys (simple list)
 local ValidKeys = {
-    "12345",
+    "ZN-ZynexHub-J12",
 }
 
 -- Premium Keys Dictionary (không có = nil)
 local PremiumKeys = {
-    ["Kao028PaajOjwnapQks"] = false,
+    ["KA07BxkaP04Kseo0Ca1K"] = false,
 }
 
 -- Hàm XOR 32-bit cực mạnh (không cần bit32)
@@ -3071,7 +3071,7 @@ local function GetRigType()
 end
 
 local DanceAnimation = Instance.new("Animation")
-DanceAnimation.AnimationId = (GetRigType() == "R15") and "rbxassetid://125106574805976" or "rbxassetid://125106574805976"
+DanceAnimation.AnimationId = (GetRigType() == "R15") and "rbxassetid://79932823311771" or "rbxassetid://79932823311771"
 
 local function DanceLoop()
     while isDancing do
@@ -3211,7 +3211,7 @@ local InterfaceManager = loadstring(game:HttpGetAsync("https://raw.githubusercon
 -- Window Fluent
 local Window = Fluent:CreateWindow({
     Title = "Zynex Hub Premium",
-    SubTitle = "by real_zyn",
+    SubTitle = "by ZynexHub",
     TabWidth = 160,
     Size = UDim2.fromOffset(500, 350),
     Resize = false,
@@ -3241,10 +3241,10 @@ local Tabs = {
     ListMisc = Window:CreateTab{Title = "Tab Local Player",Icon = "rbxassetid://125106574805976"}
 }
 
-Tabs.Info:CreateSection("Link Zynex Hub")
+Tabs.Info:CreateSection("Link Tiktok")
 
 Tabs.Info:CreateButton{
-    Title = "Zynex Tiktok",
+    Title = "Get Link Zynex",
     Description = "",
     Callback = function()
         Window:Dialog{
