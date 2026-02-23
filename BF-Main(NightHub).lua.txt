@@ -1,0 +1,56 @@
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+
+-- Tạo cửa sổ chính (Window)
+local Window = Fluent:CreateWindow({
+    Title = "Redz Farm UI - Beta",
+    SubTitle = "by Gemini",
+    TabWidth = 160,
+    Size = UDim2.fromOffset(580, 460),
+    Acrylic = true,
+    Theme = "Dark"
+})
+
+-- Tạo các Tab
+local Tabs = {
+    Main = Window:AddTab({ Title = "Auto Farm", Icon = "home" }),
+    Settings = Window:AddTab({ Title = "Cài đặt", Icon = "settings" })
+}
+
+-- Thêm chức năng Auto Farm
+Tabs.Main:AddToggle("AutoFarmToggle", {
+    Title = "Bật Auto Farm",
+    Default = false,
+    Callback = function(Value)
+        _G.AutoFarm = Value
+        if Value then
+            print("Đã bật Auto Farm!")
+            -- Chèn logic farm của bạn ở đây
+            spawn(function()
+                while _G.AutoFarm do
+                    task.wait(1)
+                    -- Ví dụ: game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = ...
+                end
+            end)
+        else
+            print("Đã tắt Auto Farm!")
+        end
+    end
+})
+
+-- Thêm Dropdown chọn quái
+Tabs.Main:AddDropdown("SelectMob", {
+    Title = "Chọn Quái vật",
+    Values = {"Mob Level 1", "Mob Level 10", "Boss Mini"},
+    Multi = false,
+    Default = 1,
+    Callback = function(Value)
+        print("Mục tiêu hiện tại: " .. Value)
+    end
+})
+
+-- Thông báo khi chạy script thành công
+Fluent:Notify({
+    Title = "Thông báo",
+    Content = "Script đã được thực thi thành công!",
+    Duration = 5
+})
