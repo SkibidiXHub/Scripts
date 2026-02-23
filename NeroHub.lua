@@ -4075,10 +4075,30 @@ v485:AddToggle({
     Name = "Auto Random Event",
     Description = "Tự động random sự kiện valentine",
     Default = false,
-    Callback = function()
-    
+    Callback = function(v)
+-- Khai báo biến
+local NPC_Name = "Valentine NPC" -- Tên NPC sự kiện
+local Remote_Path = game:GetService("ReplicatedStorage").Remotes.CommF_ -- Đường dẫn nộp Hearts
+
+_G.AutoRandom = v -- Bật/Tắt chế độ auto
+
+spawn(function()
+    while _G.AutoRandom do
+        wait(1) -- Tránh bị văng game (kick) do gửi yêu cầu quá nhanh
+        
+        -- Kiểm tra khoảng cách tới NPC (hoặc dịch chuyển tới đó)
+        local npc = game.Workspace.NPCs:FindFirstChild(NPC_Name)
+        if npc then
+            -- Gửi lệnh "Roll" hoặc "Exchange" tới Server
+            -- Lưu ý: "ValentineGacha" là tên giả định, mỗi bản update sẽ có tên khác
+            Remote_Path:InvokeServer("ValentineGacha", "Roll")
+            
+            print("Đã thực hiện Random Valentine!")
+        else
+            print("Không tìm thấy NPC Sự kiện. Đang đợi...")
+        end
     end
-})
+end)
 local _ = v485:AddSection({"AutoRaidPirate"})
 v485:AddToggle({
     Name = "Farm Pirate",
