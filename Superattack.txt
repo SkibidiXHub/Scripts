@@ -45,9 +45,3 @@ task.spawn(function()
         end
     end
 end)
-
---code make by hiru hub team--
----lõ quá bỏ chịu---
-
-
-<@>
