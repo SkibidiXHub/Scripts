@@ -1,3 +1,143 @@
+-- by trieu share cho may em
+local Players = game:GetService("Players")
+local VIM = game:GetService("VirtualInputManager")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local LP = Players.LocalPlayer
+getgenv()._FastAttackBackup = getgenv()._FastAttackBackup or {}
+
+-- config
+local HITBOX = 1000
+local LOOP_DELAY = 0.01 -- đừng để 0, dễ tụt fps / kick
+
+local function safeRequireWeaponData()
+    local ok, mod = pcall(function()
+        return require(ReplicatedStorage:WaitForChild("Modules"):WaitForChild("WeaponData"))
+    end)
+    return ok and mod or nil
+end
+
+local WeaponData = safeRequireWeaponData()
+
+local function findAttackMelee()
+    if getgenv().attackMelee and typeof(getgenv().attackMelee) == "function" then
+        return getgenv().attackMelee
+    end
+
+    if typeof(getgc) ~= "function" or typeof(debug) ~= "table" or typeof(debug.getinfo) ~= "function" then
+        return nil
+    end
+
+    for _, v in next, getgc(true) do
+        if typeof(v) == "function" then
+            local ok, info = pcall(debug.getinfo, v)
+            if ok and info and info.name == "attackMelee" then
+                getgenv().attackMelee = v
+                return v
+            end
+        end
+    end
+    return nil
+end
+
+local function cacheUpvalueTargets(fn)
+    -- cache index các upvalue "có vẻ là cooldown/flag" để khỏi scan + set bừa mỗi vòng
+    if getgenv()._FastAttackBackup._uv_cached then return end
+    getgenv()._FastAttackBackup._uv_cached = true
+    getgenv()._FastAttackBackup._uv_idx = {}
+
+    if typeof(getupvalues) ~= "function" then return end
+
+    local ok, uvs = pcall(getupvalues, fn)
+    if not ok or type(uvs) ~= "table" then return end
+
+    for i, v in next, uvs do
+        local t = typeof(v)
+        if t == "number" then
+            -- chỉ động vào số nhỏ (thường là delay/cooldown), tránh phá damage/level/linh tinh
+            if v > 0 and v < 5 then
+                table.insert(getgenv()._FastAttackBackup._uv_idx, {i = i, kind = "number"})
+            end
+        elseif t == "boolean" then
+            -- flag true thường là debounce
+            if v == true then
+                table.insert(getgenv()._FastAttackBackup._uv_idx, {i = i, kind = "boolean"})
+            end
+        end
+    end
+end
+
+local function applyFastUpvalues(fn)
+    if typeof(setupvalue) ~= "function" then return end
+    local idxs = getgenv()._FastAttackBackup._uv_idx
+    if type(idxs) ~= "table" then return end
+
+    for _, it in ipairs(idxs) do
+        if it.kind == "number" then
+            pcall(setupvalue, fn, it.i, 0)
+        elseif it.kind == "boolean" then
+            pcall(setupvalue, fn, it.i, false)
+        end
+    end
+end
+
+task.spawn(function()
+    repeat task.wait() until game:IsLoaded() and LP
+
+    while task.wait(0.2) do
+        local fn = findAttackMelee()
+        if fn then
+            cacheUpvalueTargets(fn)
+            break
+        end
+    end
+
+    while task.wait(LOOP_DELAY) do
+        local attackFn = getgenv().attackMelee
+        if typeof(attackFn) ~= "function" then
+            attackFn = findAttackMelee()
+            if typeof(attackFn) ~= "function" then
+                continue
+            end
+        end
+
+        local char = LP.Character
+        if not char then continue end
+
+        local tool = char:FindFirstChildOfClass("Tool")
+        if not tool then continue end
+
+        if not WeaponData then
+            WeaponData = safeRequireWeaponData()
+            if not WeaponData then continue end
+        end
+
+        local weaponName = tool:GetAttribute("WeaponName")
+        if not weaponName then continue end
+
+        local w = WeaponData[weaponName]
+        if not w then continue end
+
+        -- backup hitbox gốc 1 lần
+        if getgenv()._FastAttackBackup.Hitbox == nil then
+            getgenv()._FastAttackBackup.Hitbox = w.HitboxMagnitude
+        end
+
+        -- giảm debounce/cooldown (nhẹ tay hơn bản set bừa mọi số)
+        applyFastUpvalues(attackFn)
+
+        -- tăng hitbox
+        w.HitboxMagnitude = HITBOX
+
+        -- click + gọi attack
+        pcall(function()
+            VIM:SendMouseButtonEvent(0, 0, 0, true, game, 0)
+            VIM:SendMouseButtonEvent(0, 0, 0, false, game, 0)
+        end)
+        pcall(attackFn)
+    end
+end)
+
 Settings = Settings or {}
 
 local Players = game:GetService("Players")
@@ -3751,7 +3891,7 @@ v466:AddMinimizeButton({
 
 local v484 = v466:MakeTab({"Discord", "info"})
 local v485 = v466:MakeTab({"Farm", "home"})
-local v487 = v466:MakeTab({"Quest/Items", "swords"})
+local v487 = v466:MakeTab({"Quest | Items", "swords"})
 local v486 = v466:MakeTab({"Auto Fishing", "rbxassetid://127664059821666"})
 local v489 = v466:MakeTab({"Sea Event", "waves"})
 local v491 = v466:MakeTab({"Raid/Fruits", "cherry"})
@@ -4233,34 +4373,6 @@ spawn(function()
                 end
             end)
         end
-    end
-end)
-
-local function fireActivity()
-    local reportRemote = ReplicatedStorage:FindFirstChild("ReportActivity", true)
-    if reportRemote and reportRemote:IsA("RemoteEvent") then
-        pcall(function()
-            reportRemote:FireServer("GachaWindow")
-        end)
-    end
-end
-
-task.spawn(function()
-    while task.wait(2.5) do
-        if not _G.AutoValentineGacha then continue end
-
-        pcall(function()
-            CommF:InvokeServer("Cousin")
-            task.wait(0.1)
-
-            fireActivity()
-            task.wait(0.1)
-
-            CommF:InvokeServer("Cousin", "CheckCanBuyType", "ValentinesGacha26")
-            task.wait(0.1)
-
-            CommF:InvokeServer("Cousin", "ValentinesGacha26")
-        end)
     end
 end)
 
@@ -10107,7 +10219,6 @@ v496:AddToggle({
         end
     end
 })
-
 
 local v1 = next
 local v2 = {
