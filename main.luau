@@ -3735,8 +3735,8 @@ function CheckItemBPCRBPCR(v463)
 end
 local vu32 = loadstring(game:HttpGet("https://raw.githubusercontent.com/PlockScripts/Library-ui/refs/heads/main/redz-V5-remake/main.luau"))()
 local v466 = vu32:MakeWindow({
-    Title = "redz hub [ BETA ACCESS ] : Blox Fruits",
-    SubTitle = "remake version",
+    Title = "redz Hub : Blox Fruits",
+    SubTitle = "by real_redz",
     SaveFolder = "Redz | redz lib v5.lua"
 })
 
@@ -10215,6 +10215,22 @@ task.spawn(function()
         end
     end
 end)
+v496:AddToggle({
+    Name = "Attack Player",
+    Description = "",
+    Default = false,
+    Callback = function()
+    
+    end
+})
+v496:AddToggle({
+    Name = "Attack Gun",
+    Description = "",
+    Default = false,
+    Callback = function()
+    
+    end
+})
 v496:AddToggle({
     Name = "Bring Mob",
     Description = "",
