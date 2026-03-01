@@ -3735,7 +3735,7 @@ function CheckItemBPCRBPCR(v463)
 end
 local vu32 = loadstring(game:HttpGet("https://raw.githubusercontent.com/PlockScripts/Library-ui/refs/heads/main/redz-V5-remake/main.luau"))()
 local v466 = vu32:MakeWindow({
-    Title = "redz Hub [ BETA ACCESS ] : Blox Fruits",
+    Title = "redz hub [ BETA ACCESS ] : Blox Fruits",
     SubTitle = "remake version",
     SaveFolder = "Redz | redz lib v5.lua"
 })
@@ -3748,21 +3748,21 @@ v466:AddMinimizeButton({
 
 local v484 = v466:MakeTab({"Discord", "info"})
 local v485 = v466:MakeTab({"Farm", "home"})
-local v489 = v466:MakeTab({"Biển", "waves"})
 local v486 = v466:MakeTab({"Fishing", "rbxassetid://127664059821666"})
-local v487 = v466:MakeTab({"Nhiệm Vụ/Items", "swords"})
-local v491 = v466:MakeTab({"Trái/Raid", "cherry"})
+local v487 = v466:MakeTab({"Quest/Items", "swords"})
+local v491 = v466:MakeTab({"Raid/Fruits", "cherry"})
+local v489 = v466:MakeTab({"Sea Event", "waves"})
 local v497 = v466:MakeTab({"Stats", "Signal"})
-local v493 = v466:MakeTab({"Dịch Chuyển", "locate"})
+local v493 = v466:MakeTab({"Teleport", "locate"})
 local v499 = v466:MakeTab({"Status", "Scroll"})
-local v494 = v466:MakeTab({"Hình Ảnh", "user"})
-local v495 = v466:MakeTab({"Cửa Hàng", "shoppingCart"})
-local v496 = v466:MakeTab({"Linh Tinh", "settings"})
+local v494 = v466:MakeTab({"Visual", "user"})
+local v495 = v466:MakeTab({"Shop", "shoppingCart"})
+local v496 = v466:MakeTab({"Misc", "settings"})
 
 v484:AddDiscordInvite({
     Name = "redz Hub | Community",
-    Description = "Join server to new Update by real_redz",
-    Logo = "rbxassetid://15298567397",
+    Description = "Join server to new redz hub update everyone",
+    Logo = "rbxassetid://87245917237197",
     Invite = "https://discord.gg/redz-hub"
 })
 _G.SelectWeapon = "Melee"
