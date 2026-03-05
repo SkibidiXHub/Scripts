@@ -3750,6 +3750,7 @@ local v484 = v466:MakeTab({"Discord", "info"})
 local v485 = v466:MakeTab({"Farm", "home"})
 local v486 = v466:MakeTab({"Fishing", "rbxassetid://127664059821666"})
 local v487 = v466:MakeTab({"Quest/Items", "swords"})
+local v488 = v466:MakeTab({"Race V4", "crown"})
 local v491 = v466:MakeTab({"Raid/Fruits", "cherry"})
 local v489 = v466:MakeTab({"Sea Event", "waves"})
 local v497 = v466:MakeTab({"Stats", "Signal"})
@@ -3761,8 +3762,8 @@ local v496 = v466:MakeTab({"Misc", "settings"})
 
 v484:AddDiscordInvite({
     Name = "redz Hub | Community",
-    Description = "Join server to new redz hub update everyone",
-    Logo = "rbxassetid://87245917237197",
+    Description = "Join server to receive Update",
+    Logo = "rbxassetid://15298567397",
     Invite = "https://discord.gg/redz-hub"
 })
 _G.SelectWeapon = "Melee"
@@ -6833,37 +6834,66 @@ if World3 then
             end
         end)
     end
-local _ = v487:AddSection({"Teleport V4"})
-v487:AddButton({
+local _ = v487:AddSection({"Auto Skill"})
+v487:AddToggle({
+    Name = "Auto Skill Z",
+    Description = "",
+    Default = false,
+    Callback = function(v1024)
+        _G.XaiSkillZ = v1024
+        StopTween(_G.XaiSkillZ)
+    end
+})
+v487:AddToggle({
+    Name = "Auto Skill X",
+    Description = "",
+    Default = false,
+    Callback = function(v1025)
+        _G.XaiSkillX = v1025
+        StopTween(_G.XaiSkillX)
+    end
+})
+v487:AddToggle({
+    Name = "Auto Skill C",
+    Description = "",
+    Default = false,
+    Callback = function(v1026)
+        _G.XaiSkillC = v1026
+        StopTween(_G.XaiSkillC)
+    end
+})
+end
+local _ = v488:AddSection({"Teleport Trial"})
+v488:AddButton({
     Title = "Teleport To Top GreatTree",
     Value = false,
     Callback = function()
         Game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(3030.39453125, 2280.6171875, -7320.18359375)
     end
 })
-v487:AddButton({
+v488:AddButton({
     Title = "Teleport Temple Of Time",
     Value = false,
     Callback = function()
         Game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(28286.35546875, 14895.3017578125, 102.62469482421875)
     end
 })
-v487:AddButton({
+v488:AddButton({
     Title = "Teleport Lever Pull",
     Value = false,
     Callback = function()
         topos(CFrame.new(28575.181640625, 14936.6279296875, 72.31636810302734))
     end
 })
-v487:AddButton({
+v488:AddButton({
     Title = "Teleport To The Clock",
     Value = false,
     Callback = function()
         topos(CFrame.new(29553.7812, 15066.6133, -88.2750015, 1, 0, 0, 0, 1, 0, 0, 0, 1))
     end
 })
-local _ = v487:AddSection({"Trial V4"})
-v487:AddButton({
+local _ = v488:AddSection({"Trial V4"})
+v488:AddButton({
     Title = "Auto Race Door",
     Value = false,
     Callback = function()
@@ -6894,14 +6924,14 @@ v487:AddButton({
         end
     end
 })
-v487:AddButton({
+v488:AddButton({
     Title = "Buy Acient One Quest",
     Value = false,
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("UpgradeRace", "Buy")
     end
 })
-v487:AddToggle({
+v488:AddToggle({
     Name = "Auto Trial Human Ghost",
     Description = "",
     Default = false,
@@ -6910,7 +6940,7 @@ v487:AddToggle({
         StopTween(_G.Kill_Aura)
     end
 })
-v487:AddToggle({
+v488:AddToggle({
     Name = "Auto Trial All Race",
     Description = "",
     Default = false,
@@ -7038,7 +7068,7 @@ spawn(function()
         end
     end)
 end)
-v487:AddToggle({
+v488:AddToggle({
     Name = "Auto Kill Player after Trial  V4",
     Description = "",
     Default = false,
@@ -7070,35 +7100,6 @@ spawn(function()
         end
     end
 end)
-local _ = v487:AddSection({"Auto Skill"})
-v487:AddToggle({
-    Name = "Auto Skill Z",
-    Description = "",
-    Default = false,
-    Callback = function(v1024)
-        _G.XaiSkillZ = v1024
-        StopTween(_G.XaiSkillZ)
-    end
-})
-v487:AddToggle({
-    Name = "Auto Skill X",
-    Description = "",
-    Default = false,
-    Callback = function(v1025)
-        _G.XaiSkillX = v1025
-        StopTween(_G.XaiSkillX)
-    end
-})
-v487:AddToggle({
-    Name = "Auto Skill C",
-    Description = "",
-    Default = false,
-    Callback = function(v1026)
-        _G.XaiSkillC = v1026
-        StopTween(_G.XaiSkillC)
-    end
-})
-end
 local _ = v489:AddSection({"Sea Events"})
 v489:AddToggle({
     Name = "Auto Drive Boats",
@@ -10215,22 +10216,6 @@ task.spawn(function()
         end
     end
 end)
-v496:AddToggle({
-    Name = "Attack Player",
-    Description = "",
-    Default = false,
-    Callback = function()
-    
-    end
-})
-v496:AddToggle({
-    Name = "Attack Gun",
-    Description = "",
-    Default = false,
-    Callback = function()
-    
-    end
-})
 v496:AddToggle({
     Name = "Bring Mob",
     Description = "",
