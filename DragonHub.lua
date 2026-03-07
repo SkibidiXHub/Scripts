@@ -2898,6 +2898,28 @@ spawn(function()
 		end)
 	end
 end)
+L_1_[93]["Main"]:AddDropdown({
+	["Name"] = "Select UI Scale";
+	["Options"] = {
+		"Small",
+		"Large",
+		"Bigger"
+    ["Default"] = "Large",
+    ["Callback"] = function(p36)
+	};
+	["Default"] = "Large",
+	["Callback"] = function(p36)
+        if p36 == "Small" then
+            vu32:SetScale(900)
+        elseif p36 == "Large" then
+            vu32:SetScale(450)
+        elseif p36 == "Bigger" then
+            vu32:SetScale(300)  -- menor número = maior UI
+        else
+            vu32:SetScale(450)
+        end
+    end
+})
 L_1_[93]["Main"]:AddSection({
 	"Farming"
 })
