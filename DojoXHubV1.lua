@@ -3023,7 +3023,7 @@ local v16 = Window:MakeTab({
 	Icon = "home"
 })
 local Miragecheck = v1:AddParagraph({
-    Title = "Mirage Island",
+    Title = "Đảo Bí Ẩn",
     Desc = "Status: "
 })
 Discord:AddDiscordInvite({
@@ -3044,7 +3044,7 @@ spawn(function()
     end)
 end)
 local Kitsunecheck = v1:AddParagraph({
-    Title = "Kitsune Island",
+    Title = "Kitsune Đảo",
     Desc = "Status: "
 })
 spawn(function()
@@ -3443,9 +3443,9 @@ task.spawn(function()
     end
 end)
 
-v2:AddSection({"Auto Farm main"})
+v2:AddSection({"Main"})
 v2:AddDropdown({
-    Name = "Select Weapon",
+    Name = "Chọn Vũ Khí",
     Options = {"Melee","Sword","Blox Fruit","Gun"},
     Default = "Melee",
     Multi = false,
@@ -3500,7 +3500,7 @@ end
 ----------------------------------------------------------------------------
 
 v2:AddDropdown({
-    Name = "Select Farm Mode",
+    Name = "Chọn Loại Farm",
     Options = {"Level", "Bone", "Cake Prince", "Tyrant Of The Skies"},
     Default = GetSetting("SelectedFarmMode_Save", "Level"),
     Callback = function(v)
@@ -3510,7 +3510,7 @@ v2:AddDropdown({
     end
 })
 v2:AddToggle({
-    Name = "Start Farm",
+    Name = "Bắt Đầu Farm",
     Default = GetSetting("StartFarm_Save", false),
     Callback = function(v)
         _G.StartFarm = v
@@ -3539,7 +3539,7 @@ v2:AddToggle({
 })
 
 v2:AddToggle({
-    Name = "Accept Quests",
+    Name = "Nhận Nhiệm Vụ",
     Default = GetSetting("AcceptQuest_Save", false),
     Callback = function(v)
         _G.AcceptQuest = v
@@ -4046,7 +4046,7 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 v2:AddToggle({
-    Name = "Kill Mobs Nearest",
+    Name = "Farm Quái Gần",
     -- 1. Carrega se estava ligado ou desligado ao abrir o script
     Default = GetSetting("AutoFarmNear_Save", false),
     Callback = function(I)
@@ -4121,7 +4121,7 @@ local Sec = 0.5
 
 if World2 then
 v2:AddToggle({
-    Name = "Auto Factory Raid",
+    Name = "Tự Động Nhà Máy",
     -- 1. Tenta carregar se estava ligado ou desligado
     Default = GetSetting("AutoFactory_Save", false),
     Callback = function(Value)
@@ -4172,7 +4172,7 @@ end)
 end
 if World3 then
 v2:AddToggle({
-    Name = "Auto Pirate Raid",
+    Name = "Tự Động Hải Tặc",
     -- 1. Carrega se estava ligado ou desligado ao abrir o script
     Default = GetSetting("AutoRaidCastle_Save", false),
     Callback = function(I)
@@ -4246,7 +4246,7 @@ end
 v2:AddSection({"Collect"})
 -- Botão Auto Collect Chest
 v2:AddToggle({
-    Name = "Auto Collect Chest (Tween)",
+    Name = "Tự Động Nhặt Rương (Tween)",
     -- 1. Carrega o estado salvo (ou false por padrão)
     Default = GetSetting("AutoFarmChest_Save", false),
     Callback = function(I)
@@ -4260,7 +4260,7 @@ v2:AddToggle({
     end,
 })
 v2:AddToggle({
-    Name = "Auto Collect Chest (Bypass)",
+    Name = "Tự Động Nhặt Rương (Bypass)",
     Default = GetSetting("ChestBypass_Save", false),  -- đọc từ file
     Callback = function(Value)
         _G.ChestBypass = Value
@@ -4270,7 +4270,7 @@ v2:AddToggle({
 })
 -- Botão Auto Collect Berry
 v2:AddToggle({
-	Name = "Auto Collect Berry",
+	Name = "Tự Động Nhặt Berry",
 	-- 1. Carrega o estado salvo
 	Default = GetSetting("AutoBerry_Save", false),
 	Callback = function(I)
@@ -4342,7 +4342,7 @@ end)
 v2:AddSection({"Material"})
 -- Dropdown de Selecionar Material
 v2:AddDropdown({
-	Name = "Select Material",
+	Name = "Chọn Nguyên Liệu",
 	Options = MaterialList,
 	-- 1. Carrega o material salvo ou deixa vazio se for a primeira vez
 	Default = GetSetting("SelectMaterial_Save", nil),
@@ -4358,7 +4358,7 @@ v2:AddDropdown({
 
 -- Toggle de Auto Farm (Material)
 v2:AddToggle({
-	Name = "Auto Farm",
+	Name = "Bắt Đầu Farm Nguyên Liệu",
 	-- 1. Carrega se o farm de material estava ligado
 	Default = GetSetting("AutoMaterial_Save", false),
 	Callback = function(I)
@@ -4411,10 +4411,10 @@ spawn(function()
 end);
 
 if World3 then
-v2:AddSection({"Bones"})
+v2:AddSection({"Xương"})
 
 v2:AddToggle({
-    Name = "Trade Bone",
+    Name = "Đổi Xương",
     Default = false,
     Callback = function(Value)
         _G.Rdbone = Value
@@ -4430,7 +4430,7 @@ spawn(function()
 end)
 
 v2:AddToggle({
-    Name = "Auto Soul Reaper",
+    Name = "Farm Boss Xương",
     Default = false,
     Callback = function(v)
         _G.AutoHytHallow = v
@@ -4468,7 +4468,7 @@ end)
 local prayPos = CFrame.new(-8652.99707, 143.450119, 6170.50879, -0.983064115, -2.48005533E-10, 0.18326205, -1.78910387E-9, 1, -8.24392288E-9, -0.18326205, -8.43218029E-9, -0.983064115)
 
 v2:AddToggle({
-    Name = "Auto Pray",
+    Name = "Tự Động Cầu Nguyên",
     Default = false,
     Callback = function(v)
         _G.Pray = v
@@ -4500,7 +4500,7 @@ end)
 local luckPos = CFrame.new(-8652.99707, 143.450119, 6170.50879, -0.983064115, -2.48005533E-10, 0.18326205, -1.78910387E-9, 1, -8.24392288E-9, -0.18326205, -8.43218029E-9, -0.983064115)
 
 v2:AddToggle({
-    Name = "Auto Try Luck",
+    Name = "Tự Động Thử Vận May",
     Default = false,
     Callback = function(v)
         _G.Trylux = v
@@ -4542,7 +4542,7 @@ v2:AddSection({"Boss Farm"})
 
 -- Khung kiểm tra trạng thái boss (từ file v1.txt)
 local BossStatus = v2:AddParagraph({
-    Title = "Boss Spawn Status",
+    Title = "Boss Xuất Hiện Stastus",
     Desc = "Checking..."
 })
 
@@ -4561,7 +4561,7 @@ task.spawn(function()
 end)
 
 local BossDropdown = v2:AddDropdown({
-    Name = "Select Boss",
+    Name = "Chọn Boss",
     Options = Boss,
     Default = Boss and Boss[1] or "The Gorilla King",
     Callback = function(v)
@@ -4570,7 +4570,7 @@ local BossDropdown = v2:AddDropdown({
 })
 
 v2:AddButton({
-    Name = "Refresh Boss List",
+    Name = "Reset Boss",
     Callback = function()
         local LiveBosses = {}
         local FoundAny = false
@@ -4600,7 +4600,7 @@ v2:AddButton({
 })
 
 v2:AddToggle({
-    Name = "Auto Farm Boss Select",
+    Name = "Bắt Đầu Farm Boss",
     Default = GetSetting("AutoBoss_Save", false),
     Callback = function(v)
         _G.AutoBoss = v
@@ -4611,7 +4611,7 @@ v2:AddToggle({
 })
 
 v2:AddToggle({
-    Name = "Accept Quest Boss",
+    Name = "Nhận Nhiệm Vụ Boss",
     Default = GetSetting("AutoAcceptQuestBoss_Save", false),
     Callback = function(v)
         _G.AutoAcceptQuest = v
@@ -4621,7 +4621,7 @@ v2:AddToggle({
 })
 
 v2:AddToggle({
-    Name = "Farm All Bosses",
+    Name = "Farm Hết Boss",
     Default = GetSetting("FarmAllBosses_Save", false),
     Callback = function(v)
         _G.FarmAllBoss = v
@@ -4764,7 +4764,7 @@ end)
 end
 
 if World3 then
-v2:AddSection({"Farm Mastery"})
+v2:AddSection({"Farm Thông Thạo"})
 
 -- Định nghĩa danh sách quái cho từng đảo
 local CAKE_MOBS = X or {"Cookie Crafter", "Cake Guard", "Baking Staff", "Head Baker"}
@@ -4802,7 +4802,7 @@ end
 
 -- UI Dropdown chọn đảo
 v2:AddDropdown({
-    Name = "Select Island For Mastery",
+    Name = "Chọn Đạo Farm Thông Thạo",
     Options = {"Cake", "Bone"},
     Default = GetSetting("SelectedIsland_Save", "Cake"),
     Callback = function(I)
@@ -4816,7 +4816,7 @@ v2:AddDropdown({
 -- MASTERY FRUIT
 -- ========================================
 v2:AddToggle({
-    Name = "Auto Farm Mastery Fruit",
+    Name = "Tự Động Farm Thông Thạo Trái",
     Default = GetSetting("FarmMastery_Dev_Save", false),
     Callback = function(I)
         _G.FarmMastery_Dev = I
@@ -4828,11 +4828,11 @@ v2:AddToggle({
 -- Skill Control cho Fruit Mastery
 _G.FruitSkills = _G.FruitSkills or { Z = false, X = false, C = false, V = false, F = false }
 
-v2:AddToggle({ Name = "Use Skill Z (Fruit)", Default = false, Callback = function(v) _G.FruitSkills.Z = v end })
-v2:AddToggle({ Name = "Use Skill X (Fruit)", Default = false, Callback = function(v) _G.FruitSkills.X = v end })
-v2:AddToggle({ Name = "Use Skill C (Fruit)", Default = false, Callback = function(v) _G.FruitSkills.C = v end })
-v2:AddToggle({ Name = "Use Skill V (Fruit)", Default = false, Callback = function(v) _G.FruitSkills.V = v end })
-v2:AddToggle({ Name = "Use Skill F (Fruit)", Default = false, Callback = function(v) _G.FruitSkills.F = v end })
+v2:AddToggle({ Name = "Sử Dụng Skill Z (Fruit)", Default = false, Callback = function(v) _G.FruitSkills.Z = v end })
+v2:AddToggle({ Name = "Sử Dụng Skill X (Fruit)", Default = false, Callback = function(v) _G.FruitSkills.X = v end })
+v2:AddToggle({ Name = "Sử Dụng Skill C (Fruit)", Default = false, Callback = function(v) _G.FruitSkills.C = v end })
+v2:AddToggle({ Name = "Sử Dụng Skill V (Fruit)", Default = false, Callback = function(v) _G.FruitSkills.V = v end })
+v2:AddToggle({ Name = "Sử Dụng Skill F (Fruit)", Default = false, Callback = function(v) _G.FruitSkills.F = v end })
 
 -- Hàm sử dụng skill Fruit dựa trên cài đặt
 local function UseFruitSkills()
@@ -4918,7 +4918,7 @@ end)
 -- MASTERY GUN
 -- ========================================
 v2:AddToggle({
-    Name = "Auto Farm Mastery Gun",
+    Name = "Tự Động Farm Thông Thạo Súng",
     Default = GetSetting("FarmMastery_G_Save", false),
     Callback = function(I)
         _G.FarmMastery_G = I
@@ -5004,7 +5004,7 @@ end)
 _G.FarmMastery_S = _G.FarmMastery_S or false
 
 v2:AddToggle({
-    Name = "Auto Farm Mastery All Sword",
+    Name = "Farm Tất Cả Thông Thạo Kiếm",
     Default = GetSetting("FarmMastery_S_Save", false),
     Callback = function(I)
         _G.FarmMastery_S = I
@@ -12916,38 +12916,3 @@ v12:AddToggle({
     end
 })
 
-v16:AddSection({"Hop Sever"})
-v16:AddButton({
-	Name = "Hop Full Moon",
-	Callback = function()
-	
-	end
-})
-
-v16:AddButton({
-	Name = "Hop Near Moon",
-	Callback = function()
-	
-	end
-})
-
-v16:AddButton({
-	Name = "Hop Dough King",
-	Callback = function()
-	
-	end
-})
-
-v16:AddButton({
-	Name = "Hop Rip Indra",
-	Callback = function()
-	
-	end
-})
-
-v16:AddButton({
-	Name = "Hop Râu Đen",
-	Callback = function()
-	
-	end
-})
