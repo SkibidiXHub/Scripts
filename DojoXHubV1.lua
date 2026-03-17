@@ -169,7 +169,7 @@ end
 -- ==========================================
 -- GỌI THỬ ĐỂ TEST:
 -- ==========================================
-NotificacaoNightMystic("Dojo Notification 🔔", "New Update v.0🔥")
+NotificacaoNightMystic("Dojo Notification 🔔", "New Update v1.0🔥")
 task.wait(0.8)
 NotificacaoNightMystic("Dojo Thông Báo 🔔", "Cập Nhật Mới v1.0🔥")
 
@@ -3017,6 +3017,10 @@ local v14 = Window:MakeTab({
 local v15 = Window:MakeTab({
     Title = "Linh Tinh",
     Icon = "settings-2"
+})
+local v16 = Window:MakeTab({
+	Title = "Hop Sever",
+	Icon = "home"
 })
 local Miragecheck = v1:AddParagraph({
     Title = "Mirage Island",
@@ -12912,3 +12916,38 @@ v12:AddToggle({
     end
 })
 
+v16:AddSection({"Hop Sever"})
+v16:AddButton({
+	Name = "Hop Full Moon",
+	Callback = function()
+	
+	end
+})
+
+v16:AddButton({
+	Name = "Hop Near Moon",
+	Callback = function()
+	
+	end
+})
+
+v16:AddButton({
+	Name = "Hop Dough King",
+	Callback = function()
+	
+	end
+})
+
+v16:AddButton({
+	Name = "Hop Rip Indra",
+	Callback = function()
+	
+	end
+})
+
+v16:AddButton({
+	Name = "Hop Râu Đen",
+	Callback = function()
+	
+	end
+})
