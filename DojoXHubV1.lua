@@ -2944,9 +2944,9 @@ local Window = redzlib:MakeWindow({
 -- Tạo nút bấm bằng hàm gốc của thư viện (100% không lỗi ẩn/hiện)
 local MinimizeButton = Window:AddMinimizeButton({
     Button = { 
-        Image = "rbxassetid://89947810111304", -- Dùng ID ảnh bạn chọn
+        Image = "rbxassetid://78617112299549", -- Dùng ID ảnh bạn chọn
         BackgroundTransparency = 1,
-        Name = "LongHiHi_On_Top_V5.2.0.0.0.0.1" -- Đặt tên đúng yêu cầu
+        Name = "DojoHub_On_Top_V5.2.0.0.0.0.1" -- Đặt tên đúng yêu cầu
     },
     Size = UDim2.new(0, 45, 0, 45), -- Size 45
     Corner = { CornerRadius = UDim.new(0.5, 0) }, -- Bo tròn
@@ -2966,56 +2966,56 @@ local v2 = Window:MakeTab({
     Icon = "leaf"
 })
 local v3 = Window:MakeTab({
-    Title = "Quests & Other",
+    Title = "Nhiệm Vụ/Khác",
     Icon = "layers"
 })
 local v4 = Window:MakeTab({
-    Title = "Settings Farm",
+    Title = "Cài Đặt Farm",
     Icon = "settings"
 })
 local v5 = Window:MakeTab({
-    Title = "Fishing",
+    Title = "Câu Cá",
     Icon = "rbxassetid://127664059821666"
 })
 local v6 = Window:MakeTab({
-    Title = "Sea Event",
+    Title = "Biển",
     Icon = "anchor"
 })
 local v7 = Window:MakeTab({
-    Title = "Volcano & Dojo",
+    Title = "Núi Lửa/Dojo",
     Icon = "flame"
 })
 local v8 = Window:MakeTab({
-    Title = "Mirage & Race",
+    Title = "Đảo Bí Ẩn/Tộc",
     Icon = "crown"
 })
 local v9 = Window:MakeTab({
-    Title = "Fruits & Check Stock",
+    Title = "Trái/Check Stock",
     Icon = "cherry"
 })
 local v10 = Window:MakeTab({
-    Title = "Raid & Dungoen",
+    Title = "Raid/Dungoen",
     Icon = "skull"
 })
 local v11 = Window:MakeTab({
-    Title = "Teleport",
+    Title = "Dịch Chuyển",
     Icon = "map-pin"
 })
 local v12 = Window:MakeTab({
-    Title = "PvP & Player",
+    Title = "PvP/Player",
     Icon = "user"
 })
 local v13 = Window:MakeTab({
-    Title = "Esp & Stats",
+    Title = "Hình Ảnh/Stats",
     Icon = "eye"
 })
 
 local v14 = Window:MakeTab({
-    Title = "Shop",
+    Title = "Cửa Hàng",
     Icon = "shopping-cart"
 })
 local v15 = Window:MakeTab({
-    Title = "Misc",
+    Title = "Linh Tinh",
     Icon = "settings-2"
 })
 local Miragecheck = v1:AddParagraph({
