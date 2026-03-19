@@ -169,9 +169,9 @@ end
 -- ==========================================
 -- GỌI THỬ ĐỂ TEST:
 -- ==========================================
-NotificacaoNightMystic("LongHiHi Notification 🔔", "New Update v1.0🔥")
+NotificacaoNightMystic("Dojo Notification 🔔", "New Update v1.0🔥")
 task.wait(0.8)
-NotificacaoNightMystic("LongHiHi Thông Báo 🔔", "Cập Nhật Mới v1.0🔥")
+NotificacaoNightMystic("Dojo Thông Báo 🔔", "Cập Nhật Mới v1.0🔥")
 
 local HttpService = Services.HttpService
 local FolderName = "Ai hỏi.json"
@@ -2936,7 +2936,7 @@ end
 
 local redzlib = loadstring(game:HttpGet("https://pastefy.app/W6Xz5utn/raw"))()
 local Window = redzlib:MakeWindow({
-    Title = "Dojo Hub [ BETA] : Blox Fruits",
+    Title = "Dojo Hub : Blox Fruits",
     SubTitle = "by real_skibidi",
     SaveFolder = true,
     Image = "78617112299549"
@@ -12911,4 +12911,3 @@ v12:AddToggle({
         end)
     end
 })
-
