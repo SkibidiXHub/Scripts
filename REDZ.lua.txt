@@ -14,7 +14,7 @@ v466:AddMinimizeButton({
 local v484 = v466:MakeTab({"Main", "home"})
 local _ = v484:AddSection({"Farm Chest"})
 
-v485:AddToggle({
+v484:AddToggle({
     Name = "Auto Farm Chest [ Tween ]",
     Description = "",
     Default = false,
@@ -50,7 +50,7 @@ spawn(function()
 end)
 local ChestBypass = false
 
-v485:AddToggle({
+v484:AddToggle({
     Title = "Auto Farm Chest [ Bypass ]",
     Value = false,
     Callback = function(v)
