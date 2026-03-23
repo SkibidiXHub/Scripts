@@ -4090,6 +4090,117 @@ spawn(function()
         end
     end
 end)
+v485:AddToggle({
+    Name = "Farm Nearest",
+    Description = "Auto Farm Nearest Mobs",
+    Default = false,
+    Callback = function(v520)
+        _G.AutoNear = v520
+        StopTween(_G.AutoNear)
+    end
+})
+spawn(function()
+    while wait() do
+        if _G.AutoNear then
+            pcall(function()
+                for _, v522 in pairs(game.Workspace.Enemies:GetChildren()) do
+                    if v522:FindFirstChild("Humanoid") and v522:FindFirstChild("HumanoidRootPart") and v522.Humanoid.Health > 0 and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v522.HumanoidRootPart.Position).Magnitude <= 5000 then
+                        repeat
+                            wait(_G.Fast_Delay)
+                            StartBring = true
+                            AutoHaki()
+                            EquipWeapon(_G.SelectWeapon)
+                            topos(v522.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                            v522.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+                            v522.HumanoidRootPart.Transparency = 1
+                            v522.Humanoid.JumpPower = 0
+                            v522.Humanoid.WalkSpeed = 0
+                            v522.HumanoidRootPart.CanCollide = false
+                            FarmPos = v522.HumanoidRootPart.CFrame
+                            MonFarm = v522.Name
+                        until not _G.AutoNear or not v522.Parent or v522.Humanoid.Health <= 0 or not game.Workspace.Enemies:FindFirstChild(v522.Name)
+                        StartBring = false
+                    end
+                end
+            end)
+        end
+    end
+end)
+v485:AddToggle({
+    Name = "Auto Pirates Sea",
+    Description = "Farm Raid Pirate",
+    Default = false,
+    Callback = function(v543)
+        _G.AutoRaidPirate = v543
+        StopTween(_G.AutoRaidPirate)
+    end
+})
+spawn(function()
+    while wait() do
+        if _G.AutoRaidPirate then
+            pcall(function()
+                local v544 = CFrame.new(-5496.17432, 313.768921, -2841.53027, 0.924894512, 7.37058015E-9, 0.380223751, 3.5881019E-8, 1, -1.06665446E-7, -0.380223751, 1.12297109E-7, 0.924894512)
+                if (CFrame.new(-5539.3115234375, 313.800537109375, -2972.372314453125).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 500 then
+                    for _, v546 in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                        if _G.AutoRaidPirate and v546:FindFirstChild("HumanoidRootPart") and v546:FindFirstChild("Humanoid") and v546.Humanoid.Health > 0 and (v546.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 2000 then
+                            repeat
+                                wait()
+                                AutoHaki()
+                                EquipWeapon(_G.SelectWeapon)
+                                NeedAttacking = true
+                                StartMagnet = true
+                                v546.HumanoidRootPart.CanCollide = false
+                                v546.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+                                topos(v546.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                            until v546.Humanoid.Health <= 0 or not v546.Parent or _G.AutoRaidPirate == false
+                            NeedAttacking = false
+                            StartMagnet = false
+                        end
+                    end
+                elseif (v544.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 1500 then
+                    TP1(v544)
+                else
+                    TP1(v544)
+                end
+            end)
+        end
+    end
+end)
+end
+    v485:AddToggle({
+        Name = "Auto Factory",
+        Description = "Auto Factory Farm",
+        Default = false,
+        Callback = function(v732)
+            _G.AutoFactory = v732
+            StopTween(_G.AutoFactory)
+        end
+    })
+    spawn(function()
+        while wait() do
+            spawn(function()
+                if _G.AutoFactory then
+                    if game:GetService("Workspace").Enemies:FindFirstChild("Core") then
+                        for _, v734 in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                            if v734.Name == "Core" and v734.Humanoid.Health > 0 then
+                                repeat
+                                    task.wait()
+                                    AutoHaki()
+                                    EquipWeapon(_G.SelectWeapon)
+                                    topos(CFrame.new(448.46756, 199.356781, -441.389252))
+                                    game:GetService("VirtualUser"):CaptureController()
+                                    game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
+                                until v734.Humanoid.Health <= 0 or _G.AutoFactory == false
+                            end
+                        end
+                    else
+                        topos(CFrame.new(448.46756, 199.356781, -441.389252))
+                    end
+                end
+            end)
+        end
+    end)
+ end
 
 local _ = v487:AddSection({"Settings"})
 
