@@ -4091,9 +4091,9 @@ spawn(function()
     end
 end)
 
-local _ = v496:AddSection({"Settings"})
+local _ = v487:AddSection({"Settings"})
 
-v496:AddToggle({
+v487:AddToggle({
     Name = "Fast Attack",
     Description = "",
     Default = true,
@@ -4234,7 +4234,7 @@ task.spawn(function()
         end
     end
 end)
-v496:AddToggle({
+v487:AddToggle({
     Name = "Bring Mob",
     Description = "",
     Default = true,
