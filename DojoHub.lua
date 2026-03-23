@@ -4126,8 +4126,6 @@ spawn(function()
         end
     end
 end)
-
-if World3 then
 v485:AddToggle({
     Name = "Auto Pirates Sea",
     Description = "Farm Raid Pirate",
@@ -4169,8 +4167,7 @@ spawn(function()
     end
 end)
 end
-if World2 then
-    v485:AddToggle({
+v485:AddToggle({
         Name = "Auto Factory",
         Description = "Spawns Every 1:30 [hours, Minutes]",
         Default = false,
