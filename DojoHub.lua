@@ -3748,7 +3748,7 @@ v466:AddMinimizeButton({
 
 local v484 = v466:MakeTab({"Discord", "info"})
 local v485 = v466:MakeTab({"Farm", "home"})
-local v486 = v466:MakeTab({"Misc", "settings"})
+local v486 = v466:MakeTab({"Linh Tinh", "settings"})
 
 v484:AddDiscordInvite({
     Name = "Dojo Hub | Community",
@@ -3794,8 +3794,8 @@ task.spawn(function()
     end
 end)
 local _ = v485:AddDropdown({
-    Name = "Select Tool",
-    Description = "Choose the tool you want to use",
+    Name = "Chọn Vũ Khí",
+    Description = "Chọn vũ khí để đánh",
     Options = {"Melee", "Sword", "Gun", "Blox Fruit"},
     Default = "Melee",
     Flag = "WeaponType",
@@ -3933,8 +3933,8 @@ local function CheckQuestNew()
     end
 end
 v485:AddToggle({
-    Name = "Auto Farm Level",
-    Description = "Farm Level",
+    Name = "Tự Động Cấp",
+    Description = "Tự Động Farm cấp",
     Default = false,
     Callback = function(state)
         _G.AutoFarm = state
@@ -4090,8 +4090,8 @@ spawn(function()
     end
 end)
 v485:AddToggle({
-    Name = "Auto Farm Nearest",
-    Description = "Auto Farm Nearest Mobs",
+    Name = "Tự Động Farm Quái Gần",
+    Description = "Tự động quái gần",
     Default = false,
     Callback = function(v520)
         _G.AutoNear = v520
@@ -4129,7 +4129,7 @@ end)
 local _ = v486:AddSection({"Settings"})
 
 v486:AddToggle({
-    Name = "Fast Attack",
+    Name = "Tự Động Đánh",
     Description = "",
     Default = true,
     Callback = function(value)
@@ -4270,7 +4270,7 @@ task.spawn(function()
     end
 end)
 v486:AddToggle({
-    Name = "Bring Mob",
+    Name = "Gom Quái",
     Description = "",
     Default = true,
     Callback = function(v1165)
