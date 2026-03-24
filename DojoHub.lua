@@ -4126,9 +4126,9 @@ spawn(function()
     end
 end)
 
-local _ = v487:AddSection({"Settings"})
+local _ = v486:AddSection({"Settings"})
 
-v487:AddToggle({
+v486:AddToggle({
     Name = "Fast Attack",
     Description = "",
     Default = true,
@@ -4269,7 +4269,7 @@ task.spawn(function()
         end
     end
 end)
-v487:AddToggle({
+v486:AddToggle({
     Name = "Bring Mob",
     Description = "",
     Default = true,
@@ -4311,14 +4311,14 @@ spawn(function()
     end
 end)
 
-v487:AddSection("Server")
-v487:AddButton({
+v486:AddSection("Server")
+v486:AddButton({
     Title = "Rejoin Server",
     Callback = function()
         game:GetService("TeleportService"):Teleport(game.PlaceId, game:GetService("Players").LocalPlayer)
     end
 })
-v496:AddButton({Title = "Server Hop", Callback = function()
+v486:AddButton({Title = "Server Hop", Callback = function()
     Hop()
 end})
 
@@ -4355,7 +4355,7 @@ function GetNewServer()
 end
 
 -- ===== TOGGLE REDZLIB =====
-v487:AddToggle({
+v486:AddToggle({
     Name = "Anti-reset",
     Description = "Server hop every 30 minutes",
     Default = false,
@@ -4386,22 +4386,22 @@ v487:AddToggle({
     end
 })
 
-v487:AddSection("Team")
-v487:AddButton({
+v486:AddSection("Team")
+v486:AddButton({
     Title = "Join Pirates Team",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetTeam", "Pirates")
     end
 })
-v487:AddButton({
+v486:AddButton({
     Title = "Join Marines Team",
     Callback = function()
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetTeam", "Marines")
     end
 })
 
-v487:AddSection("Race")
-v487:AddToggle({
+v486:AddSection("Race")
+v486:AddToggle({
     Title = "Auto Active Race V3",
     Description = "",
     Value = false,
@@ -4433,7 +4433,7 @@ else
     end
 end
 
-v487:AddToggle({
+v486:AddToggle({
     Title = "Auto Active Race V4",
     Description = "",
     Value = _G.AutoRaceV4,
@@ -4470,8 +4470,8 @@ spawn(function()
     end
 end)
 
-v487:AddSection("Menu")
-v487:AddButton({
+v486:AddSection("Menu")
+v486:AddButton({
     Title = "Open Title Name",
     Callback = function()
         local v1209 = {[1] = "getTitles"}
@@ -4480,7 +4480,7 @@ v487:AddButton({
     end
 })
 
-v487:AddSection("Local-Player")
+v486:AddSection("Local-Player")
 
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
@@ -4543,7 +4543,7 @@ if LocalPlayer.Character then
 	ApplyMovement(LocalPlayer.Character)
 end
 
-v487:AddToggle({
+v486:AddToggle({
 	Title = "Enable WalkSpeed and Jump",
 	Default = MovementEnabled,
 	Callback = function(v)
@@ -4563,7 +4563,7 @@ v487:AddToggle({
 	end
 })
 
-v487:AddSlider({
+v486:AddSlider({
 	Title = "Speed",
 	Min = 26,
 	Max = 300,
@@ -4581,7 +4581,7 @@ v487:AddSlider({
 	end
 })
 
-v487:AddSlider({
+v486:AddSlider({
 	Title = "Jump",
 	Min = 50,
 	Max = 500,
@@ -4599,7 +4599,7 @@ v487:AddSlider({
 	end
 })
 
-v487:AddSection("Visual")
+v486:AddSection("Visual")
 local Lighting = game:GetService("Lighting")
 local FULLBRIGHT_SAVE_FILE = "fullbright_save.txt"
 
@@ -4639,7 +4639,7 @@ end
 
 ApplyFullBright(FullBrightEnabled)
 
-v487:AddToggle({
+v486:AddToggle({
 	Title = "Full Bright",
 	Value = FullBrightEnabled,
 	Callback = function(Value)
@@ -4649,7 +4649,7 @@ v487:AddToggle({
 	end
 })
 
-v487:AddButton({
+v486:AddButton({
    Title = "Remove Sky Fog",
    Description = "",
    Callback = function()
@@ -4661,7 +4661,7 @@ end
 
 
 
-v487:AddButton({
+v486:AddButton({
 	Name = "FPS Boost",
 	Callback = function()
 		for _, v in ipairs(game:GetDescendants()) do
@@ -4682,9 +4682,9 @@ v487:AddButton({
 	end
 })
 
-v487:AddSection("Others")
+v486:AddSection("Others")
 
-v487:AddToggle({
+v486:AddToggle({
     Name = "Delete Lava",
     Description = "",
     Default = false,
@@ -4709,7 +4709,7 @@ spawn(function()
     end
 end)
 
-v487:AddToggle({
+v486:AddToggle({
     Title = "Set Home Point",
     Description = "",
     Value = false,
@@ -4749,7 +4749,7 @@ spawn(function()
         end
     end
 end)
-v487:AddToggle({Title = "Infinite Geppo", Value = false, Callback = function(v1183)
+v486:AddToggle({Title = "Infinite Geppo", Value = false, Callback = function(v1183)
     InfiniteGeppo = v1183
 end})
 spawn(function()
@@ -4772,7 +4772,7 @@ spawn(function()
         end
     end
 end)
-v487:AddToggle({
+v486:AddToggle({
     Title = "Walk on Water",
     Default = true,
     Callback = function(v1188)
@@ -4858,7 +4858,7 @@ local v1218 = {
     "TANTAIGAMING",
     "THEGREATACE"
 }
-v487:AddButton({
+v486:AddButton({
     Title = "Codes",
     Description = "",
     Callback = function()
@@ -4876,7 +4876,7 @@ v487:AddButton({
 })
 local RunService = game:GetService("RunService")
 
-v487:AddToggle({
+v486:AddToggle({
 	Name = "White Screen",
 	Default = false,
 	Callback = function(Value)
