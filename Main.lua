@@ -10870,8 +10870,8 @@ end)
 RedzLib:SetNotify({
     Title = "Dojo Hub Loaded !",
     Description = "dojo Hub kích hoạt thành công !",
-    Image = "rbxassetid://78617112299549", -- Thay ID ảnh của bạn vào đây (Icon người dùng)
-    Time = 5 -- Thông báo hiện trong 5 giây
+    Image = "rbxassetid://78617112299549",
+    Time = 10
 })
 
 return redzlib
