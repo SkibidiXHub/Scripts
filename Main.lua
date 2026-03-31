@@ -3755,7 +3755,7 @@ local v489 = v466:MakeTab({"Sea Event", "waves"})
 local v497 = v466:MakeTab({"Stats", "Signal"})
 local v493 = v466:MakeTab({"Teleport", "locate"})
 local v499 = v466:MakeTab({"Status", "Scroll"})
-local v494 = v466:MakeTab({"Local Player", "user"})
+local v494 = v466:MakeTab({"Visual", "user"})
 local v495 = v466:MakeTab({"Setting", "settings"})
 
 v484:AddDiscordInvite({
@@ -4153,6 +4153,83 @@ spawn(function()
         end
     end
 end)
+if World3 then
+v485:AddToggle({
+    Name = "Auto Pirates Sea",
+    Description = "Farm Raid Pirate",
+    Default = false,
+    Callback = function(v543)
+        _G.AutoRaidPirate = v543
+        StopTween(_G.AutoRaidPirate)
+    end
+})
+spawn(function()
+    while wait() do
+        if _G.AutoRaidPirate then
+            pcall(function()
+                local v544 = CFrame.new(-5496.17432, 313.768921, -2841.53027, 0.924894512, 7.37058015E-9, 0.380223751, 3.5881019E-8, 1, -1.06665446E-7, -0.380223751, 1.12297109E-7, 0.924894512)
+                if (CFrame.new(-5539.3115234375, 313.800537109375, -2972.372314453125).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 500 then
+                    for _, v546 in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                        if _G.AutoRaidPirate and v546:FindFirstChild("HumanoidRootPart") and v546:FindFirstChild("Humanoid") and v546.Humanoid.Health > 0 and (v546.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 2000 then
+                            repeat
+                                wait()
+                                AutoHaki()
+                                EquipWeapon(_G.SelectWeapon)
+                                NeedAttacking = true
+                                StartMagnet = true
+                                v546.HumanoidRootPart.CanCollide = false
+                                v546.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+                                topos(v546.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                            until v546.Humanoid.Health <= 0 or not v546.Parent or _G.AutoRaidPirate == false
+                            NeedAttacking = false
+                            StartMagnet = false
+                        end
+                    end
+                elseif (v544.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 1500 then
+                    TP1(v544)
+                else
+                    TP1(v544)
+                end
+            end)
+        end
+    end
+end)
+end
+if World2 then
+    v485:AddToggle({
+        Name = "Auto Factory",
+        Description = "Spawns Every 1:30 [hours, Minutes]",
+        Default = false,
+        Callback = function(v732)
+            _G.AutoFactory = v732
+            StopTween(_G.AutoFactory)
+        end
+    })
+    spawn(function()
+        while wait() do
+            spawn(function()
+                if _G.AutoFactory then
+                    if game:GetService("Workspace").Enemies:FindFirstChild("Core") then
+                        for _, v734 in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                            if v734.Name == "Core" and v734.Humanoid.Health > 0 then
+                                repeat
+                                    task.wait()
+                                    AutoHaki()
+                                    EquipWeapon(_G.SelectWeapon)
+                                    topos(CFrame.new(448.46756, 199.356781, -441.389252))
+                                    game:GetService("VirtualUser"):CaptureController()
+                                    game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
+                                until v734.Humanoid.Health <= 0 or _G.AutoFactory == false
+                            end
+                        end
+                    else
+                        topos(CFrame.new(448.46756, 199.356781, -441.389252))
+                    end
+                end
+            end)
+        end
+    end)
+ end
 
 local _ = v491:AddSection({"Fruits"})
 v491:AddToggle({
