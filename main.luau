@@ -3750,15 +3750,15 @@ v466:AddMinimizeButton({
 local v484 = v466:MakeTab({"Discord", "info"})
 local v485 = v466:MakeTab({"Farm", "home"})
 local v486 = v466:MakeTab({"Câu Cá", "rbxassetid://127664059821666"})
-local v487 = v466:MakeTab({"Quest/Items", "swords"})
-local v491 = v466:MakeTab({"Raid/Fruits", "cherry"})
-local v489 = v466:MakeTab({"Sea Event", "waves"})
+local v487 = v466:MakeTab({"Nhiệm Vụ/Vật Phẩm", "swords"})
+local v491 = v466:MakeTab({"Trái/Raid", "cherry"})
+local v489 = v466:MakeTab({"Biển", "waves"})
 local v497 = v466:MakeTab({"Stats", "Signal"})
-local v493 = v466:MakeTab({"Teleport", "locate"})
+local v493 = v466:MakeTab({"Dịch Chuyển", "locate"})
 local v499 = v466:MakeTab({"Status", "Scroll"})
-local v494 = v466:MakeTab({"Visual", "user"})
-local v495 = v466:MakeTab({"Shop", "shoppingCart"})
-local v496 = v466:MakeTab({"Misc", "settings"})
+local v494 = v466:MakeTab({"Giao Diện", "user"})
+local v495 = v466:MakeTab({"Cửa Hàng", "shoppingCart"})
+local v496 = v466:MakeTab({"Linh Tinh", "settings"})
 
 v484:AddDiscordInvite({
     Name = "redz Hub | Community",
@@ -3766,19 +3766,3 @@ v484:AddDiscordInvite({
     Logo = "rbxassetid://131723242350068",
     Invite = "https://discord.gg/redz-hub"
 })
-
-------- SAILOR PIECE
-local vu32 = loadstring(game:HttpGet("https://raw.githubusercontent.com/PlockScripts/Library-ui/refs/heads/main/redz-V5-remake/main.luau"))()
-local v466 = vu32:MakeWindow({
-    Title = "Dojo Hub [ BETA ] | Blox Fruits",
-    SubTitle = "remake version",
-    SaveFolder = "Redz | redz lib v5.lua"
-})
-
-v466:AddMinimizeButton({
-    Button = { Image = "rbxassetid://15298567397", BackgroundTransparency = 0 },
-    Size = UDim2.new(0, 35, 0, 35),
-    Corner = { CornerRadius = UDim.new(0.25, 0) },
-})
-
-local v484 = v466:MakeTab({"Discord", "info"})
