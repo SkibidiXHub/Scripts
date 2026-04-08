@@ -3735,8 +3735,8 @@ function CheckItemBPCRBPCR(v463)
 end
 local vu32 = loadstring(game:HttpGet("https://raw.githubusercontent.com/PlockScripts/Library-ui/refs/heads/main/redz-V5-remake/main.luau"))()
 local v466 = vu32:MakeWindow({
-    Title = "Dojo Hub | Old Version | Blox Fruits",
-    SubTitle = "remake old version",
+    Title = "Dojo Hub [ BETA ] | Blox Fruits",
+    SubTitle = "remake dojo",
     SaveFolder = "Redz | redz lib v5.lua"
 })
 
@@ -3747,23 +3747,15 @@ v466:AddMinimizeButton({
 })
 
 local v484 = v466:MakeTab({"Discord", "info"})
-local v485 = v466:MakeTab({"Main Farm", "home"})
-local v486 = v466:MakeTab({"Stack Farm", "swords"})
-local v487 = v466:MakeTab({"Fishing", "rbxassetid://127664059821666"})
-local v491 = v466:MakeTab({"Fruits & Raid", "cherry"})
-local v489 = v466:MakeTab({"Sea Event", "waves"})
-local v497 = v466:MakeTab({"Stats", "Signal"})
-local v493 = v466:MakeTab({"Teleport", "locate"})
-local v499 = v466:MakeTab({"Status Sever", "Scroll"})
-local v494 = v466:MakeTab({"Visual", "user"})
-local v495 = v466:MakeTab({"Shop", "shoppingCart"})
-local v496 = v466:MakeTab({"Misc", "settings"})
+local v485 = v466:MakeTab({"Settings", "settings"})
+local v486 = v466:MakeTab({"Main Farm", "home"})
+local v487 = v466:MakeTab({"Stack Farm", "swords"})
 
 v484:AddDiscordInvite({
-    Name = "Dojo Hub | Community",
-    Description = "Join server to receive Update",
+    Name = "Dojo Hub • Community",
+    Description = "Join server to new update",
     Logo = "rbxassetid://78617112299549",
-    Invite = "https://discord.gg/BnEDM8k0"
+    Invite = "https://discord.gg/MT8mLR2"
 })
 _G.SelectWeapon = "Melee"
 task.spawn(function()
@@ -3801,7 +3793,7 @@ task.spawn(function()
         end)
     end
 end)
-local _ = v485:AddDropdown({
+local _ = v486:AddDropdown({
     Name = "Select Tool",
     Description = "Choose the tool you want to use",
     Options = {"Melee", "Sword", "Gun", "Blox Fruit"},
@@ -3811,7 +3803,7 @@ local _ = v485:AddDropdown({
         _G.SelectWeapon = v506
     end
 })
-local _ = v485:AddSection({"Main"})
+local _ = v485:AddSection({"Nông Trại"})
 
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
@@ -3939,9 +3931,9 @@ local function CheckQuestNew()
         CFrameMonNew = CFrame.new(10965.1025, -2158.8842, 9177.2597)
     end
 end
-v485:AddToggle({
-    Name = "Auto Level",
-    Description = "Farm Level",
+v486:AddToggle({
+    Name = "Tự Động Lên Cấp",
+    Description = "Tự động nông trại cấp",
     Default = false,
     Callback = function(state)
         _G.AutoFarm = state
@@ -4096,9 +4088,9 @@ spawn(function()
         end
     end
 end)
-v485:AddToggle({
-    Name = "Auto Nearest",
-    Description = "Auto Farm Nearest Mobs",
+v486:AddToggle({
+    Name = "Tự Động Quái Gần",
+    Description = "Tự động nông trại quái gần",
     Default = false,
     Callback = function(v520)
         _G.AutoNear = v520
@@ -4132,87 +4124,18 @@ spawn(function()
         end
     end
 end)
-
-if World3 then
-v485:AddToggle({
-    Name = "Auto Pirates",
-    Description = "Farm Raid Pirate",
+local _ = v486:AddSection({"Sự Kiện Egg"})
+v486:AddToggle({
+    Name = "Tự Động Trứng [ Near ]",
+    Description = "Tự động trứng gần",
     Default = false,
-    Callback = function(v543)
-        _G.AutoRaidPirate = v543
-        StopTween(_G.AutoRaidPirate)
+    Callback = function()
+    
     end
 })
-spawn(function()
-    while wait() do
-        if _G.AutoRaidPirate then
-            pcall(function()
-                local v544 = CFrame.new(-5496.17432, 313.768921, -2841.53027, 0.924894512, 7.37058015E-9, 0.380223751, 3.5881019E-8, 1, -1.06665446E-7, -0.380223751, 1.12297109E-7, 0.924894512)
-                if (CFrame.new(-5539.3115234375, 313.800537109375, -2972.372314453125).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 500 then
-                    for _, v546 in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                        if _G.AutoRaidPirate and v546:FindFirstChild("HumanoidRootPart") and v546:FindFirstChild("Humanoid") and v546.Humanoid.Health > 0 and (v546.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 2000 then
-                            repeat
-                                wait()
-                                AutoHaki()
-                                EquipWeapon(_G.SelectWeapon)
-                                NeedAttacking = true
-                                StartMagnet = true
-                                v546.HumanoidRootPart.CanCollide = false
-                                v546.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-                                topos(v546.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
-                            until v546.Humanoid.Health <= 0 or not v546.Parent or _G.AutoRaidPirate == false
-                            NeedAttacking = false
-                            StartMagnet = false
-                        end
-                    end
-                elseif (v544.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 1500 then
-                    TP1(v544)
-                else
-                    TP1(v544)
-                end
-            end)
-        end
-    end
-end)
-end
-if World2 then
-    v485:AddToggle({
-        Name = "Auto Factory",
-        Description = "Spawns Every 1:30 [hours, Minutes]",
-        Default = false,
-        Callback = function(v732)
-            _G.AutoFactory = v732
-            StopTween(_G.AutoFactory)
-        end
-    })
-    spawn(function()
-        while wait() do
-            spawn(function()
-                if _G.AutoFactory then
-                    if game:GetService("Workspace").Enemies:FindFirstChild("Core") then
-                        for _, v734 in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                            if v734.Name == "Core" and v734.Humanoid.Health > 0 then
-                                repeat
-                                    task.wait()
-                                    AutoHaki()
-                                    EquipWeapon(_G.SelectWeapon)
-                                    topos(CFrame.new(448.46756, 199.356781, -441.389252))
-                                    game:GetService("VirtualUser"):CaptureController()
-                                    game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
-                                until v734.Humanoid.Health <= 0 or _G.AutoFactory == false
-                            end
-                        end
-                    else
-                        topos(CFrame.new(448.46756, 199.356781, -441.389252))
-                    end
-                end
-            end)
-        end
-    end)
- end
-local _ = v496:AddSection("Join Sever")
-v496:AddTextBox({
-        Name = "Job ID",
+local _ = v485:AddSection({"Vào Máy Chủ"})
+v485:AddTextBox({
+        Name = "Vào ID",
         PlaceholderText = "Paste the Job ID here...",
         Callback = function(p215)
             if p215 ~= "" then
@@ -4220,8 +4143,8 @@ v496:AddTextBox({
             end
         end
     })
-v496:AddButton({
-    Title = "Join Clipboard",
+v485:AddButton({
+    Title = "Vào Khi Sao Chép ID",
     Description = "Join server from copied JobId",
     Callback = function()
         local TeleportService = game:GetService("TeleportService")
@@ -4237,8 +4160,10 @@ v496:AddButton({
         end
     end
 })
-local _ = v496:AddSection("Fast Attack")
-v496:AddToggle({
+
+local _ = v485:AddSection({"Settings Farm"})
+
+v485:AddToggle({
     Name = "Fast Attack",
     Description = "",
     Default = true,
@@ -4379,7 +4304,7 @@ task.spawn(function()
         end
     end
 end)
-v496:AddToggle({
+v485:AddToggle({
     Name = "Bring Mob",
     Description = "",
     Default = true,
