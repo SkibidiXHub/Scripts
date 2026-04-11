@@ -3733,8 +3733,8 @@ function CheckItemBPCRBPCR(v463)
         end
     end
 end
-local vu32 = loadstring(game:HttpGet("https://raw.githubusercontent.com/PlockScripts/Library-ui/refs/heads/main/redz-V5-remake/main.luau"))()
-local v466 = vu32:MakeWindow({
+Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/PlockScripts/Library-ui/refs/heads/main/redz-V5-remake/main.luau"))()
+local v466 = Library:MakeWindow({
     Title = "Dojo Hub [ BETA V1 ] | Blox Fruits",
     SubTitle = "by real_dojo",
     SaveFolder = "Redz | redz lib v5.lua"
@@ -3753,7 +3753,7 @@ local v487 = v466:MakeTab({"Tab | Quest & Other", "swords"})
 
 wait(1)
 
-vu32:Notify({
+Library:Notify({
     Title = "Dojo Hub Loaded !",
     Description = "Chúc Bạn Chơi Vui Vẻ !",
     Duration = 3
