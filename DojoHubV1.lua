@@ -3733,7 +3733,7 @@ function CheckItemBPCRBPCR(v463)
         end
     end
 end
-Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/PlockScripts/Library-ui/refs/heads/main/redz-V5-remake/main.luau"))()
+Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/SkibidiXHub/Scripts/refs/heads/main/raw"))()
 local v466 = Library:MakeWindow({
     Title = "Dojo Hub [ BETA V1 ] | Blox Fruits",
     SubTitle = "by real_dojo",
