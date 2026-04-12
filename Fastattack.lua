@@ -40,9 +40,9 @@ end
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 local Window = Rayfield:CreateWindow({
-    Name = "Fast Attack By Night Slayer Hub",
+    Name = "Watermelon Hub | Fast Attack",
     LoadingTitle = "Loading...",
-    LoadingSubtitle = "Clean Mode",
+    LoadingSubtitle = "By real_watermelon",
     ConfigurationSaving = {Enabled = false}
 })
 
@@ -58,6 +58,14 @@ Tab:CreateToggle({
     CurrentValue = false,
     Callback = function(v)
         _G.FastAttack = v
+    end
+})
+
+Tab:CreatToggle({
+    Name = "Fast Attack M1",
+    CurenntValue = false,
+    Callback = function(v)
+       _G.IsUsingFastAttack = v
     end
 })
 
