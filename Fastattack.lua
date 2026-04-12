@@ -61,14 +61,6 @@ Tab:CreateToggle({
     end
 })
 
-Tab:CreateToggle({
-    Name = "Fast Attack M1",
-    CurenntValue = false,
-    Callback = function(v)
-       _G.IsUsingFastAttack = v
-    end
-})
-
 Tab:CreateSlider({
     Name = "Attack Range",
     Range = {20,100},
