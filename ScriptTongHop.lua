@@ -100,7 +100,7 @@ loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V
 
        local Window = MakeWindow({
          Hub = {
-         Title = "Watermelon Hub | Tổng Hợp",
+         Title = "Dojo Hub | Tổng Hợp",
          Animation = "[ BETA 1.0 ]"
          },
         Key = {
@@ -119,7 +119,7 @@ loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V
   })
 
        MinimizeButton({
-       Image = "http://www.roblox.com/asset/?id=97224029591833",
+       Image = "http://www.roblox.com/asset/?id=78617112299549",
        Size = {40, 40},
        Color = Color3.fromRGB(10, 10, 10),
        Corner = true,
@@ -133,7 +133,7 @@ loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V
      local Tab3o = MakeTab({Name = "Kaitun Bounty"})
      local Tab4o = MakeTab({Name = "Kaitun V4"})
      local Tab5o = MakeTab({Name = "Hop Sever"})
-     local Tab5o = MakeTab({Name = "Admin Kamui"})
+     local Tab6o = MakeTab({Name = "Admin Kamui"})
 ------- BUTTON
     
 AddButton(Tab1o, {
@@ -159,5 +159,11 @@ AddButton(Tab1o, {
      Name = "Trẩu Banana (Key)",
     Callback = function()
 	  loadstring(game:HttpGet("https://raw.githubusercontent.com/trungdao2k4/trauroblox/refs/heads/main/traubluev1"))()
+  end
+  })
+AddButton(Tab6o, {
+     Name = "Kamui (Từ 1 đến 6)
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/WhiteX1208/Scripts/refs/heads/main/AdminKamui.luau"))()
   end
   })
