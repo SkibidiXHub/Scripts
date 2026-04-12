@@ -61,7 +61,7 @@ Tab:CreateToggle({
     end
 })
 
-Tab:CreatToggle({
+Tab:CreateToggle({
     Name = "Fast Attack M1",
     CurenntValue = false,
     Callback = function(v)
