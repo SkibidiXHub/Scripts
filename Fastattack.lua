@@ -40,9 +40,9 @@ end
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 local Window = Rayfield:CreateWindow({
-    Name = "Watermelon Hub | Fast Attack",
-    LoadingTitle = "Loading...",
-    LoadingSubtitle = "By real_watermelon",
+    Name = "Dojo Hub | Đánh Nhanh",
+    LoadingTitle = "Đang Tải...",
+    LoadingSubtitle = "Bởi real_dojo",
     ConfigurationSaving = {Enabled = false}
 })
 
@@ -54,7 +54,7 @@ _G.HitRate = 0.1
 _G.Combo = 2
 
 Tab:CreateToggle({
-    Name = "Enable Fast Attack",
+    Name = "Kích Hoạt Tấn Công Nhanh",
     CurrentValue = false,
     Callback = function(v)
         _G.FastAttack = v
@@ -62,7 +62,7 @@ Tab:CreateToggle({
 })
 
 Tab:CreateSlider({
-    Name = "Attack Range",
+    Name = "Phạm Vi Tấn Công",
     Range = {20,100},
     Increment = 5,
     CurrentValue = 60,
@@ -72,7 +72,7 @@ Tab:CreateSlider({
 })
 
 Tab:CreateSlider({
-    Name = "Attack Speed",
+    Name = "Tốc Độ Tấn Công",
     Range = {1,20},
     Increment = 1,
     CurrentValue = 10,
@@ -136,10 +136,3 @@ task.spawn(function()
         end
     end
 end)
-
-Tab:CreateButton({
-    Name = "Kamui (từ 1 đến 6)
-    Callback = function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/WhiteX1208/Scripts/refs/heads/main/AdminKamui.luau"))()
-    end
-})
