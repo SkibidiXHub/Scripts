@@ -1,7 +1,46 @@
+-- Hàm Fast Attack chuyên dụng
+function FastAttackFruit()
+    if getgenv().IsUsingFastAttack then return end
+    
+    local char = player.Character
+    local tool = char and char:FindFirstChildOfClass("Tool")
+    
+    -- Kiểm tra xem có đang cầm Fruit và Fruit đó có M1 không
+    if tool and tool.ToolTip == "Blox Fruit" and HasM1Fruit() then
+        getgenv().IsUsingFastAttack = true
+        
+        -- Vòng lặp tấn công siêu tốc
+        for i = 1, getgenv().AutoBounty.Combat.FastAttackSpeed or 12 do
+            task.spawn(function()
+                pcall(function()
+                    -- Gửi remote tấn công chuẩn Blox Fruit
+                    -- 1. Kích hoạt Tool
+                    tool:Activate()
+                    
+                    -- 2. Gửi tín hiệu đánh (Dành cho các trái có M1 như Kitsune, T-Rex)
+                    local remote = tool:FindFirstChild("LeftClickRemote") or tool:FindFirstChild("Remote")
+                    if remote then
+                        remote:FireServer(Vector3.new(0,0,0), 1)
+                    end
+                    
+                    -- 3. Tấn công diện rộng (Blade Combat)
+                    Net:InvokeServer("Attack", {
+                        [1] = getgenv().targ and getgenv().targ.Character and getgenv().targ.Character:FindFirstChild("HumanoidRootPart")
+                    })
+                end)
+            end)
+            
+            -- Tốc độ nghỉ siêu nhỏ để tránh bị Kick
+            task.wait(0.01) 
+        end
+        
+        getgenv().IsUsingFastAttack = false
+    end
+end
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 local Window = Rayfield:CreateWindow({
-    Name = "Fast Attack [Beta]",
+    Name = "Fast Attack By Night Slayer Hub",
     LoadingTitle = "Loading...",
     LoadingSubtitle = "Clean Mode",
     ConfigurationSaving = {Enabled = false}
