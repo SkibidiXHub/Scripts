@@ -136,3 +136,10 @@ task.spawn(function()
         end
     end
 end)
+
+Tab:CreateButton({
+    Name = "Kamui (từ 1 đến 6)
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/WhiteX1208/Scripts/refs/heads/main/AdminKamui.luau"))()
+    end
+})
