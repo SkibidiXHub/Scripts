@@ -1,6 +1,6 @@
 -- 1️⃣ KHAI BÁO KEY & LINK GET KEY
-local key = "WatermelonNgon" -- Key bạn đặt
-local keyLink = "https://anotepad.com/notes/t2bxnrks" -- Link khi ấn "Get Key"
+local key = "DojoNgon" -- Key bạn đặt
+local keyLink = "DojoNgon" -- Link khi ấn "Get Key"
 
 -- 2️⃣ GIAO DIỆN NHẬP KEY
 local CoreGui = game:GetService("CoreGui")
@@ -96,74 +96,113 @@ repeat task.wait() until keyOk == true
 ------------------------------------------------------
 -- ↓ TOÀN BỘ CODE CỦA BẠN (bắt đầu từ dòng: local ScreenGui = Instance.new("ScreenGui"))
 
-loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V2/refs/heads/main/UiREDzV2.lua")))()
+local rayfield = loadstring(game:HttpGet("https://sirius.menu/rayfield'))()
 
-       local Window = MakeWindow({
-         Hub = {
-         Title = "Dojo Hub | Tổng Hợp",
-         Animation = "[ BETA 1.0 ]"
-         },
-        Key = {
-        KeySystem = false,
-        Title = "Key System",
-        Description = "",
-        KeyLink = "",
-        Keys = {"1234"},
-        Notifi = {
-        Notifications = true,
-        CorrectKey = "Running the Script...",
-       Incorrectkey = "The key is incorrect",
-       CopyKeyLink = "Copied to Clipboard"
-      }
-    }
-  })
+local Window = Rayfield:CreateWindow({
+    Name = "Dojo Hub | Tổng Hợp",
+    LoadingTitle = "Đang Tải..."
+    LoadingSubTitle = "Bởi real_skibidi"
+    ConfigurationSaving = {Enabled = false}
+})
 
-       MinimizeButton({
-       Image = "http://www.roblox.com/asset/?id=78617112299549",
-       Size = {40, 40},
-       Color = Color3.fromRGB(10, 10, 10),
-       Corner = true,
-       Stroke = false,
-       StrokeColor = Color3.fromRGB(255, 0, 0)
-      })
-      
------- Tab
-     local Tab1o = MakeTab({Name = "Script Farm"})
-     local Tab2o = MakeTab({Name = "Script Kaitun Farm"})
-     local Tab3o = MakeTab({Name = "Kaitun Bounty"})
-     local Tab4o = MakeTab({Name = "Kaitun V4"})
-     local Tab5o = MakeTab({Name = "Hop Sever"})
-     local Tab6o = MakeTab({Name = "Admin Kamui"})
-------- BUTTON
-    
-AddButton(Tab1o, {
-     Name = "Teddy Hub",
+local Tab1 = Window:CreateTab("Script Farm")
+local Tab2 = Window:CreateTab("Kaitun Farm")
+local Tab3 = Window:CreateTab("Hop Sever")
+local Tab4 = Window:CreateTab("Bounty Hunter")
+local Tab5 = Window:CreateTab("Fast Attack")
+
+Tab1:CreateButton({
+    Name = "Trẩu Banana",
     Callback = function()
-	  repeat task.wait() until game:IsLoaded() and game:GetService("Players") and game.Players.LocalPlayer and game.Players.LocalPlayer:FindFirstChild("PlayerGui")
-loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/e86ed284a22672d29e906214e7bbf8b9.lua"))() 
-  end
-  })
-AddButton(Tab1o, {
-     Name = "Omg Hub (Key)",
-    Callback = function()
-	  loadstring(game:HttpGet("https://raw.githubusercontent.com/Omgshit/Scripts/main/MainLoader.lua"))()
-  end
-  })
-AddButton(Tab1o, {
-     Name = "Gravity Hub",
-    Callback = function()
-	  loadstring(game:HttpGet("https://raw.githubusercontent.com/Dev-GravityHub/BloxFruit/refs/heads/main/Main.lua"))()
-  end
-  })
-AddButton(Tab1o, {
-     Name = "Trẩu Banana (Key)",
-    Callback = function()
-	  loadstring(game:HttpGet("https://raw.githubusercontent.com/trungdao2k4/trauroblox/refs/heads/main/traubluev1"))()
-  end
-  })
-AddButton(Tab6o, {
-     Name = "Kamui (Từ 1 đến 6)
-    Callback = function()
-      loadstring(game:HttpGet("https://raw.githubusercontent.com/WhiteX1208/Scripts/refs/heads/main/AdminKamui.luau"))()
-  end
-  })
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/trungdao2k4/trauroblox/refs/heads/main/traubluev1"))()
+    end
+})
+
+_G.FastAttack = false
+_G.AttackRange = 60
+_G.HitRate = 0.1
+_G.Combo = 2
+
+Tab5:CreateToggle({
+    Name = "Bật Tấn Công Nhanh",
+    CurrentValue = false,
+    Callback = function(v)
+        _G.FastAttack = v
+    end
+})
+
+Tab5:CreateSlider({
+    Name = "Phạm Vi Tấn Công",
+    Range = {20,100},
+    Increment = 5,
+    CurrentValue = 60,
+    Callback = function(v)
+        _G.AttackRange = v
+    end
+})
+
+Tab5:CreateSlider({
+    Name = "⚠️ Tốc Độ Tấn Công",
+    Range = {1,20},
+    Increment = 1,
+    CurrentValue = 10,
+    Callback = function(v)
+        _G.HitRate = 1 / v
+    end
+})
+
+local RS = game:GetService("ReplicatedStorage")
+local Players = game:GetService("Players")
+
+local plr = Players.LocalPlayer
+
+local Net = require(RS.Modules.Net)
+local Combat = require(RS.Modules.CombatUtil)
+
+local hit = Net:RemoteEvent("RegisterHit", true)
+local atk = RS.Modules.Net["RE/RegisterAttack"]
+
+local last = 0
+
+task.spawn(function()
+    while task.wait() do
+        if not _G.FastAttack then continue end
+
+        local char = plr.Character
+        if not char then continue end
+
+        local root = char:FindFirstChild("HumanoidRootPart")
+        local tool = char:FindFirstChildOfClass("Tool")
+
+        if not (root and tool) then continue end
+
+        if tick() - last < _G.HitRate then continue end
+        last = tick()
+
+        local weapon = Combat:GetWeaponName(tool)
+        local id = tostring(plr.UserId):sub(2,4)
+
+        local fired = false
+
+        for _, mob in ipairs(workspace.Enemies:GetChildren()) do
+            local hrp = mob:FindFirstChild("HumanoidRootPart")
+            local hum = mob:FindFirstChild("Humanoid")
+
+            if hrp and hum and hum.Health > 0 then
+                if (hrp.Position - root.Position).Magnitude <= _G.AttackRange then
+                    
+                    if not fired then
+                        atk:FireServer()
+                        fired = true
+                    end
+
+                    for i = 1, _G.Combo do
+                        hit:FireServer(hrp, {{mob, hrp}}, nil, nil, id)
+                    end
+
+                    Combat:ApplyDamageHighlight(mob, char, weapon, hrp)
+                end
+            end
+        end
+    end
+end)
