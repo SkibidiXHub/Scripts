@@ -3752,6 +3752,7 @@ local v486 = v466:MakeTab({"Tab | Main", "home"})
 local v487 = v466:MakeTab({"Tab | Quest Other", "swords"})
 local v488 = v466:MakeTab({"Tab | Fishing", "rbxassetid://127664059821666"})
 local v489 = v466:MakeTab({"Tab | Fruits & Raid", "cherry"})
+local v490 = v466:MakeTab({"Tab | Race", "crown"})
 
 v484:AddDiscordInvite({
     Name = "Dojo Hub | Community",
@@ -4204,9 +4205,147 @@ if World2 then
         end
     end)
  end
+local _ = v486:AddSection({"Nông Trại Rương"})
+v486:AddToggle({
+    Name = "Nông Trại Rương [ Di Chuyển ]",
+    Description = "",
+    Default = false,
+    Callback = function(v644)
+        _G.FarmChest = v644
+        StopTween(_G.FarmChest)
+    end
+})
+spawn(function()
+    while wait() do
+        if _G.FarmChest then
+            local l_LocalPlayer_9 = game:GetService("Players").LocalPlayer
+            local l_Position_4 = (l_LocalPlayer_9.Character or l_LocalPlayer_9.CharacterAdded:Wait()):GetPivot().Position
+            local l_Tagged_2 = game:GetService("CollectionService"):GetTagged("_ChestTagged")
+            local l_huge_2 = math.huge
+            local v649 = nil
+            for v650 = 1, #l_Tagged_2 do
+                local v651 = l_Tagged_2[v650]
+                local l_Magnitude_5 = (v651:GetPivot().Position - l_Position_4).Magnitude
+                if not v651:GetAttribute("IsDisabled") and l_Magnitude_5 < l_huge_2 then
+                    local l_l_Magnitude_5_0 = l_Magnitude_5
+                    v649 = v651
+                    l_huge_2 = l_l_Magnitude_5_0
+                end
+            end
+            if v649 then
+                local l_Position_5 = v649.GetPivot(v649).Position
+                local v655 = CFrame.new(l_Position_5)
+                topos(v655)
+            end
+        end
+    end
+end)
+local ChestBypass = false
+
+v486:AddToggle({
+    Title = "Nông Trại Rương [ Dịch Chuyển ]",
+    Value = false,
+    Callback = function(v)
+        ChestBypass = v
+    end
+})
+
+task.spawn(function()
+    while task.wait() do
+        if ChestBypass then
+            local Players = game:GetService("Players")
+            local LocalPlayer = Players.LocalPlayer
+            local CollectionService = game:GetService("CollectionService")
+
+            local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+            local startTick = tick()
+
+            while ChestBypass and (tick() - startTick) < 4 do
+                character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+                local charPos = character:GetPivot().Position
+                local chests = CollectionService:GetTagged("_ChestTagged")
+
+                local closest, dist = nil, math.huge
+                for i = 1, #chests do
+                    local chest = chests[i]
+                    if not chest:GetAttribute("IsDisabled") then
+                        local d = (chest:GetPivot().Position - charPos).Magnitude
+                        if d < dist then
+                            dist = d
+                            closest = chest
+                        end
+                    end
+                end
+
+                if closest then
+                    character:PivotTo(CFrame.new(closest:GetPivot().Position))
+                    task.wait(0.2)
+                else
+                    break
+                end
+            end
+
+            if ChestBypass and LocalPlayer.Character then
+                LocalPlayer.Character:BreakJoints()
+                LocalPlayer.CharacterAdded:Wait()
+            end
+        end
+    end
+end)
+
+local _ = v487:AddSection({"Nông Trại Quả Mộng"})
+v487:AddToggle({
+    Name = "Auto Collect Berry",
+    Description = "",
+    Default = false,
+    Callback = function(v628)
+        _G.CollectBerry = v628
+        StopTween(_G.CollectBerry)
+    end
+})
+spawn(function()
+    while wait() do
+        if _G.CollectBerry then
+            local l_LocalPlayer_8 = game:GetService("Players").LocalPlayer
+            local l_Position_2 = (l_LocalPlayer_8.Character or l_LocalPlayer_8.CharacterAdded:Wait()):GetPivot().Position
+            local l_Tagged_1 = game:GetService("CollectionService"):GetTagged("BerryBush")
+            local l_huge_1 = math.huge
+            local v633 = nil
+            local v634 = nil
+            for _, v636 in ipairs(l_Tagged_1) do
+                for v637, _ in pairs(v636:GetAttributes()) do
+                    local l_Magnitude_4 = (v636.Parent:GetPivot().Position - l_Position_2).Magnitude
+                    if l_Magnitude_4 < l_huge_1 then
+                        l_huge_1 = l_Magnitude_4
+                        v633 = v636
+                        v634 = v637
+                    end
+                end
+            end
+            if v633 and v634 then
+                local l_Parent_0 = v633.Parent
+                local l_Position_3 = l_Parent_0:GetPivot().Position
+                TP1(CFrame.new(l_Position_3 + Vector3.new(0, 2, 0)))
+                task.wait(0.5)
+                local l_l_Parent_0_FirstChild_0 = l_Parent_0:FindFirstChild(v634)
+                if l_l_Parent_0_FirstChild_0 and l_l_Parent_0_FirstChild_0:IsA("BasePart") then
+                    TP1(l_l_Parent_0_FirstChild_0.CFrame + Vector3.new(0, 1, 0))
+                    task.wait(0.3)
+                    local l_VirtualInputManager_2 = game:GetService("VirtualInputManager")
+                    l_VirtualInputManager_2:SendKeyEvent(true, Enum.KeyCode.E, false, game)
+                    task.wait(0.1)
+                    l_VirtualInputManager_2:SendKeyEvent(false, Enum.KeyCode.E, false, game)
+                end
+            elseif _G.CollectBerryHop then
+                Hop()
+            end
+        end
+    end
+end)
+
 if World3 then
-local _ = v486:AddSection({"Boss Chim"})
-local v548 = v486:AddParagraph({Title = "Kiểm Tra Mắt Chim", Content = "Loading..."})
+local _ = v487:AddSection({"Boss Chim"})
+local v548 = v487:AddParagraph({Title = "Kiểm Tra Mắt Chim", Content = "Loading..."})
 task.spawn(function()
     while task.wait(1) do
         pcall(function()
@@ -4226,7 +4365,7 @@ task.spawn(function()
         end)
     end
 end)
-v486:AddToggle({
+v487:AddToggle({
     Name = "Tự Động Nông Trại Boss Chim",
     Description = "",
     Default = false,
@@ -4328,7 +4467,7 @@ task.spawn(function()
         end
     end
 end)
-v486:AddToggle({
+v487:AddToggle({
     Name = "Triệu Hồi Boss Chim",
     Description = "",
     Default = false,
@@ -4516,6 +4655,134 @@ v488:AddDropdown({
         l_FishingRequest_0:InvokeServer("SelectBait", v690)
     end
 })
+
+local _ = v489:AddSection({"Fruits"})
+v489:AddToggle({
+    Name = "Tự Động Quay Trái Cây",
+    Description = "",
+    Default = false,
+    Callback = function(v1074)
+        _G.RandomAuto = v1074
+    end
+})
+spawn(function()
+    pcall(function()
+        while wait() do
+            if _G.RandomAuto then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Cousin", "Buy")
+            end
+        end
+    end)
+end)
+v489:AddToggle({
+    Title = "Tự Động Lưu Trữ",
+    Description = "",
+    Value = false,
+    Callback = function(v1075)
+        getgenv().AutoStoreFruit = v1075
+    end
+})
+spawn(function()
+    while task.wait(0.2) do
+        if getgenv().AutoStoreFruit then
+            pcall(function()
+                local l_LocalPlayer_16 = game:GetService("Players").LocalPlayer
+                local v1077 = l_LocalPlayer_16.Character or l_LocalPlayer_16.CharacterAdded:Wait()
+                local l_Backpack_3 = l_LocalPlayer_16:WaitForChild("Backpack")
+                for _, v1080 in ipairs({
+                    {"Rocket Fruit", "Rocket-Rocket"},
+                    {"Spin Fruit", "Spin-Spin"},
+                    {"Blade Fruit", "Blade-Blade"},
+                    {"Spring Fruit", "Spring-Spring"},
+                    {"Bomb Fruit", "Bomb-Bomb"},
+                    {"Smoke Fruit", "Smoke-Smoke"},
+                    {"Spike Fruit", "Spike-Spike"},
+                    {"Flame Fruit", "Flame-Flame"},
+                    {"Eagle Fruit", "Eagle-Eagle"},
+                    {"Ice Fruit", "Ice-Ice"},
+                    {"Sand Fruit", "Sand-Sand"},
+                    {"Dark Fruit", "Dark-Dark"},
+                    {"Diamond Fruit", "Diamond-Diamond"},
+                    {"Light Fruit", "Light-Light"},
+                    {"Rubber Fruit", "Rubber-Rubber"},
+                    {"Creation Fruit", "Creation-Creation"},
+                    {"Ghost Fruit", "Ghost-Ghost"},
+                    {"Magma Fruit", "Magma-Magma"},
+                    {"Quake Fruit", "Quake-Quake"},
+                    {"Buddha Fruit", "Buddha-Buddha"},
+                    {"Love Fruit", "Love-Love"},
+                    {"Spider Fruit", "Spider-Spider"},
+                    {"Sound Fruit", "Sound-Sound"},
+                    {"Phoenix Fruit", "Phoenix-Phoenix"},
+                    {"Portal Fruit", "Portal-Portal"},
+                    {"Lightning Fruit", "Lightning-Lightning"},
+                    {"Pain Fruit", "Pain-Pain"},
+                    {"Blizzard Fruit", "Blizzard-Blizzard"},
+                    {"Gravity Fruit", "Gravity-Gravity"},
+                    {"Mammoth Fruit", "Mammoth-Mammoth"},
+                    {"T-Rex Fruit", "T-Rex-T-Rex"},
+                    {"Dough Fruit", "Dough-Dough"},
+                    {"Shadow Fruit", "Shadow-Shadow"},
+                    {"Venom Fruit", "Venom-Venom"},
+                    {"Gas Fruit", "Gas-Gas"},
+                    {"Control Fruit", "Control-Control"},
+                    {"Spirit Fruit", "Spirit-Spirit"},
+                    {"Leopard Fruit", "Leopard-Leopard"},
+                    {"Yeti Fruit", "Yeti-Yeti"},
+                    {"Kitsune Fruit", "Kitsune-Kitsune"},
+                    {"Dragon Fruit", "Dragon-Dragon"}
+                }) do
+                    local v1081 = v1080[1]
+                    local v1082 = v1080[2]
+                    local v1083 = l_Backpack_3:FindFirstChild(v1081) or v1077:FindFirstChild(v1081)
+                    if v1083 then
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StoreFruit", v1082, v1083)
+                        break
+                    end
+                end
+            end)
+        end
+    end
+end)
+v489:AddToggle({
+    Name = "Đi Đến Trái Cây Đang Xuấn Hiện",
+    Description = "",
+    Default = false,
+    Callback = function(v1084)
+        _G.Tweenfruit = v1084
+    end
+})
+spawn(function()
+    while wait(0.1) do
+        if _G.TweenFruit then
+            for _, v1086 in pairs(game.Workspace:GetChildren()) do
+                if string.find(v1086.Name, "Fruit") then
+                    TP1(v1086.Handle.CFrame)
+                end
+            end
+        end
+    end
+end)
+v489:AddToggle({
+    Name = "Dịch Chuyển Đến Trái Cây",
+    Description = "",
+    Default = false,
+    Callback = function(v1087)
+        _G.Grabfruit = v1087
+    end
+})
+spawn(function()
+    while wait(0.1) do
+        if _G.Grabfruit then
+            for _, v1089 in pairs(game.Workspace:GetChildren()) do
+                if string.find(v1089.Name, "Fruit") then
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v1089.Handle.CFrame
+                end
+            end
+        end
+    end
+end)
+
 local _ = v485:AddSection({"Vào Máy Chủ"})
 v485:AddTextBox({
         Name = "Vào ID",
