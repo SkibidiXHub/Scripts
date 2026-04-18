@@ -3753,12 +3753,25 @@ local v487 = v466:MakeTab({"Tab | Quest Other", "swords"})
 local v488 = v466:MakeTab({"Tab | Fishing", "rbxassetid://127664059821666"})
 local v489 = v466:MakeTab({"Tab | Fruits & Raid", "cherry"})
 local v490 = v466:MakeTab({"Tab | Race", "crown"})
+local v491 = v466:MakeTab({"Tab | Stats", "Signal"})
 
 v484:AddDiscordInvite({
     Name = "Dojo Hub | Community",
     Description = "Join server to receive Update",
     Logo = "rbxassetid://78617112299549",
     Invite = "https://discord.gg/BMe59Na"
+})
+v484:AddParagraph({
+Title = "Phiên Bản Cập Nhật Mới",
+    Desc = "- Fix Bring Mob, Fix Fast Attack, Add Stats And Race"
+})
+v484:AddParagraph({
+Title = "New Version 1.5",
+    Desc = ""
+})
+v484:AddParagraph({
+Title = "Freemium Script",
+    Desc = ""
 })
 _G.SelectWeapon = "Melee"
 task.spawn(function()
@@ -4782,6 +4795,120 @@ spawn(function()
         end
     end
 end)
+
+local _ = v491:AddSection({"Cài Đặt Chỉ Số")}
+    local Replicated = game:GetService("ReplicatedStorage")
+local CommF = Replicated:WaitForChild("Remotes"):WaitForChild("CommF_")
+
+local AutoStats = false
+local PointsPerTick = 1
+
+local StatsSelect = {
+    Melee = false,
+    Defense = false,
+    Sword = false,
+    Gun = false,
+    BloxFruit = false,
+}
+
+local function AddPoint(Stat, Amount)
+    pcall(function()
+        CommF:InvokeServer("AddPoint", Stat, Amount, false)
+    end)
+end
+
+local function DistributePoints()
+    while AutoStats do
+        task.wait(0.4)
+
+        local player = game.Players.LocalPlayer
+        local statsFolder = player:FindFirstChild("Data")
+        if not statsFolder then continue end
+        
+        local points = statsFolder:FindFirstChild("Points")
+        if not points or points.Value <= 0 then continue end
+        
+        local EnabledStats = {}
+        for stat, enabled in pairs(StatsSelect) do
+            if enabled then
+                table.insert(EnabledStats, stat)
+            end
+        end
+        
+        if #EnabledStats > 0 then
+            local amountEach = math.floor(PointsPerTick / #EnabledStats)
+            if amountEach < 1 then amountEach = 1 end
+            
+            for _, stat in ipairs(EnabledStats) do
+                AddPoint(stat, amountEach)
+            end
+        end
+    end
+end
+
+v497:AddSlider({
+    Name = "Tỷ Lệ Cộng",
+    Min = 1,
+    Max = 500,
+    Increase = 1,
+    Default = 1,
+    Callback = function(v)
+        PointsPerTick = v
+    end
+})
+
+v497:AddToggle({
+    Name = "Bắt Đầu Cộng",
+    Default = false,
+    Callback = function(v)
+        AutoStats = v
+        if v then
+            task.spawn(DistributePoints)
+        end
+    end
+})
+
+local Section = v497:AddSection({"Chọn Chỉ Số"})
+
+v497:AddToggle({
+    Name = "Võ",
+    Default = false,
+    Callback = function(v)
+        StatsSelect.Melee = v
+    end
+})
+
+v497:AddToggle({
+    Name = "Máu",
+    Default = false,
+    Callback = function(v)
+        StatsSelect.Defense = v
+    end
+})
+
+v497:AddToggle({
+    Name = "Kiếm",
+    Default = false,
+    Callback = function(v)
+        StatsSelect.Sword = v
+    end
+})
+
+v497:AddToggle({
+    Name = "Súng",
+    Default = false,
+    Callback = function(v)
+        StatsSelect.Gun = v
+    end
+})
+
+v497:AddToggle({
+    Name = "Trái",
+    Default = false,
+    Callback = function(v)
+        StatsSelect.BloxFruit = v
+    end
+})
 
 local _ = v485:AddSection({"Vào Máy Chủ"})
 v485:AddTextBox({
