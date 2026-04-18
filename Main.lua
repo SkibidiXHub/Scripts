@@ -4176,9 +4176,9 @@ v486:AddToggle({
     end
 })
 spawn(function()
-     while wait() do
-          spawn(function()
-              if _G.AutoFactory then
+    while wait() do
+       spawn(function()
+       if _G.AutoFactory then
                     if game:GetService("Workspace").Enemies:FindFirstChild("Core") then
                         for _, v734 in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                             if v734.Name == "Core" and v734.Humanoid.Health > 0 then
