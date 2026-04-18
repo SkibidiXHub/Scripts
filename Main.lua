@@ -3750,7 +3750,7 @@ local v484 = v466:MakeTab({"Tab | Info", "info"})
 local v485 = v466:MakeTab({"Tab | Settings", "home"})
 local v486 = v466:MakeTab({"Tab | Main", "home"})
 local v487 = v466:MakeTab({"Tab | Quest Other", "swords"})
-local v491 = v466:MakeTab({"Tab | Fishing", "rbxassetid://127664059821666"})
+local v488 = v466:MakeTab({"Tab | Fishing", "rbxassetid://127664059821666"})
 
 v484:AddDiscordInvite({
     Name = "Dojo Hub | Community",
@@ -4203,8 +4203,8 @@ if World2 then
         end
     end)
  end
-local _ = v491:AddSection({"Nông Trại Câu Cá"})
-v491:AddToggle({
+local _ = v488:AddSection({"Nông Trại Câu Cá"})
+v488:AddToggle({
     Title = "Tự Động Cá",
     Description = "",
     Default = false,
@@ -4252,7 +4252,7 @@ task.spawn(function()
         end
     end
 end)
-v491:AddDropdown({
+v488:AddDropdown({
     Name = "Chọn Mồi Để Câu",
     Description = "",
     Options = {"Basic Bait", "Kelp Bait", "Good Bait", "Abyssal Bait", "Frozen Bait", "Epic Bait", "Carnivore Bait"},
