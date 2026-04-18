@@ -3733,10 +3733,10 @@ function CheckItemBPCRBPCR(v463)
         end
     end
 end
-local vu32 = loadstring(game:HttpGet("https://pastefy.app/5bk02Q6b/raw"))()
+local vu32 = loadstring(game:HttpGet("https://pastefy.app/5bk02Q6b/raw"))();
 local v466 = vu32:MakeWindow({
-    Title = "Dojo Hub [ BETA ] | Blox Fruits",
-    SubTitle = "by real_skibidi",
+    Title = "Dojo Hub | Blox Fruits",
+    SubTitle = "by realdojo",
     SaveFolder = "Redz | redz lib v5.lua"
 })
 
@@ -3746,28 +3746,17 @@ v466:AddMinimizeButton({
     Corner = { CornerRadius = UDim.new(0.25, 0) },
 })
 
-local v484 = v466:MakeTab({"Tab | Info", "info"})
-local v485 = v466:MakeTab({"Tab | Settings", "home"})
-local v486 = v466:MakeTab({"Tab | Main", "home"})
-local v487 = v466:MakeTab({"Tab | Quest Other", "swords"})
-local v488 = v466:MakeTab({"Tab | Fishing", "rbxassetid://127664059821666"})
-local v489 = v466:MakeTab({"Tab | Fruits & Raid", "cherry"})
-local v490 = v466:MakeTab({"Tab | Race", "crown"})
-local v491 = v466:MakeTab({"Tab | Stats", "Signal"})
+local v484 = v466:MakeTab({"Discord", "info"})
+local v485 = v466:MakeTab({"Shop", "shoppingCart"})
+local v486 = v466:MakeTab({"Misc", "settings"})
+local v487 = v466:MakeTab({"Main Farm", "home"})
+local v484 = v466:MakeTab({"Stack Farm", "swords"})
 
 v484:AddDiscordInvite({
     Name = "Dojo Hub | Community",
-    Description = "Join server to receive Update",
+    Description = "Chúc Vào Discord May Mắn",
     Logo = "rbxassetid://78617112299549",
-    Invite = "https://discord.gg/BMe59Na"
-})
-v484:AddParagraph({
-Title = "New Version 1.5",
-    Desc = ""
-})
-v484:AddParagraph({
-Title = "Freemium Script",
-    Desc = ""
+    Invite = "https://discord.gg/H1eMno2"
 })
 _G.SelectWeapon = "Melee"
 task.spawn(function()
@@ -3805,9 +3794,9 @@ task.spawn(function()
         end)
     end
 end)
-local _ = v486:AddDropdown({
-    Name = "Chọn Công Cụ",
-    Description = "",
+local _ = v487:AddDropdown({
+    Name = "Chọn Vũ Khí",
+    Description = "Chọn vũ khí mà bạn muốn",
     Options = {"Melee", "Sword", "Gun", "Blox Fruit"},
     Default = "Melee",
     Flag = "WeaponType",
@@ -3815,8 +3804,7 @@ local _ = v486:AddDropdown({
         _G.SelectWeapon = v506
     end
 })
-
-local _ = v486:AddSection({"Nông Trại"})
+local _ = v485:AddSection({"Nông Trại"})
 
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
@@ -3944,9 +3932,9 @@ local function CheckQuestNew()
         CFrameMonNew = CFrame.new(10965.1025, -2158.8842, 9177.2597)
     end
 end
-v486:AddToggle({
+v485:AddToggle({
     Name = "Nông Trại Cấp",
-    Description = "",
+    Description = "Cày Cấp",
     Default = false,
     Callback = function(state)
         _G.AutoFarm = state
@@ -4101,9 +4089,9 @@ spawn(function()
         end
     end
 end)
-v486:AddToggle({
-    Name = "Nông Trại Gần",
-    Description = "",
+v485:AddToggle({
+    Name = "Nông Trại Ở Gần",
+    Description = "Kill Quái Gần",
     Default = false,
     Callback = function(v520)
         _G.AutoNear = v520
@@ -4137,10 +4125,11 @@ spawn(function()
         end
     end
 end)
+
 if World3 then
-v486:AddToggle({
-    Name = "Tự Động Hải Tặc",
-    Description = "",
+v485:AddToggle({
+    Name = "Nông Trại Hải Tặc",
+    Description = "Farm Raid Hải Tặc",
     Default = false,
     Callback = function(v543)
         _G.AutoRaidPirate = v543
@@ -4180,9 +4169,9 @@ spawn(function()
 end)
 end
 if World2 then
-    v486:AddToggle({
-        Name = "Tự Động Nhà Máy",
-        Description = "",
+    v485:AddToggle({
+        Name = "Nông Trại Factory",
+        Description = "Đánh Nhà Máy",
         Default = false,
         Callback = function(v732)
             _G.AutoFactory = v732
@@ -4214,787 +4203,9 @@ if World2 then
         end
     end)
  end
-local _ = v486:AddSection({"Nông Trại Rương"})
-v486:AddToggle({
-    Name = "Nông Trại Rương [ Di Chuyển ]",
-    Description = "",
-    Default = false,
-    Callback = function(v644)
-        _G.FarmChest = v644
-        StopTween(_G.FarmChest)
-    end
-})
-spawn(function()
-    while wait() do
-        if _G.FarmChest then
-            local l_LocalPlayer_9 = game:GetService("Players").LocalPlayer
-            local l_Position_4 = (l_LocalPlayer_9.Character or l_LocalPlayer_9.CharacterAdded:Wait()):GetPivot().Position
-            local l_Tagged_2 = game:GetService("CollectionService"):GetTagged("_ChestTagged")
-            local l_huge_2 = math.huge
-            local v649 = nil
-            for v650 = 1, #l_Tagged_2 do
-                local v651 = l_Tagged_2[v650]
-                local l_Magnitude_5 = (v651:GetPivot().Position - l_Position_4).Magnitude
-                if not v651:GetAttribute("IsDisabled") and l_Magnitude_5 < l_huge_2 then
-                    local l_l_Magnitude_5_0 = l_Magnitude_5
-                    v649 = v651
-                    l_huge_2 = l_l_Magnitude_5_0
-                end
-            end
-            if v649 then
-                local l_Position_5 = v649.GetPivot(v649).Position
-                local v655 = CFrame.new(l_Position_5)
-                topos(v655)
-            end
-        end
-    end
-end)
-local ChestBypass = false
 
-v486:AddToggle({
-    Title = "Nông Trại Rương [ Dịch Chuyển ]",
-    Value = false,
-    Callback = function(v)
-        ChestBypass = v
-    end
-})
-
-task.spawn(function()
-    while task.wait() do
-        if ChestBypass then
-            local Players = game:GetService("Players")
-            local LocalPlayer = Players.LocalPlayer
-            local CollectionService = game:GetService("CollectionService")
-
-            local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-            local startTick = tick()
-
-            while ChestBypass and (tick() - startTick) < 4 do
-                character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-                local charPos = character:GetPivot().Position
-                local chests = CollectionService:GetTagged("_ChestTagged")
-
-                local closest, dist = nil, math.huge
-                for i = 1, #chests do
-                    local chest = chests[i]
-                    if not chest:GetAttribute("IsDisabled") then
-                        local d = (chest:GetPivot().Position - charPos).Magnitude
-                        if d < dist then
-                            dist = d
-                            closest = chest
-                        end
-                    end
-                end
-
-                if closest then
-                    character:PivotTo(CFrame.new(closest:GetPivot().Position))
-                    task.wait(0.2)
-                else
-                    break
-                end
-            end
-
-            if ChestBypass and LocalPlayer.Character then
-                LocalPlayer.Character:BreakJoints()
-                LocalPlayer.CharacterAdded:Wait()
-            end
-        end
-    end
-end)
-
-local _ = v487:AddSection({"Nông Trại Quả Mộng"})
-v487:AddToggle({
-    Name = "Auto Collect Berry",
-    Description = "",
-    Default = false,
-    Callback = function(v628)
-        _G.CollectBerry = v628
-        StopTween(_G.CollectBerry)
-    end
-})
-spawn(function()
-    while wait() do
-        if _G.CollectBerry then
-            local l_LocalPlayer_8 = game:GetService("Players").LocalPlayer
-            local l_Position_2 = (l_LocalPlayer_8.Character or l_LocalPlayer_8.CharacterAdded:Wait()):GetPivot().Position
-            local l_Tagged_1 = game:GetService("CollectionService"):GetTagged("BerryBush")
-            local l_huge_1 = math.huge
-            local v633 = nil
-            local v634 = nil
-            for _, v636 in ipairs(l_Tagged_1) do
-                for v637, _ in pairs(v636:GetAttributes()) do
-                    local l_Magnitude_4 = (v636.Parent:GetPivot().Position - l_Position_2).Magnitude
-                    if l_Magnitude_4 < l_huge_1 then
-                        l_huge_1 = l_Magnitude_4
-                        v633 = v636
-                        v634 = v637
-                    end
-                end
-            end
-            if v633 and v634 then
-                local l_Parent_0 = v633.Parent
-                local l_Position_3 = l_Parent_0:GetPivot().Position
-                TP1(CFrame.new(l_Position_3 + Vector3.new(0, 2, 0)))
-                task.wait(0.5)
-                local l_l_Parent_0_FirstChild_0 = l_Parent_0:FindFirstChild(v634)
-                if l_l_Parent_0_FirstChild_0 and l_l_Parent_0_FirstChild_0:IsA("BasePart") then
-                    TP1(l_l_Parent_0_FirstChild_0.CFrame + Vector3.new(0, 1, 0))
-                    task.wait(0.3)
-                    local l_VirtualInputManager_2 = game:GetService("VirtualInputManager")
-                    l_VirtualInputManager_2:SendKeyEvent(true, Enum.KeyCode.E, false, game)
-                    task.wait(0.1)
-                    l_VirtualInputManager_2:SendKeyEvent(false, Enum.KeyCode.E, false, game)
-                end
-            elseif _G.CollectBerryHop then
-                Hop()
-            end
-        end
-    end
-end)
-
-if World3 then
-local _ = v487:AddSection({"Boss Chim"})
-local v548 = v487:AddParagraph({Title = "Kiểm Tra Mắt Chim", Content = "Loading..."})
-task.spawn(function()
-    while task.wait(1) do
-        pcall(function()
-            local v549 = 0
-            local v550 = {
-                workspace.Map.TikiOutpost.IslandModel:FindFirstChild("Eye1"),
-                workspace.Map.TikiOutpost.IslandModel:FindFirstChild("Eye2"),
-                workspace.Map.TikiOutpost.IslandModel:FindFirstChild("Eye3"),
-                workspace.Map.TikiOutpost.IslandModel:FindFirstChild("Eye4")
-            }
-            for _, v552 in ipairs(v550) do
-                if v552 and v552:IsA("BasePart") and v552.Transparency == 0 then
-                    v549 = v549 + 1
-                end
-            end
-            v548:Set("Status: " .. v549 .. " Eye(s)" .. (not (v549 ~= 4) and "       " or ""))
-        end)
-    end
-end)
-v487:AddToggle({
-    Name = "Tự Động Nông Trại Boss Chim",
-    Description = "",
-    Default = false,
-    Callback = function(v553)
-        _G.FarmDaiBan = v553
-        StopTween(_G.FarmDaiBan)
-    end
-})
-local v554 = CFrame.new(-16194.0048828125, 155.21844482421875, 1420.719970703125)
-local _ = game:GetService("Workspace").Enemies
-task.spawn(function()
-    while task.wait() do
-        if _G.FarmDaiBan then
-            pcall(function()
-                if not game:GetService("Workspace").Enemies:FindFirstChild("Tyrant of the Skies") then
-                    local v556 = false
-                    for _, v558 in pairs({"Isle Outlaw", "Island Boy", "Isle Champion", "Serpent Hunter", "Skull Slayer"}) do
-                        if game:GetService("Workspace").Enemies:FindFirstChild(v558) then
-                            v556 = true
-                            break
-                        end
-                    end
-                    if not v556 then
-                        local v559 = math.random(1, 3)
-                        if v559 == 1 then
-                            topos(CFrame.new(-1436.86011, 167.753616, -12296.9512))
-                        elseif v559 ~= 2 then
-                            if v559 == 3 then
-                                topos(CFrame.new(-2231.2793, 168.256653, -12845.7559))
-                            end
-                        else
-                            topos(CFrame.new(-2383.78979, 150.450592, -12126.4961))
-                        end
-                    else
-                        for _, v561 in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                            if (v561.Name == "Isle Outlaw" or v561.Name == "Island Boy" or v561.Name == "Isle Champion" or v561.Name == "Serpent Hunter" or v561.Name == "Skull Slayer") and v561:FindFirstChild("Humanoid") and v561:FindFirstChild("HumanoidRootPart") and v561.Humanoid.Health > 0 then
-                                repeat
-                                    task.wait()
-                                    AutoHaki()
-                                    EquipWeapon(_G.SelectWeapon)
-                                    v561.HumanoidRootPart.CanCollide = false
-                                    v561.Humanoid.WalkSpeed = 0
-                                    StartBring = true
-                                    v561.HumanoidRootPart.Size = Vector3.new(50, 50, 50)
-                                    PosMon = v561.HumanoidRootPart.CFrame
-                                    MonFarm = v561.Name
-                                    v561.Head.CanCollide = false
-                                    topos(v561.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
-                                    NeedAttacking = true
-                                    if v561.Name ~= "Isle Outlaw" then
-                                        if v561.Name == "Island Boy" then
-                                            Bring(v561.Name, CFrame.new(-16901.26171875, 84.06756591796875, -192.88906860351562))
-                                        elseif v561.Name ~= "Isle Champion" then
-                                            if v561.Name ~= "Serpent Hunter" then
-                                                if v561.Name == "Skull Slayer" then
-                                                    Bring(v561.Name, CFrame.new(-16855.043, 122.457253, 1478.15308, -0.999392271, 0, -0.0348687991, 0, 1, 0, 0.0348687991, 0, -0.999392271))
-                                                end
-                                            else
-                                                Bring(v561.Name, CFrame.new(-16521.0625, 106.09285, 1488.78467, 0.469467044, 0, 0.882950008, 0, 1, 0, -0.882950008, 0, 0.469467044))
-                                            end
-                                        else
-                                            Bring(v561.Name, CFrame.new(-16641.6796875, 235.7825469970703, 1031.282958984375))
-                                        end
-                                    else
-                                        Bring(v561.Name, CFrame.new(-16442.814453125, 116.13899993896484, -264.4637756347656))
-                                    end
-                                until not _G.FarmDaiBan or not v561.Parent or v561.Humanoid.Health <= 0 or game:GetService("Workspace").Map.CakeLoaf.BigMirror.Other.Transparency == 0 or game:GetService("ReplicatedStorage"):FindFirstChild("Tyrant of the Skies [Lv. 2600] [Raid Boss]") or game:GetService("Workspace").Enemies:FindFirstChild("Tyrant of the Skies [Lv. 2600] [Raid Boss]")
-                                DamageAura = false
-                            end
-                        end
-                    end
-                    if not BypassTP then
-                        topos(v554)
-                    elseif (playerPos - v554.Position).Magnitude > 1500 then
-                        BTP(v554)
-                    else
-                        topos(v554)
-                    end
-                    UnEquipWeapon(_G.Selectweapon)
-                    topos(CFrame.new(-16194.0048828125, 155.21844482421875, 1420.719970703125))
-                else
-                    for _, v563 in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                        if v563.Name == "Tyrant of the Skies" and v563:FindFirstChild("Humanoid") and v563:FindFirstChild("HumanoidRootPart") and v563.Humanoid.Health > 0 then
-                            repeat
-                                task.wait()
-                                AutoHaki()
-                                EquipWeapon(_G.SelectWeapon)
-                                v563.HumanoidRootPart.CanCollide = false
-                                v563.Humanoid.WalkSpeed = 0
-                                v563.HumanoidRootPart.Size = Vector3.new(50, 50, 50)
-                                topos(v563.HumanoidRootPart.CFrame * CFrame.new(0, 40, 0))
-                                NeedAttacking = true
-                            until not _G.FarmDaiBan or not v563.Parent or v563.Humanoid.Health <= 0
-                            wait(1)
-                        end
-                    end
-                end
-            end)
-        end
-    end
-end)
-v487:AddToggle({
-    Name = "Triệu Hồi Boss Chim",
-    Description = "",
-    Default = false,
-    Callback = function(v564)
-        _G.Farm8Binhs = v564
-        StopTween(_G.Farm8Binhs)
-    end
-})
-local v565 = {
-    CFrame.new(-16250.2354, 158.167007, 1313.01904, 0.999388874, 0, 0.0349550731, 0, 1, 0, -0.0349550731, 0, 0.999388874),
-    CFrame.new(-16250.2354, 158.167007, 1313.01904, 0.999388874, 0, 0.0349550731, 0, 1, 0, -0.0349550731, 0, 0.999388874),
-    CFrame.new(-16297.0596, 159.322998, 1317.224, -0.463313937, 0, 0.886194229, 0, 1, 0, -0.886194229, 0, -0.463313937),
-    CFrame.new(-16335.0967, 159.334, 1324.88599, 0.999388874, 0, 0.0349550731, 0, 1, 0, -0.0349550731, 0, 0.999388874),
-    CFrame.new(-16288.6094, 158.167007, 1470.36804, 0.999388874, 0, 0.0349550731, 0, 1, 0, -0.0349550731, 0, 0.999388874),
-    CFrame.new(-16258.001, 156.761002, 1461.40405, 0.999388874, 0, 0.0349550731, 0, 1, 0, -0.0349550731, 0, 0.999388874),
-    CFrame.new(-16245.4121, 158.436996, 1463.36597, -0.993159413, 0, 0.116766132, 0, 1, 0, -0.116766132, 0, -0.993159413),
-    CFrame.new(-16212.4688, 158.167007, 1466.34399, 0.999388874, 0, 0.0349550731, 0, 1, 0, -0.0349550731, 0, 0.999388874)
-}
-function TweenToPosition(v566)
-    local l_Character_5 = game.Players.LocalPlayer.Character
-    local v568 = l_Character_5 and l_Character_5:FindFirstChild("HumanoidRootPart")
-    if not v568 then
-        return 
-    else
-        local l_TweenService_0 = game:GetService("TweenService")
-        local v570 = (v568.Position - v566.Position).Magnitude / 300
-        local v571 = l_TweenService_0:Create(v568, TweenInfo.new(v570, Enum.EasingStyle.Linear), {CFrame = v566})
-        v571:Play()
-        v571.Completed:Wait()
-        return 
-    end
-end
-function Skill(v572)
-    local l_VirtualInputManager_0 = game:GetService("VirtualInputManager")
-    l_VirtualInputManager_0:SendKeyEvent(true, Enum.KeyCode[v572], false, game)
-    task.wait(0.05)
-    l_VirtualInputManager_0:SendKeyEvent(false, Enum.KeyCode[v572], false, game)
-end
-function Click()
-    local l_VirtualInputManager_1 = game:GetService("VirtualInputManager")
-    l_VirtualInputManager_1:SendMouseButtonEvent(0, 0, 0, true, game, 1)
-    task.wait(0.05)
-    l_VirtualInputManager_1:SendMouseButtonEvent(0, 0, 0, false, game, 1)
-end
-function FindWeapon(v575)
-    local l_Backpack_0 = game.Players.LocalPlayer.Backpack
-    for _, v578 in ipairs(l_Backpack_0:GetChildren()) do
-        if v578:IsA("Tool") then
-            if v575 ~= "Melee" or v578.ToolTip ~= "Melee" and v578.Name ~= "Combat" then
-                if v575 ~= "Sword" or v578.ToolTip ~= "Sword" then
-                    if v575 == "Gun" and v578.ToolTip == "Gun" then
-                        return v578.Name
-                    elseif v575 == "Fruit" and v578.ToolTip == "Blox Fruit" then
-                        return v578.Name
-                    end
-                else
-                    return v578.Name
-                end
-            else
-                return v578.Name
-            end
-        end
-    end
-    return nil
-end
-function EquipWeapon(v579)
-    if not v579 then
-        return 
-    else
-        local l_LocalPlayer_7 = game.Players.LocalPlayer
-        local l_FirstChild_1 = l_LocalPlayer_7:WaitForChild("Backpack"):FindFirstChild(v579)
-        if l_FirstChild_1 then
-            l_LocalPlayer_7.Character.Humanoid:EquipTool(l_FirstChild_1)
-        end
-        return 
-    end
-end
-function AttackAllSkills()
-    local v582 = FindWeapon("Melee")
-    local v583 = FindWeapon("Sword")
-    local v584 = FindWeapon("Fruit")
-    local v585 = FindWeapon("Gun")
-    if v582 then
-        EquipWeapon(v582)
-        Skill("Z")
-        Skill("X")
-        Skill("C")
-        Skill("V")
-        Click()
-    end
-    if v583 then
-        EquipWeapon(v583)
-        Skill("Z")
-        Skill("X")
-        Click()
-    end
-    if v584 then
-        EquipWeapon(v584)
-        Skill("Z")
-        Skill("X")
-        Skill("C")
-        Skill("F")
-        Click()
-    end
-    if v585 then
-        EquipWeapon(v585)
-        Skill("Z")
-        Skill("X")
-        Click()
-    end
-end
-task.spawn(function()
-    while task.wait(1) do
-        if _G.Farm8Binhs then
-            for _, v587 in ipairs(v565) do
-                if _G.Farm8Binhs then
-                    TweenToPosition(v587 * CFrame.new(0, 5, 0))
-                    task.wait(0.5)
-                    AttackAllSkills()
-                    task.wait(3)
-                else
-                    break
-                end
-            end
-        end
-    end
-end)
-end
-local _ = v488:AddSection({"Nông Trại Câu Cá"})
-v488:AddToggle({
-    Title = "Tự Động Cá",
-    Description = "",
-    Default = false,
-    Callback = function(v673)
-        _G.AutoFishing = v673
-    end
-})
-local _ = workspace
-local l_LocalPlayer_10 = game.Players.LocalPlayer
-local l_FishReplicated_0 = game.ReplicatedStorage:WaitForChild("FishReplicated")
-local l_FishingRequest_0 = l_FishReplicated_0:WaitForChild("FishingRequest")
-local l_MaxLaunchDistance_0 = require(l_FishReplicated_0.FishingClient.Config).Rod.MaxLaunchDistance
-local v679 = require(game.ReplicatedStorage.Util.GetWaterHeightAtLocation)
-task.spawn(function()
-    while task.wait() do
-        if _G.AutoFishing then
-            local l_Character_6 = l_LocalPlayer_10.Character
-            local v681 = l_Character_6 and l_Character_6:FindFirstChild("HumanoidRootPart")
-            local v682 = l_Character_6 and l_Character_6:FindFirstChildOfClass("Tool")
-            if _G.SelectedRod and (not v682 or v682.Name ~= _G.SelectedRod) then
-                local l_FirstChild_2 = l_LocalPlayer_10.Backpack:FindFirstChild(_G.SelectedRod)
-                if l_FirstChild_2 then
-                    l_LocalPlayer_10.Character.Humanoid:EquipTool(l_FirstChild_2)
-                    v682 = l_FirstChild_2
-                end
-            end
-            if l_Character_6 and v681 and v682 then
-                local v684 = v679(v681.Position)
-                local _, v686 = workspace:FindPartOnRayWithIgnoreList(Ray.new(l_Character_6.Head.Position, v681.CFrame.LookVector * l_MaxLaunchDistance_0), {l_Character_6, workspace.Characters, workspace.Enemies})
-                local v687 = v686 and Vector3.new(v686.X, math.max(v686.Y, v684), v686.Z)
-                local v688 = v682.GetAttribute(v682, "State")
-                local v689 = v682.GetAttribute(v682, "ServerState")
-                if v688 ~= "ReeledIn" and v689 ~= "ReeledIn" or not v687 then
-                    if v689 == "Biting" then
-                        l_FishingRequest_0:InvokeServer("Catching", true)
-                        task.wait(0.1)
-                        l_FishingRequest_0:InvokeServer("Catch", 1)
-                    end
-                else
-                    l_FishingRequest_0:InvokeServer("StartCasting")
-                    task.wait()
-                    l_FishingRequest_0:InvokeServer("CastLineAtLocation", v687, 100, true)
-                end
-            end
-        end
-    end
-end)
-v488:AddDropdown({
-    Name = "Chọn Mồi Để Câu",
-    Description = "",
-    Options = {"Basic Bait", "Kelp Bait", "Good Bait", "Abyssal Bait", "Frozen Bait", "Epic Bait", "Carnivore Bait"},
-    Default = "Basic Bait",
-    Callback = function(v690)
-        _G.SelectedBait = v690
-        l_FishingRequest_0:InvokeServer("SelectBait", v690)
-    end
-})
-
-local _ = v489:AddSection({"Fruits"})
-v489:AddToggle({
-    Name = "Tự Động Quay Trái Cây",
-    Description = "",
-    Default = false,
-    Callback = function(v1074)
-        _G.RandomAuto = v1074
-    end
-})
-spawn(function()
-    pcall(function()
-        while wait() do
-            if _G.RandomAuto then
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Cousin", "Buy")
-            end
-        end
-    end)
-end)
-v489:AddToggle({
-    Title = "Tự Động Lưu Trữ",
-    Description = "",
-    Value = false,
-    Callback = function(v1075)
-        getgenv().AutoStoreFruit = v1075
-    end
-})
-spawn(function()
-    while task.wait(0.2) do
-        if getgenv().AutoStoreFruit then
-            pcall(function()
-                local l_LocalPlayer_16 = game:GetService("Players").LocalPlayer
-                local v1077 = l_LocalPlayer_16.Character or l_LocalPlayer_16.CharacterAdded:Wait()
-                local l_Backpack_3 = l_LocalPlayer_16:WaitForChild("Backpack")
-                for _, v1080 in ipairs({
-                    {"Rocket Fruit", "Rocket-Rocket"},
-                    {"Spin Fruit", "Spin-Spin"},
-                    {"Blade Fruit", "Blade-Blade"},
-                    {"Spring Fruit", "Spring-Spring"},
-                    {"Bomb Fruit", "Bomb-Bomb"},
-                    {"Smoke Fruit", "Smoke-Smoke"},
-                    {"Spike Fruit", "Spike-Spike"},
-                    {"Flame Fruit", "Flame-Flame"},
-                    {"Eagle Fruit", "Eagle-Eagle"},
-                    {"Ice Fruit", "Ice-Ice"},
-                    {"Sand Fruit", "Sand-Sand"},
-                    {"Dark Fruit", "Dark-Dark"},
-                    {"Diamond Fruit", "Diamond-Diamond"},
-                    {"Light Fruit", "Light-Light"},
-                    {"Rubber Fruit", "Rubber-Rubber"},
-                    {"Creation Fruit", "Creation-Creation"},
-                    {"Ghost Fruit", "Ghost-Ghost"},
-                    {"Magma Fruit", "Magma-Magma"},
-                    {"Quake Fruit", "Quake-Quake"},
-                    {"Buddha Fruit", "Buddha-Buddha"},
-                    {"Love Fruit", "Love-Love"},
-                    {"Spider Fruit", "Spider-Spider"},
-                    {"Sound Fruit", "Sound-Sound"},
-                    {"Phoenix Fruit", "Phoenix-Phoenix"},
-                    {"Portal Fruit", "Portal-Portal"},
-                    {"Lightning Fruit", "Lightning-Lightning"},
-                    {"Pain Fruit", "Pain-Pain"},
-                    {"Blizzard Fruit", "Blizzard-Blizzard"},
-                    {"Gravity Fruit", "Gravity-Gravity"},
-                    {"Mammoth Fruit", "Mammoth-Mammoth"},
-                    {"T-Rex Fruit", "T-Rex-T-Rex"},
-                    {"Dough Fruit", "Dough-Dough"},
-                    {"Shadow Fruit", "Shadow-Shadow"},
-                    {"Venom Fruit", "Venom-Venom"},
-                    {"Gas Fruit", "Gas-Gas"},
-                    {"Control Fruit", "Control-Control"},
-                    {"Spirit Fruit", "Spirit-Spirit"},
-                    {"Leopard Fruit", "Leopard-Leopard"},
-                    {"Yeti Fruit", "Yeti-Yeti"},
-                    {"Kitsune Fruit", "Kitsune-Kitsune"},
-                    {"Dragon Fruit", "Dragon-Dragon"}
-                }) do
-                    local v1081 = v1080[1]
-                    local v1082 = v1080[2]
-                    local v1083 = l_Backpack_3:FindFirstChild(v1081) or v1077:FindFirstChild(v1081)
-                    if v1083 then
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StoreFruit", v1082, v1083)
-                        break
-                    end
-                end
-            end)
-        end
-    end
-end)
-v489:AddToggle({
-    Name = "Đi Đến Trái Cây Đang Xuấn Hiện",
-    Description = "",
-    Default = false,
-    Callback = function(v1084)
-        _G.Tweenfruit = v1084
-    end
-})
-spawn(function()
-    while wait(0.1) do
-        if _G.TweenFruit then
-            for _, v1086 in pairs(game.Workspace:GetChildren()) do
-                if string.find(v1086.Name, "Fruit") then
-                    TP1(v1086.Handle.CFrame)
-                end
-            end
-        end
-    end
-end)
-v489:AddToggle({
-    Name = "Dịch Chuyển Đến Trái Cây",
-    Description = "",
-    Default = false,
-    Callback = function(v1087)
-        _G.Grabfruit = v1087
-    end
-})
-spawn(function()
-    while wait(0.1) do
-        if _G.Grabfruit then
-            for _, v1089 in pairs(game.Workspace:GetChildren()) do
-                if string.find(v1089.Name, "Fruit") then
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v1089.Handle.CFrame
-                end
-            end
-        end
-    end
-end)
-local _ = v489:AddSection({"Raid Trái"})
-
-_G.SelectChip = "Flame"
-_G.AutoBuyChip = false
-_G.StartRaid = false
-_G.Dungeon = false
-
-v489:AddDropdown({
-    Name = "Chọn Chip",
-    Options = {
-        "Flame","Ice","Sand","Dark","Light","Magma",
-        "Quake","Buddha","Spider","Phoenix","Lightning","Dough"
-    },
-    Default = "Flame",
-    Callback = function(v)
-        _G.SelectChip = v
-    end
-})
-
-v489:AddToggle({
-    Name = "Mua Chip",
-    Default = false,
-    Callback = function(v)
-        _G.AutoBuyChip = v
-    end
-})
-
-task.spawn(function()
-    while task.wait(1) do
-        if _G.AutoBuyChip and _G.SelectChip then
-            pcall(function()
-                game.ReplicatedStorage.Remotes.CommF_:InvokeServer(
-                    "RaidsNpc",
-                    "Select",
-                    _G.SelectChip
-                )
-            end)
-        end
-    end
-end)
-
-v489:AddToggle({
-    Name = "Bắt Đầu Raid",
-    Default = false,
-    Callback = function(v)
-        _G.StartRaid = v
-    end
-})
-
-task.spawn(function()
-    while task.wait(1) do
-        pcall(function()
-            if not _G.StartRaid then return end
-
-            local lp = game.Players.LocalPlayer
-            local gui = lp.PlayerGui:FindFirstChild("Main")
-            if not gui then return end
-
-            if gui.Timer.Visible then return end
-            if workspace._WorldOrigin.Locations:FindFirstChild("Island 1") then return end
-            if not (lp.Backpack:FindFirstChild("Special Microchip") or lp.Character:FindFirstChild("Special Microchip")) then return end
-
-            if World2 then
-                topos(CFrame.new(-6438.73, 250.64, -4501.5))
-                game.ReplicatedStorage.Remotes.CommF_:InvokeServer("SetSpawnPoint")
-                fireclickdetector(workspace.Map.CircleIsland.RaidSummon2.Button.Main.ClickDetector)
-            elseif World3 then
-                game.ReplicatedStorage.Remotes.CommF_:InvokeServer(
-                    "requestEntrance",
-                    Vector3.new(-5075.5, 314.51, -3150.02)
-                )
-                topos(CFrame.new(-5017.4, 314.84, -2823.01))
-                game.ReplicatedStorage.Remotes.CommF_:InvokeServer("SetSpawnPoint")
-                fireclickdetector(workspace.Map["Boat Castle"].RaidSummon2.Button.Main.ClickDetector)
-            end
-        end)
-    end
-end)
-
-v489:AddToggle({
-    Name = "Nông Trại Raid",
-    Default = false,
-    Callback = function(v)
-        _G.Dungeon = v
-    end
-})
-
-local function GetIsland(num)
-    local closest, dist = nil, math.huge
-    for _,v in pairs(workspace._WorldOrigin.Locations:GetChildren()) do
-        if v.Name == "Island "..num then
-            local mag = (v.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-            if mag < dist then
-                dist = mag
-                closest = v
-            end
-        end
-    end
-    return closest
-end
-
-local function GetNextIsland()
-    for _,i in ipairs({5,4,3,2,1}) do
-        local isl = GetIsland(i)
-        if isl and (isl.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 4500 then
-            return isl
-        end
-    end
-end
-
-local function FarmRaidEnemies()
-    for _,mob in pairs(workspace.Enemies:GetChildren()) do
-        if mob:FindFirstChild("HumanoidRootPart")
-        and mob:FindFirstChild("Humanoid")
-        and mob.Humanoid.Health > 0
-        and (mob.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1000 then
-            repeat
-                task.wait(0.1)
-                if mob.Humanoid.Health > 0 then
-                    EquipWeapon(_G.SelectWeapon)
-                    topos(mob.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
-                end
-            until mob.Humanoid.Health <= 0 or not _G.Dungeon
-        end
-    end
-end
-
-task.spawn(function()
-    while task.wait() do
-        if _G.Dungeon then
-            FarmRaidEnemies()
-            local isl = GetNextIsland()
-            if isl then
-                topos(isl.CFrame * CFrame.new(0,60,0))
-            end
-        end
-    end
-end)
-end
-
-if not World2 then
-    v489:AddParagraph({
-        Title = "Raid Law Only Sea 2",
-        Content = ""
-    })
-else
-
-local _ = v489:AddSection({"Raid Law"})
-v489:AddButton({
-    Title = "Mua Chip Law",
-    Description = "",
-    Value = false,
-    Callback = function()
-        local v1069 = {[1] = "BlackbeardReward", [2] = "Microchip", [3] = "2"}
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(v1069))
-    end
-})
-v489:AddButton({
-    Title = "Bắt Đầu Raid Law",
-    Value = false,
-    Callback = function()
-        fireclickdetector(game:GetService("Workspace").Map.CircleIsland.RaidSummon.Button.Main.ClickDetector)
-    end
-})
-v489:AddToggle({
-    Name = "Nông Trại Raid Law",
-    Description = "",
-    Default = false,
-    Callback = function(v1070)
-        _G.AutoLawRaid = v1070
-    end
-})
-spawn(function()
-    while wait() do
-        if _G.AutoLawRaid then
-            pcall(function()
-                if game:GetService("Workspace").Enemies:FindFirstChild("Order") then
-                    for _, v1072 in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                        if v1072.Name == "Order" and v1072:FindFirstChild("Humanoid") and v1072:FindFirstChild("HumanoidRootPart") and v1072.Humanoid.Health > 0 then
-                            repeat
-                                task.wait()
-                                AutoHaki()
-                                EquipWeapon(_G.SelectWeapon)
-                                v1072.HumanoidRootPart.CanCollide = false
-                                v1072.Humanoid.WalkSpeed = 0
-                                topos(v1072.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
-                                sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
-                            until not _G.AutoLawRaid or not v1072.Parent or v1072.Humanoid.Health <= 0
-                        end
-                    end
-                else
-                    NeedAttacking = true
-                    if game:GetService("ReplicatedStorage"):FindFirstChild("Order") then
-                        topos(game:GetService("ReplicatedStorage"):FindFirstChild("Order").HumanoidRootPart.CFrame * CFrame.new(5, 10, 2))
-                    end
-                end
-            end)
-        end
-    end
-end)
-end
-
-local _ = v485:AddSection({"Vào Máy Chủ"})
-v485:AddTextBox({
+local _ = v486:AddSection({"Vào Máy Chủ"})
+v486:AddTextBox({
         Name = "Vào ID",
         PlaceholderText = "Paste the Job ID here...",
         Callback = function(p215)
@@ -5003,9 +4214,9 @@ v485:AddTextBox({
             end
         end
     })
-v485:AddButton({
+v486:AddButton({
     Title = "Vô Bằng Sao Chép",
-    Description = "",
+    Description = "Vào Sever Bằng Cách Có ID Sao Chép",
     Callback = function()
         local TeleportService = game:GetService("TeleportService")
         local Players = game:GetService("Players")
@@ -5021,11 +4232,11 @@ v485:AddButton({
     end
 })
 
-local _ = v485:AddSection({"Attack"})
+local _ = v486:AddSection({"Settings"})
 
-v485:AddToggle({
+v486:AddToggle({
     Name = "Tấn Công Nhanh",
-    Description = "",
+    Description = "Fast Attack",
     Default = true,
     Callback = function(value)
         _G.AutoAttack = value
@@ -5164,9 +4375,9 @@ task.spawn(function()
         end
     end
 end)
-v485:AddToggle({
-    Name = "Mang Theo Đám Đông",
-    Description = "",
+v486:AddToggle({
+    Name = "Gom Quái",
+    Description = "Bring Mob",
     Default = true,
     Callback = function(v1165)
         _G.BringMonster = v1165
