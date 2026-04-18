@@ -4475,6 +4475,7 @@ spawn(function()
     end
 end)
 
+--- Thông Báo Khi Script Đã Tải Xong
 vu32:SetNotify({
     Name = "Dojo Hub Loaded !",
     Description = "Chúc Bạn Chơi Vui vẻ",
