@@ -3804,6 +3804,329 @@ local _ = v486:AddDropdown({
     end
 })
 
+local _ = v486:AddSection({"Nông Trại"})
+
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local LocalPlayer = Players.LocalPlayer
+
+
+local SUBMERGED_Y = -1400
+local SUB_NPC = CFrame.new(-16246.041, 38.48, 1376.539)
+local TravelingSubmerged = false
+local CurrentTween = nil
+
+local function HRP()
+    return LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+end
+
+local function IsInSubmerged()
+    local hrp = HRP()
+    return hrp and hrp.Position.Y < SUBMERGED_Y
+end
+
+local function StopTween(state)
+    if not state and CurrentTween then
+        pcall(function() CurrentTween:Cancel() end)
+        CurrentTween = nil
+    end
+end
+
+local function TweenTo(cf)
+    if not _G.AutoFarm then return end
+    local hrp = HRP()
+    if not hrp then return end
+
+    if CurrentTween then
+        pcall(function() CurrentTween:Cancel() end)
+    end
+
+    local dist = (hrp.Position - cf.Position).Magnitude
+    local speed = 300
+    local t = dist / speed
+
+    CurrentTween = TweenService:Create(hrp, TweenInfo.new(t, Enum.EasingStyle.Linear), {CFrame = cf})
+    CurrentTween:Play()
+
+    while _G.AutoFarm and CurrentTween and CurrentTween.PlaybackState == Enum.PlaybackState.Playing do
+        task.wait()
+    end
+
+    if CurrentTween then
+        pcall(function() CurrentTween:Cancel() end)
+    end
+    CurrentTween = nil
+end
+
+local function GoSubmerged()
+    if not _G.AutoFarm then return end
+    if TravelingSubmerged or IsInSubmerged() or LocalPlayer.Data.Level.Value < 2600 then return end
+
+    TravelingSubmerged = true
+    TweenTo(SUB_NPC + Vector3.new(0, 60, 0))
+    if not _G.AutoFarm then TravelingSubmerged = false return end
+    TweenTo(SUB_NPC)
+    if not _G.AutoFarm then TravelingSubmerged = false return end
+
+    pcall(function()
+        ReplicatedStorage.Modules.Net["RF/SubmarineWorkerSpeak"]:InvokeServer("TravelToSubmergedIsland")
+    end)
+
+    while _G.AutoFarm and not IsInSubmerged() do
+        task.wait(0.5)
+    end
+
+    TravelingSubmerged = false
+end
+
+local function CheckQuestNew()
+    local lvl = LocalPlayer.Data.Level.Value
+
+    if lvl >= 2600 and lvl <= 2624 then
+        MonNew = "Reef Bandit"
+        LevelQuestNew = 1
+        NameQuestNew = "SubmergedQuest1"
+        NameMonNew = "Reef Bandit"
+        CFrameQuestNew = CFrame.new(10882.264, -2086.322, 10034.226)
+        CFrameMonNew = CFrame.new(10736.6191, -2087.8439, 9338.4882)
+
+    elseif lvl >= 2650 and lvl <= 2674 then
+        MonNew = "Sea Chanter"
+        LevelQuestNew = 1
+        NameQuestNew = "SubmergedQuest2"
+        NameMonNew = "Sea Chanter"
+        CFrameQuestNew = CFrame.new(10882.264, -2086.322, 10034.226)
+        CFrameMonNew = CFrame.new(10621.0342, -2087.844, 10102.0332)
+
+    elseif lvl >= 2675 and lvl <= 2699 then
+        MonNew = "Ocean Prophet"
+        LevelQuestNew = 2
+        NameQuestNew = "SubmergedQuest2"
+        NameMonNew = "Ocean Prophet"
+        CFrameQuestNew = CFrame.new(10882.264, -2086.322, 10034.226)
+        CFrameMonNew = CFrame.new(11056.1445, -2001.6717, 10117.4493)
+
+    elseif lvl >= 2700 and lvl <= 2724 then
+        MonNew = "High Disciple"
+        LevelQuestNew = 1
+        NameQuestNew = "SubmergedQuest3"
+        NameMonNew = "High Disciple"
+        CFrameQuestNew = CFrame.new(9636.524, -1992.195, 9609.528)
+        CFrameMonNew = CFrame.new(9828.088, -1940.909, 9693.064)
+
+    elseif lvl >= 2725 then
+        MonNew = "Grand Devotee"
+        LevelQuestNew = 2
+        NameQuestNew = "SubmergedQuest3"
+        NameMonNew = "Grand Devotee"
+        CFrameQuestNew = CFrame.new(9636.524, -1992.195, 9609.528)
+        CFrameMonNew = CFrame.new(9557.585, -1928.040, 9859.183)
+
+    else
+        MonNew = "Coral Pirate"
+        LevelQuestNew = 2
+        NameQuestNew = "SubmergedQuest1"
+        NameMonNew = "Coral Pirate"
+        CFrameQuestNew = CFrame.new(10882.264, -2086.322, 10034.226)
+        CFrameMonNew = CFrame.new(10965.1025, -2158.8842, 9177.2597)
+    end
+end
+v486:AddToggle({
+    Name = "Nông Trại Cấp",
+    Description = "",
+    Default = false,
+    Callback = function(state)
+        _G.AutoFarm = state
+        StopTween(_G.AutoFarm)
+    end
+})
+spawn(function()
+    while task.wait() do
+        if _G.AutoFarm then
+            pcall(function()
+                local currentLevel = LocalPlayer.Data.Level.Value                
+                if currentLevel >= 2600 and World3 then
+                      if not IsInSubmerged() then
+                           GoSubmerged()
+                    end
+              end                
+                if currentLevel >= 2600 and World3 and IsInSubmerged() then
+                    CheckQuestNew()
+                    
+                    local questGui = LocalPlayer.PlayerGui.Main.Quest
+                    if not questGui.Visible then
+                        StartBring = false
+                        if (HRP().Position - CFrameQuestNew.Position).Magnitude > 20 then
+                            TweenTo(CFrameQuestNew)
+                        else
+                            ReplicatedStorage.Remotes.CommF_:InvokeServer("StartQuest", NameQuestNew, LevelQuestNew)
+                        end
+                    else
+                        local questText = questGui.Container.QuestTitle.Title.Text
+                        if not string.find(questText, NameMonNew) then
+                            StartBring = false
+                            ReplicatedStorage.Remotes.CommF_:InvokeServer("AbandonQuest")
+                        else
+                            for _, mob in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                                if mob.Name == MonNew and mob:FindFirstChild("HumanoidRootPart") and mob:FindFirstChild("Humanoid") and mob.Humanoid.Health > 0 then
+                                    repeat
+                                        task.wait()
+                                        EquipWeapon(_G.SelectWeapon)
+                                        AutoHaki()
+                                        topos(mob.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                                        mob.HumanoidRootPart.CanCollide = false
+                                        mob.Humanoid.WalkSpeed = 0
+                                        mob.Head.CanCollide = false
+                                        mob.HumanoidRootPart.Size = Vector3.new(70, 70, 70)
+                                        StartBring = true
+                                        MonFarm = mob.Name
+                                        game:GetService("VirtualUser"):CaptureController()
+                                        game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
+                                    until not _G.AutoFarm or mob.Humanoid.Health <= 0 or not mob.Parent or not questGui.Visible
+                                end
+                            end
+                            
+                            if not game:GetService("Workspace").Enemies:FindFirstChild(MonNew) then
+                                TweenTo(CFrameMonNew)
+                                StartBring = false
+                            end
+                        end
+                    end
+                else
+                    local l_Text_0 = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
+                    CheckQuest()
+                    if not string.find(l_Text_0, NameMon) then
+                        StartBring = false
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+                    end
+                    if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible ~= false then
+                        if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
+                            if not string.find(l_Text_0, "kissed") then
+                                if game:GetService("Workspace").Enemies:FindFirstChild(Mon) then
+                                    for _, v512 in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                                        if v512:FindFirstChild("HumanoidRootPart") and v512:FindFirstChild("Humanoid") and v512.Humanoid.Health > 0 and v512.Name == Mon then
+                                            if not string.find(l_Text_0, NameMon) then
+                                                StartBring = false
+                                                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+                                            else
+                                                repeat
+                                                    task.wait()
+                                                    EquipWeapon(_G.SelectWeapon)
+                                                    AutoHaki()
+                                                    PosMon = v512.HumanoidRootPart.CFrame
+                                                    topos(v512.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                                                    v512.HumanoidRootPart.CanCollide = false
+                                                    v512.Humanoid.WalkSpeed = 0
+                                                    v512.Head.CanCollide = false
+                                                    v512.HumanoidRootPart.Size = Vector3.new(70, 70, 70)
+                                                    StartBring = true
+                                                    MonFarm = v512.Name
+                                                    game:GetService("VirtualUser"):CaptureController()
+                                                    game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
+                                                until not _G.AutoFarm or v512.Humanoid.Health <= 0 or not v512.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
+                                            end
+                                        end
+                                    end
+                                else
+                                    TP1(CFrameMon)
+                                    StartBring = false
+                                    if game:GetService("ReplicatedStorage"):FindFirstChild(Mon) then
+                                        TP1(game:GetService("ReplicatedStorage"):FindFirstChild(Mon).HumanoidRootPart.CFrame * CFrame.new(0, 20, 0))
+                                    end
+                                end
+                            else
+                                for _, v514 in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                                    if string.find(v514.Name, "kissed Warrior") then
+                                        if v514:FindFirstChild("HumanoidRootPart") and v514:FindFirstChild("Humanoid") and v514.Humanoid.Health > 0 then
+                                            if string.find(l_Text_0, NameMon) then
+                                                repeat
+                                                    task.wait()
+                                                    EquipWeapon(_G.SelectWeapon)
+                                                    PosMon = v514.HumanoidRootPart.CFrame
+                                                    topos(v514.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                                                    v514.HumanoidRootPart.CanCollide = false
+                                                    v514.Humanoid.WalkSpeed = 0
+                                                    v514.Head.CanCollide = false
+                                                    v514.HumanoidRootPart.Size = Vector3.new(70, 70, 70)
+                                                    StartBring = true
+                                                    MonFarm = v514.Name
+                                                    game:GetService("VirtualUser"):CaptureController()
+                                                    game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
+                                                until not _G.AutoFarm or v514.Humanoid.Health <= 0 or not v514.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
+                                            else
+                                                StartBring = false
+                                                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+                                            end
+                                        end
+                                    else
+                                        TP1(CFrameMon)
+                                        StartBring = false
+                                        if game:GetService("ReplicatedStorage"):FindFirstChild(Mon) then
+                                            TP1(game:GetService("ReplicatedStorage"):FindFirstChild(Mon).HumanoidRootPart.CFrame * CFrame.new(0, 20, 0))
+                                        end
+                                    end
+                                end
+                            end
+                        end
+                    else
+                        StartBring = false
+                        if BypassTP then
+                            if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQuest.Position).Magnitude <= 1500 then
+                                TP1(CFrameQuest)
+                            else
+                                TP1(CFrameQuest)
+                            end
+                        else
+                            TP1(CFrameQuest)
+                        end
+                        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQuest.Position).Magnitude <= 20 then
+                            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NameQuest, LevelQuest)
+                        end
+                    end
+                end
+            end)
+        end
+    end
+end)
+v486:AddToggle({
+    Name = "Nông Trại Gần",
+    Description = "",
+    Default = false,
+    Callback = function(v520)
+        _G.AutoNear = v520
+        StopTween(_G.AutoNear)
+    end
+})
+spawn(function()
+    while wait() do
+        if _G.AutoNear then
+            pcall(function()
+                for _, v522 in pairs(game.Workspace.Enemies:GetChildren()) do
+                    if v522:FindFirstChild("Humanoid") and v522:FindFirstChild("HumanoidRootPart") and v522.Humanoid.Health > 0 and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v522.HumanoidRootPart.Position).Magnitude <= 5000 then
+                        repeat
+                            wait(_G.Fast_Delay)
+                            StartBring = true
+                            AutoHaki()
+                            EquipWeapon(_G.SelectWeapon)
+                            topos(v522.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                            v522.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+                            v522.HumanoidRootPart.Transparency = 1
+                            v522.Humanoid.JumpPower = 0
+                            v522.Humanoid.WalkSpeed = 0
+                            v522.HumanoidRootPart.CanCollide = false
+                            FarmPos = v522.HumanoidRootPart.CFrame
+                            MonFarm = v522.Name
+                        until not _G.AutoNear or not v522.Parent or v522.Humanoid.Health <= 0 or not game.Workspace.Enemies:FindFirstChild(v522.Name)
+                        StartBring = false
+                    end
+                end
+            end)
+        end
+    end
+end)
+
+
 local _ = v485:AddSection({"Vào Máy Chủ"})
 v485:AddTextBox({
         Name = "Vào ID",
