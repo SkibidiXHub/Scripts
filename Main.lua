@@ -3762,10 +3762,6 @@ v484:AddDiscordInvite({
     Invite = "https://discord.gg/BMe59Na"
 })
 v484:AddParagraph({
-Title = "Phiên Bản Cập Nhật Mới",
-    Desc = "- Fix Bring Mob, Fix Fast Attack, Add Stats And Race"
-})
-v484:AddParagraph({
 Title = "New Version 1.5",
     Desc = ""
 })
