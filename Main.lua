@@ -3752,10 +3752,10 @@ local v486 = v466:MakeTab({"Tab | Main", "home"})
 local v487 = v466:MakeTab({"Tab | Quest Other", "swords"})
 
 v484:AddDiscordInvite({
-    Name = "DesplockHub | Community",
+    Name = "Dojo Hub | Community",
     Description = "Join server to receive Update",
-    Logo = "rbxassetid://131723242350068",
-    Invite = "https://discord.gg/BnEDf68jwx"
+    Logo = "rbxassetid://78617112299549",
+    Invite = "https://discord.gg/BMe59Na"
 })
 _G.SelectWeapon = "Melee"
 task.spawn(function()
@@ -3805,7 +3805,7 @@ local _ = v486:AddDropdown({
 })
 
 local _ = v485:AddSection({"Vào Máy Chủ"})
-v496:AddTextBox({
+v485:AddTextBox({
         Name = "Vào ID",
         PlaceholderText = "Paste the Job ID here...",
         Callback = function(p215)
@@ -3814,7 +3814,7 @@ v496:AddTextBox({
             end
         end
     })
-v496:AddButton({
+v485:AddButton({
     Title = "Vô Bằng Sao Chép",
     Description = "",
     Callback = function()
@@ -3832,9 +3832,9 @@ v496:AddButton({
     end
 })
 
-local _ = v496:AddSection({"Attack"})
+local _ = v485:AddSection({"Attack"})
 
-v496:AddToggle({
+v485:AddToggle({
     Name = "Tấn Công Nhanh",
     Description = "",
     Default = true,
@@ -3975,7 +3975,7 @@ task.spawn(function()
         end
     end
 end)
-v496:AddToggle({
+v485:AddToggle({
     Name = "Mang Theo Đám Đông",
     Description = "",
     Default = true,
