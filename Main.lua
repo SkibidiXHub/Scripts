@@ -4125,8 +4125,9 @@ spawn(function()
         end
     end
 end)
+if World3 then
 v486:AddToggle({
-    Name = "Tự Động Raid Hải Tặc",
+    Name = "Tự Động Hải Tặc",
     Description = "",
     Default = false,
     Callback = function(v543)
@@ -4166,19 +4167,20 @@ spawn(function()
     end
 end)
 end
-v486:AddToggle({
-    Name = "Tự Động Nhà Máy",
-    Description = "",
-    Default = false,
-    Callback = function(v732)
-        _G.AutoFactory = v732
+if World2 then
+    v486:AddToggle({
+        Name = "Tự Động Nhà Máy",
+        Description = "",
+        Default = false,
+        Callback = function(v732)
+            _G.AutoFactory = v732
             StopTween(_G.AutoFactory)
-    end
-})
-spawn(function()
-    while wait() do
-       spawn(function()
-       if _G.AutoFactory then
+        end
+    })
+    spawn(function()
+        while wait() do
+            spawn(function()
+                if _G.AutoFactory then
                     if game:GetService("Workspace").Enemies:FindFirstChild("Core") then
                         for _, v734 in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                             if v734.Name == "Core" and v734.Humanoid.Health > 0 then
@@ -4200,7 +4202,6 @@ spawn(function()
         end
     end)
  end
-
 local _ = v485:AddSection({"Vào Máy Chủ"})
 v485:AddTextBox({
         Name = "Vào ID",
