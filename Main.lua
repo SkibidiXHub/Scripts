@@ -3750,6 +3750,7 @@ local v484 = v466:MakeTab({"Tab | Info", "info"})
 local v485 = v466:MakeTab({"Tab | Settings", "home"})
 local v486 = v466:MakeTab({"Tab | Main", "home"})
 local v487 = v466:MakeTab({"Tab | Quest Other", "swords"})
+local v491 = v466:MakeTab({"Tab | Fishing", "rbxassetid://127664059821666"})
 
 v484:AddDiscordInvite({
     Name = "Dojo Hub | Community",
@@ -4202,6 +4203,65 @@ if World2 then
         end
     end)
  end
+local _ = v491:AddSection({"Nông Trại Câu Cá"})
+v491:AddToggle({
+    Title = "Tự Động Cá",
+    Description = "",
+    Default = false,
+    Callback = function(v673)
+        _G.AutoFishing = v673
+    end
+})
+local _ = workspace
+local l_LocalPlayer_10 = game.Players.LocalPlayer
+local l_FishReplicated_0 = game.ReplicatedStorage:WaitForChild("FishReplicated")
+local l_FishingRequest_0 = l_FishReplicated_0:WaitForChild("FishingRequest")
+local l_MaxLaunchDistance_0 = require(l_FishReplicated_0.FishingClient.Config).Rod.MaxLaunchDistance
+local v679 = require(game.ReplicatedStorage.Util.GetWaterHeightAtLocation)
+task.spawn(function()
+    while task.wait() do
+        if _G.AutoFishing then
+            local l_Character_6 = l_LocalPlayer_10.Character
+            local v681 = l_Character_6 and l_Character_6:FindFirstChild("HumanoidRootPart")
+            local v682 = l_Character_6 and l_Character_6:FindFirstChildOfClass("Tool")
+            if _G.SelectedRod and (not v682 or v682.Name ~= _G.SelectedRod) then
+                local l_FirstChild_2 = l_LocalPlayer_10.Backpack:FindFirstChild(_G.SelectedRod)
+                if l_FirstChild_2 then
+                    l_LocalPlayer_10.Character.Humanoid:EquipTool(l_FirstChild_2)
+                    v682 = l_FirstChild_2
+                end
+            end
+            if l_Character_6 and v681 and v682 then
+                local v684 = v679(v681.Position)
+                local _, v686 = workspace:FindPartOnRayWithIgnoreList(Ray.new(l_Character_6.Head.Position, v681.CFrame.LookVector * l_MaxLaunchDistance_0), {l_Character_6, workspace.Characters, workspace.Enemies})
+                local v687 = v686 and Vector3.new(v686.X, math.max(v686.Y, v684), v686.Z)
+                local v688 = v682.GetAttribute(v682, "State")
+                local v689 = v682.GetAttribute(v682, "ServerState")
+                if v688 ~= "ReeledIn" and v689 ~= "ReeledIn" or not v687 then
+                    if v689 == "Biting" then
+                        l_FishingRequest_0:InvokeServer("Catching", true)
+                        task.wait(0.1)
+                        l_FishingRequest_0:InvokeServer("Catch", 1)
+                    end
+                else
+                    l_FishingRequest_0:InvokeServer("StartCasting")
+                    task.wait()
+                    l_FishingRequest_0:InvokeServer("CastLineAtLocation", v687, 100, true)
+                end
+            end
+        end
+    end
+end)
+v491:AddDropdown({
+    Name = "Chọn Mồi Để Câu",
+    Description = "",
+    Options = {"Basic Bait", "Kelp Bait", "Good Bait", "Abyssal Bait", "Frozen Bait", "Epic Bait", "Carnivore Bait"},
+    Default = "Basic Bait",
+    Callback = function(v690)
+        _G.SelectedBait = v690
+        l_FishingRequest_0:InvokeServer("SelectBait", v690)
+    end
+})
 local _ = v485:AddSection({"Vào Máy Chủ"})
 v485:AddTextBox({
         Name = "Vào ID",
