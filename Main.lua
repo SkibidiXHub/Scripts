@@ -4474,3 +4474,9 @@ spawn(function()
         end)
     end
 end)
+
+vu32:Notify({
+    Name = "Dojo Hub Loaded !",
+    Description = "Chúc Bạn Chơi Vui vẻ",
+    Duration = 5
+})
