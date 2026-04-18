@@ -4797,9 +4797,6 @@ spawn(function()
 end)
 
 local _ = v491:AddSection({"Cài Đặt Chỉ Số")}
-    local Replicated = game:GetService("ReplicatedStorage")
-local CommF = Replicated:WaitForChild("Remotes"):WaitForChild("CommF_")
-
 local AutoStats = false
 local PointsPerTick = 1
 
