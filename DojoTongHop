@@ -1,0 +1,36 @@
+local vu32 = loadstring(game:HttpGet("https://pastefy.app/5bk02Q6b/raw"))();  
+local v466 = vu32:MakeWindow({
+    Title = "Dojo Hub | Tổng Hợp",
+    SubTitle = "by realdojo",
+    SaveFolder = "DojoTongHop | redz lib v5.lua"
+})
+
+v466:AddMinimizeButton({
+    Button = { Image = "rbxassetid://78617112299549", BackgroundTransparency = 0 },
+    Size = UDim2.new(0, 35, 0, 35),
+    Corner = { CornerRadius = UDim.new(0.25, 0) },
+})
+
+local v484 = v466:MakeTab({"Discord", ""})
+local v485 = v466:MakeTab({"Blox Fruits", ""})
+local v486 = v466:MakeTab({"99 Night", ""})
+local v487 = v466:MakeTab({"Steal Brainrot", "})
+local v488 = v466:MakeTab({"Plant Vs Brainrot", ""})
+local v489 = v466:MakeTab({"Escape Brainrot", ""})
+local v490 = v466:MakeTab({"King Legacy", ""})
+local v491 = v466:MakeTab({"Sailor Piece "crown"})
+
+v484:AddDiscordInvite({
+    Name = "Dojo Hub | Community",
+    Description = "Vô discord để nhận các thông báo mới",
+    Logo = "rbxassetid://78617112299549",
+    Invite = "https://discord.gg/74XtvapnsV"
+
+local _ = v485:AddSection({"Script Farm"})
+v485:AddButton({
+    Name = "Gravity Hub",
+    Description = "",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Dev-GravityHub/BloxFruit/refs/heads/main/Main.lua"))()
+    end
+})
