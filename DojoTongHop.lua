@@ -12,22 +12,20 @@ v466:AddMinimizeButton({
 })
 
 local v484 = v466:MakeTab({"Discord", ""})
-local v485 = v466:MakeTab({"Blox Fruits", ""})
-local v486 = v466:MakeTab({"Meme Sea", ""})
-local v487 = v466:MakeTab({"Steal Brainrot", ""})
-local v488 = v466:MakeTab({"Escape Brainrot", ""})
-local v489 = v466:MakeTab({"King Legacy", ""})
-local v490 = v466:MakeTab({"Sailor Piece", ""})
-local v491 = v466:MakeTab({"Script Premium, ""})
+local v485 = v466:MakeTab({"Script Farm", ""})
+local v486 = v466:MakeTab({"Script Premium", ""})
+local v487 = v466:MakeTab({"Hop Sever", ""})
+local v488 = v466:MakeTab({"Kaitun Farm", ""})
+local v489 = v466:MakeTab({"Bounty Farm", ""})
 
 v484:AddDiscordInvite({
-    Name = "Dojo Hub | Community",
+    Name = "Dojo Hub | Community"
     Description = "Chúc Vào Discord May Mắn",
     Logo = "rbxassetid://78617112299549",
     Invite = "https://discord.gg/74XtvapnsV"
 })
 
-local _ = v485:AddSection({"Blox Fruits"})
+local _ = v485:AddSection({"Script Farm"})
 v485:AddButton({
     Name = "Hoho Hub",
     Callback = function()
