@@ -1,4 +1,4 @@
-local v466 = loadstring(game:HttpGet("https://raw.githubusercontent.com/PlockScripts/Library-ui/refs/heads/main/redz-V5-remake/main.luau"))():MakeWindow({
+local v466 = loadstring(game:HttpGet("https://pastefy.app/5bk02Q6b/raw"))();:MakeWindow({
     Title = "Dojo Hub | Tổng Hợp",
     SubTitle = "Bởi realdojo",
     SaveFolder = "DojoX.lua"
