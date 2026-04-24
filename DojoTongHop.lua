@@ -75,14 +75,6 @@ l_ImageButton_0.MouseButton1Click:Connect(function()
         v466:Minimize(true)
     end
 end)
-
-v466:SetNotify({
-    Name = "Dojo Hub Loaded !",
-    Description = "Dojo Hub Tải Thành Công !",
-    Logo = "rbxassetid://78617112299549",
-    Duration = 5
-})
-
 local v484 = v466:MakeTab({"🌐 Info", ""})
 local v485 = v466:MakeTab({"🍎 Blox Fruits", ""})
 local v486 = v466:MakeTab({"🍇 Kaitun Farm", ""})
