@@ -91,6 +91,12 @@ local v491 = v466:MakeTab({"🍔 Collect Fruit"})
     Invite = "Dojo On Top"
 })
 local _ = v485:AddSection({"No Key"})
+  v485:AddButon({
+     Name = "Dojo Hub Farm [ ⚠️NEW BAN RISK ]",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/SkibidiXHub/Scripts/refs/heads/main/Main.lua"))()
+  end
+  })
   v485:AddButton({
      Name = "Redz Hub",
     Callback = function()
@@ -355,3 +361,163 @@ local _ = v488:AddSection({"Script PvP"})
       loadstring(game:HttpGet("https://raw.githubusercontent.com/TopiHub1909/TopiHub/refs/heads/main/Attack_Aura_Fruit_M1"))()
   end
   })
+local _ = v488:AddSection({"Kaitun Bounty"})
+   v488:AddButton({
+      Name = "Night M1 Fruit",
+     Callback = function()
+       loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/2ffcdb62773f587bfb9eb0d52bb35b0c.lua"))()
+   end
+   })
+   v488:AddButton({
+      Name = "Hoho Bounty",
+     Callback = function()
+       _G["HoHo Hub Auto Bounty V36"] = {
+    ["Avatar"] = "",
+    ["Farm Method"] = "Normal",
+    ["Select Team"] = "Pirate",
+    ["Discord Webhook"] = "",
+    ["Bypass Teleport"] = false,
+    ["Max Level Distance"] = 612,
+    ["Don't attack friends"] = true,
+    ["Don't attack player have cup"] = false,
+    ["Distance Attack Y"] = 6,
+    ["Chat After Kill"] = {
+        ["Active"] = false,
+        ["List Chat"] = {"i have a good gaming chair","No skill? Use Hoho hub","How to play this game","im new","your bad"},
+    },
+    ["Yourself"] = {
+        ["Invisible From Ken"] = false,
+        ["No Stun"] = true,
+    },
+    ["SafeZone"] = {
+        Enabled = true,
+        ["Health Left (%)"] = 40,
+        ["Wait Until Heal (%)"] = 80,
+    },
+    ["Time Control"] = {
+        ["Max Time Target Player"] = 120,
+    },
+    ["Abilities"] = {
+        ["Auto Click"] = true,
+        ["Melee"] = {
+            Z = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+            X = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+            C = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+        },
+        ["Sword"] = {
+            Z = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+            X = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+        },
+        ["Gun"] = {
+            Z = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+            X = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+        },
+        ["Fruit"] = {
+            Z = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+            X = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+            C = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+            V = {Enabled = false, Hold = 0.05, WaitNextSkill = 0.6},
+            F = {Enabled = true, Hold = 0.05, WaitNextSkill = 0.6},
+        },
+    },
+    ["Supper Fix Lag"] = true,
+    ["Auto Gacha & Store Fruit"] = true,
+    ["Use Portal Teleport"] = true,
+    ["Esp"] = true,
+    ["Fast Attack"] = false,
+    ["No Skill CD"] = false,
+}
+ 
+_G.loadCustomId = "e5f02409dae922162aaf94a7ea76b6e2"
+loadstring(game:HttpGet("https://raw.githubusercontent.com/acsu123/HOHO_H/main/Loading_UI"))()
+   end
+   })
+   v488:AddButton({
+      Name = "Tdt Bounty",
+     Callback = function()
+       getgenv().Setting = {
+        ["Team"] = "Pirates",
+        ["Chat"] = {},
+        ["Skip Race V4"] = true,
+        ["Melee"] = {
+            ["Enable"] = true,
+            ["Z"] = {["Enable"] = true, ["TDTHUB"] = 0.2},
+            ["X"] = {["Enable"] = true, ["TDTHUB"] = 0.2},
+            ["C"] = {["Enable"] = true, ["TDTHUB"] = 0.2},
+            ["Delay"] = 1.0
+        },
+        ["Sword"] = {
+            ["Enable"] = true,
+            ["Z"] = {["Enable"] = true, ["TDTHUB"] = 0.1},
+            ["X"] = {["Enable"] = true, ["TDTHUB"] = 0.1},
+            ["Delay"] = 1
+        },
+        ["Gun"] = {
+            ["Enable"] = false,
+            ["Z"] = {["Enable"] = true, ["TDTHUB"] = 0.1},
+            ["X"] = {["Enable"] = true, ["TDTHUB"] = 0.1},
+            ["Delay"] = 1,
+            ["GunMode"] = false
+        },
+        ["Fruit"] = {
+            ["Enable"] = false,
+            ["Z"] = {["Enable"] = true, ["TDTHUB"] = 0.1},
+            ["X"] = {["Enable"] = true, ["TDTHUB"] = 0.1},
+            ["C"] = {["Enable"] = true, ["TDTHUB"] = 0.1},
+            ["V"] = {["Enable"] = false,["TDTHUB"] = 0.1},
+            ["F"] = {["Enable"] = true, ["TDTHUB"] = 0.1},
+            ["Delay"] = 1
+        },
+        ["Hunt"] = {
+            ["Min"] = 0,
+            ["Max"] = 30000000
+        },
+        ["Skip"] = {
+            ["Fruit"] = false,
+            ["FruitList"] = {"Buddha", "Leopard", "T-Rex"},
+            ["SafeZone"] = true,
+            ["NoHaki"] = true,
+            ["NoPvP"] = true
+        },
+        ["SafeHealth"] = {
+            ["Health"] = 4700,
+            ["Mask"] = false,
+            ["MaskType"] = "Mask",
+            ["RaceV4"] = false
+        },
+        ["Another"] = {
+            ["V3"] = true,
+            ["V4"] = true,
+            ["CustomHealth"] = true,
+            ["Health"] = 4700,
+            ["WhiteScreen"] = false,
+            ["FPSBoots"] = false,
+            ["AutoServerHop"] = true,
+            ["HopWhenNoBounty"] = true,
+            ["BountyLock"] = false,
+            ["BountyLockAt"] = 30000000,
+            ["ServerHopAfterTime"] = false,
+            ["ServerHopTime"] = 900,
+            ["CheckCombatBeforeHop"] = true,
+            ["MaxPlayersInServer"] = 8
+        },
+        ["Webhook"] = {
+            ["Enabled"] = true,
+            ["Url"] = ""
+        }
+    }
+ loadstring(game:HttpGet("https://raw.githubusercontent.com/ThinhNek343/tdthub/refs/heads/main/Autobountytdt.lua", true))()
+   end
+   })
+   v488:AddButton({
+      Name = "Top Bounty",
+     Callback = function()
+       loadstring(game:HttpGet("https://raw.githubusercontent.com/Idontknowbrodontstalk/selene/refs/heads/main/S%20ELENE-obfuscated.lua"))()
+   end
+   })
+   v488:AddButton({
+      Name = "Hiru Bounty",
+     Callback = function()
+       loadstring(game:HttpGet("https://luacrack.site/raw.php/HiruHub/raw/Loader/AutoBountyFree.lua"))()
+   end
+   })
