@@ -1,4 +1,4 @@
-local v466 = loadstring(game:HttpGet("https://raw.githubusercontent.com/SkibidiXHub/ui-library/refs/heads/main/Ui-redzlib"))():MakeWindow({
+local v466 = loadstring(game:HttpGet("https://raw.githubusercontent.com/PlockScripts/Library-ui/refs/heads/main/redz-V5-remake/main.luau"))():MakeWindow({
     Title = "Dojo Hub | Tổng Hợp",
     SubTitle = "Bởi realdojo",
     SaveFolder = "DojoX.lua"
@@ -75,6 +75,14 @@ l_ImageButton_0.MouseButton1Click:Connect(function()
         v466:Minimize(true)
     end
 end)
+
+v466:SetNotify({
+    Name = "Dojo Hub Loaded !",
+    Description = "Dojo Hub Tải Thành Công !",
+    Logo = "rbxassetid://78617112299549",
+    Duration = 5
+})
+
 local v484 = v466:MakeTab({"🌐 Info", ""})
 local v485 = v466:MakeTab({"🍎 Blox Fruits", ""})
 local v486 = v466:MakeTab({"🍇 Kaitun Farm", ""})
@@ -142,5 +150,17 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/LuaCrack/NgocBong/ref
      Name = "Banana Hub (Fake)",
     Callback = function()
       loadstring(game:HttpGet(" https://raw.githubusercontent.com/longhihilonghihi-hub/Dev-BananaHub/refs/heads/main/BananaHub.txt"))()
+  end
+  })
+  v485:AddButton({
+     Name = "Bacon Hub",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/vinh129150/hack/refs/heads/main/Bloxfruits.lua"))()
+  end
+  })
+  v485:AddButton({
+     Name = "Quantum Hub",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/flazhy/QuantumOnyx/refs/heads/main/QuantumOnyx.lua"))()
   end
   })
