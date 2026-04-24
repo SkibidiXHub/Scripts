@@ -75,10 +75,10 @@ l_ImageButton_0.MouseButton1Click:Connect(function()
         v466:Minimize(true)
     end
 end)
-local v484 = v466:MakeTab({"🌐 Info", ""})
-local v485 = v466:MakeTab({"🍎 Blox Fruits", ""})
-local v486 = v466:MakeTab({"🍇 Kaitun Farm", ""})
-local v487 = v466:MakeTab({"👑 Script Premium", ""})
+local v484 = v466:MakeTab({"🌐 Info", "info"})
+local v485 = v466:MakeTab({"🍎 Blox Fruits", "cherry"})
+local v486 = v466:MakeTab({"🍇 Kaitun Farm", "leaf"})
+local v487 = v466:MakeTab({"👑 Script Premium", "crown"})
 local v488 = v466:MakeTab({"🍉 Kaitun Bounty", ""})
 local v489 = v466:MakeTab({"💎 Hop Sever", ""})
 local v490 = v466:MakeTab({"💰 Kaitun Chest", ""})
@@ -361,10 +361,9 @@ local _ = v488:AddSection({"Script PvP"})
       loadstring(game:HttpGet("https://raw.githubusercontent.com/TopiHub1909/TopiHub/refs/heads/main/Attack_Aura_Fruit_M1"))()
   end
   })
-local _ = v488:AddSection({"Kaitun Bounty"})
-   v488:AddButton({
-      Name = "Night M1 Fruit",
-     Callback = function()
+  v488:AddButton({
+     Name = "Night M1 Fruit",
+    Callback = function()
        loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/2ffcdb62773f587bfb9eb0d52bb35b0c.lua"))()
    end
    })
