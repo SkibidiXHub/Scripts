@@ -1,4 +1,4 @@
-local v466 = loadstring(game:HttpGet("https://pastefy.app/5bk02Q6b/raw"))();:MakeWindow({
+local v466 = loadstring(game:HttpGet("https://raw.githubusercontent.com/SkibidiXHub/ui-library/refs/heads/main/Ui-redzlib"))():MakeWindow({
     Title = "Dojo Hub | Tổng Hợp",
     SubTitle = "Bởi realdojo",
     SaveFolder = "DojoX.lua"
