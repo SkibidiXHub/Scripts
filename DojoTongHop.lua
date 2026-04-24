@@ -82,6 +82,7 @@ local v487 = v466:MakeTab({"👑 Script Premium", ""})
 local v488 = v466:MakeTab({"🍉 Kaitun Bounty", ""})
 local v489 = v466:MakeTab({"💎 Hop Sever", ""})
 local v490 = v466:MakeTab({"💰 Kaitun Chest", ""})
+local v491 = v466:MakeTab({"🍔 Collect Fruit"})
 
   v484:AddDiscordInvite({
     Name = "Tiktok - Dojo Hub",
@@ -197,5 +198,94 @@ local _ = v485:AddSection({"Key"})
      Name = "Rubu Hub (Hoho)",
     Callback = function()
       loadstring(game:HttpGet("https://raw.githubusercontent.com/acsu123/HohoV2/refs/heads/main/BloxFruit/Custom/RubuHub.lua"))()
+  end
+  })
+local _ = v486:AddSection({"Kaitun Farm"})
+  v486:AddButton({
+     Name = "Teddy Kaitun",
+    Callback = function()
+      loadstring(game:HttpGet("https://pandadevelopment.net/virtual/file/8cffffd967953fe7"))()
+  end
+  })
+  v486:AddButton({
+     Name = "Xero Kaitun",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/Xero2409/XeroHub/refs/heads/main/kaitun.lua"))() 
+  end
+  })
+  v486:AddButton({
+     Name = "Orange Kaitun",
+    Callback = function()
+      repeat wait() until game:IsLoaded() and game.Players.LocalPlayer getgenv().Config = {  ["Auto Farm"] = true,  ["Settings"] = {  ["FPS Boost"] = true,  } ,  ["Melee"] = {  ["All Melee V1"] = true,  ["Super Huamn"] = true,  ["Dragon Talon"] = true,  ["Sharkman Karate"] = true,  ["Elechic Claw"] = true,  ["GodHuman"] = true,  },  ["Sword"] = {  ["All Sword"] = true,  ["Saber"] = true,  ["Pole"] = true,  ["Rengoku"] = true,  ["Midnight Blade"] = true,  ["Soul Cane"] = true,  ["Gravity Cane"] = true,  ["Dragon Trident"] = true,  ["Legendary Sword"] = true,  ["True Triple Katana"] = true,  ["Twin Hooks"] = true,  ["Canvander"] = true,  ["Buddy Sword"] = true,  ["Hallow Scythe"] = true,  ["Yama"] = true,  ["Tushita"] = true,  ["Cursed Dual Katana"] = true,  },  ["Gun"] = {  ["All Gun"] = true,  ["Acidum Rifle"] = true,  ["Kabucha"] = true,  ["Serpent Bow"] = true,  ["Soul Guitar"] = true,  },  ["Race"] = {  ["Auto V2"] = true,  ["Auto V3"] = true,  }, } loadstring(game:HttpGet("https://raw.githubusercontent.com/HieuDepTrai-Z/Dev_OrangeVip/refs/heads/main/OrangeKaitun.lua"))()
+  end
+  })
+  v486:AddButton({
+     Name = "Night Hub Kaitun",
+    Callback = function()
+      getgenv().Config = {     Team = "Pirates",     FarmConfig = {         ["Out game when done all"] = true,         ["Bypass Teleport"] = true,         ["Double Quest(RISK)"] = true     },     Items = {         ["Saber"] = true,         ["Pole (1st form)"] = true,         ["Skull Guitar"] = true,         ["Cursed Dual Katana"] = true,         ["Godhuman"] = true     },     Webhook = {         ["Enabled"] = false,         ["Url"] = ""     } } loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/d6c7959dcc94cd24467080d82a56dcf9.lua"))()
+  end
+  })
+  v486:AddButton({
+     Name = "Hinishi Hub Kaitun",
+    Callback = function()
+      _G.Hinishi_Hub_Kaitun_Blox_Fruits = {
+    ["Misc"] = {
+        ["Hop If Admin Join"] = true,
+        ["Unlock Dough Chip"] = true,
+        ["Auto Aura RGB"] = true,
+        ["Auto Pull Lever"] = true,
+        ["Big Hitbox"] = true
+    },
+    ["Upgrade Race"] = {
+        ["Race"] = {"Human","Fishman","Skypiea","Mink"},
+        ["Upgrade Race V3"] = true,
+        ["Lock Race Select"] = true
+    },
+    ["Fighting Styles"] = {
+        ["Melee V2"] = true,
+        ["Godhuman"] = true
+    },
+    ["Swords"] = {
+        ["True Triple Katana"] = true,
+        ["Cursed Dual Katana"] = true,
+        ["Shark Anchor"] = true,
+        ["Saber"] = true,
+        ["Midnight Blade"] = true,
+        ["Shisui"] = true,
+        ["Saddi"] = true,
+        ["Wando"] = true,
+        ["Yama"] = true,
+        ["Koko"] = false,
+        ["Rengoku"] = true,
+        ["Canvander"] = true,
+        ["Buddy Sword"] = true,
+        ["Twin Hooks"] = true,
+        ["Spikey Trident"] = true,
+        ["Hallow Scryte"] = true,
+        ["Dark Dagger"] = true,
+        ["Tushita"] = true
+    },
+    ["Guns"] = {
+        ["Soul Guitar"] = true,
+        ["Kabucha"] = true,
+        ["Acidum Rifle"] = true,
+        ["Serpent Bow"] = true
+    },
+    ["BloxFruits"] = {
+        ["Sub Fruits"] = {"Rocket-Rocket","Spin-Spin"},
+        ["Safe Fruits"] = {"Dragon-Dragon","T-Rex-T-Rex","Kitsune-Kitsune"}
+    },
+    ["Mastery"] = {
+        ["Blox Fruit"] = true,
+        ["Fighting Styles"] = true,
+        ["Swords"] = true
+    },
+    ["Settings"] = {
+        ["Tween Speed"] = 300,
+        ["Fix Lag"] = true,
+        ["Safe Mode"] = false
+    }
+}
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Dev-Hinishi/Hinishi-Hub/refs/heads/main/Kaitun"))()
   end
   })
