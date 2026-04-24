@@ -156,3 +156,46 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/LuaCrack/NgocBong/ref
       loadstring(game:HttpGet("https://raw.githubusercontent.com/flazhy/QuantumOnyx/refs/heads/main/QuantumOnyx.lua"))()
   end
   })
+  v485:AddButton({
+     Name = "Nak Hub V4",
+    Callback = function()
+      getgenv().Team = "Marines" loadstring(game:HttpGet("https://raw.githubusercontent.com/Naknohack/NakHubBF/refs/heads/main/NakHubV4.lua"))()
+  end
+  })
+  v485:AddButton({
+     Name = "Dragon Hub",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/dragonhubdev/dragonwitheveryone/refs/heads/main/Main-BF.lua"))()
+  end
+  })
+local _ = v485:AddSection({"Key"})
+  v485:AddButton({
+     Name = "Omg Hub",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/Omgshit/Scripts/main/MainLoader.lua"))()
+  end
+  })
+  v485:AddButton({
+     Name = "RealKid Hub",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/trungdao2k4/trauroblox/refs/heads/main/traubluev1"))()
+  end
+  })
+  v485:AddButton({
+     Name = "Blue X Hub",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/Dev-BlueX/BlueX-Hub/refs/heads/main/Main.lua"))()
+  end
+  })
+  v485:AddButton({
+     Name = "Đạt Thg (Hoho)",
+    Calback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/acsu123/HohoV2/refs/heads/main/BloxFruit/Custom/ThgHub.lua"))()
+  end
+  })
+  v485:AddButton({
+     Name = "Rubu Hub (Hoho)",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/acsu123/HohoV2/refs/heads/main/BloxFruit/Custom/RubuHub.lua"))()
+  end
+  })
