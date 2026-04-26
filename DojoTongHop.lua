@@ -1,7 +1,7 @@
-local v466 = loadstring(game:HttpGet("https://raw.githubusercontent.com/SkibidiXHub/ui-library/refs/heads/main/Ui-redzlib"))():MakeWindow({
-    Title = "Dojo Hub | Tổng Hợp",
-    SubTitle = "Bởi realdojo",
-    SaveFolder = "DojoX.lua"
+local v466 =chỉadstring(game:HttpGet("https://raw.githubusercontent.com/SkibidiXHub/ui-library/refs/heads/main/Ui-redzlib"))():MakeWindow({
+    Title = "Dojo Hub [ BETA ] | Tổng Hợp",
+    SubTitle = "by realdojo",
+    SaveFolder = "DojoHub.lua"
 })
 local l_ScreenGui_0 = Instance.new("ScreenGui")
 l_ScreenGui_0.Name = "ControlGUI"
@@ -75,313 +75,95 @@ l_ImageButton_0.MouseButton1Click:Connect(function()
         v466:Minimize(true)
     end
 end)
-local v484 = v466:MakeTab({"🌐 Info", "info"})
-local v485 = v466:MakeTab({"🍎 Blox Fruits", "cherry"})
-local v486 = v466:MakeTab({"🍇 Kaitun Farm", "leaf"})
-local v487 = v466:MakeTab({"👑 Script Premium", "crown"})
-local v488 = v466:MakeTab({"🍉 Kaitun Bounty", ""})
-local v489 = v466:MakeTab({"💎 Hop Sever", ""})
-local v490 = v466:MakeTab({"💰 Kaitun Chest", ""})
-local v491 = v466:MakeTab({"🍔 Collect Fruit"})
-
+local v484 = v466:MakeTab({"Discord", ""})
+local v485 = v466:MakeTab({"Script Farm", ""})
+local v486 = v466:MakeTab({"Kaitun Farm", ""})
+local v487 = v466:MakeTab({"Pemium Script", ""})
+local v488 = v466:MakeTab({"Hop Sever", ""})
+local v489 = v466:MakeTab({"Bounty Hunter", ""})
+local v490 = v466:MakeTab({"Auto Chest", ""})
+local v491 = v466:MakeTab({"Find Fruit", ""})
+local v492 = v466:MakeTab({"Settings", ""})
   v484:AddDiscordInvite({
-    Name = "Tiktok - Dojo Hub",
-    Description = "https://www.tiktok.com/@hoanganhnemayban230",
+    Name = "Dojo Hub | Commubity",
+    Description = "https://discord.gg/H19MpeQ0",
     Logo = "rbxassetid://78617112299549",
-    Invite = "Dojo On Top"
+    Invite = "https://discord.gg/H19MpeQ0"
 })
 local _ = v485:AddSection({"No Key"})
-  v485:AddButon({
-     Name = "Dojo Hub Farm [ ⚠️NEW BAN RISK ]",
+  v485:AddButton({
+     Name = "Dojo Hub",
     Callback = function()
       loadstring(game:HttpGet("https://raw.githubusercontent.com/SkibidiXHub/Scripts/refs/heads/main/Main.lua"))()
   end
   })
   v485:AddButton({
-     Name = "Redz Hub",
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-}
-loadstring(game:HttpGet("https://raw.githubusercontent.com/newredzv3/Scripts/refs/heads/main/main.luau"))(Settings)
-  end
-  })
-  v485:AddButton({
-     Name = "Zinner Hub",
-    Callback = function()
-	  loadstring(game:HttpGet("https://github.com/HoangNguyenk8/Roblox/blob/main/BF-Main.luau?raw=true"))()
-  end
-  })
-  v485:AddButton({
-     Name = "Gravity Hub",
-    Callback = function()
-	  loadstring(game:HttpGet("https://raw.githubusercontent.com/Dev-GravityHub/BloxFruit/refs/heads/main/Main.lua"))()
-  end
-  })
-  v485:AddButton({
-     Name = "Dark Hub",
-    Callback = function()
-	  getgenv().Team = "Pirates"
-loadstring(game:HttpGet("https://raw.githubusercontent.com/trongdeptraihucscript/Main/refs/heads/main/DarkXScript.lua"))()
-  end
-  })
-  v485:AddButton({
-     Name = "Ngọc Bổng Gaming",
-    Callback = function()
-	  getgenv().Team = "Marines"
-loadstring(game:HttpGet("https://raw.githubusercontent.com/LuaCrack/NgocBong/refs/heads/main/NgocBongVn"))()
-  end
-  })
-  v485:AddButton({
-     Name = "Night Mystic",
-    Callback = function()
-	  loadstring(game:HttpGet("https://raw.githubusercontent.com/Dev-NightMystic/Night-Mystic-/refs/heads/main/NightMystic"))()
-  end
-  })
-  v485:AddButton({
-     Name = "Maru Hub (Fake)",
-    Callback = function()
-	  loadstring(game:HttpGet("https://raw.githubusercontent.com/Dev-Yiner/MaruHubFree/refs/heads/main/main.lua"))()
-  end
-  })
-  v485:AddButton({
-     Name = "Banana Hub (Fake)",
-    Callback = function()
-      loadstring(game:HttpGet(" https://raw.githubusercontent.com/longhihilonghihi-hub/Dev-BananaHub/refs/heads/main/BananaHub.txt"))()
-  end
-  })
-  v485:AddButton({
-     Name = "Bacon Hub",
-    Callback = function()
-      loadstring(game:HttpGet("https://raw.githubusercontent.com/vinh129150/hack/refs/heads/main/Bloxfruits.lua"))()
-  end
-  })
-  v485:AddButton({
-     Name = "Quantum Hub",
-    Callback = function()
-      loadstring(game:HttpGet("https://raw.githubusercontent.com/flazhy/QuantumOnyx/refs/heads/main/QuantumOnyx.lua"))()
-  end
-  })
-  v485:AddButton({
      Name = "Nak Hub V4",
     Callback = function()
-      getgenv().Team = "Marines" loadstring(game:HttpGet("https://raw.githubusercontent.com/Naknohack/NakHubBF/refs/heads/main/NakHubV4.lua"))()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/Naknohack/NakHubBF/refs/heads/main/NakHubV4.lua"))()
   end
   })
   v485:AddButton({
-     Name = "Dragon Hub",
+     Name = "Redz Hub",
     Callback = function()
-      loadstring(game:HttpGet("https://raw.githubusercontent.com/dragonhubdev/dragonwitheveryone/refs/heads/main/Main-BF.lua"))()
-  end
-  })
-local _ = v485:AddSection({"Key"})
-  v485:AddButton({
-     Name = "Omg Hub",
-    Callback = function()
-      loadstring(game:HttpGet("https://raw.githubusercontent.com/Omgshit/Scripts/main/MainLoader.lua"))()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/newredzv3/Scripts/refs/heads/main/main.luau"))()
   end
   })
   v485:AddButton({
-     Name = "RealKid Hub",
+     Name = "Xeter V1",
     Callback = function()
-      loadstring(game:HttpGet("https://raw.githubusercontent.com/trungdao2k4/trauroblox/refs/heads/main/traubluev1"))()
+      getgenv().Version = "V1" getgenv().Team = "Marines" loadstring(game:HttpGet("https://raw.githubusercontent.com/TlDinhKhoi/Xeter/refs/heads/main/Main.lua"))()
   end
   })
   v485:AddButton({
-     Name = "Blue X Hub",
+     Name = "Xeter V2",
     Callback = function()
-      loadstring(game:HttpGet("https://raw.githubusercontent.com/Dev-BlueX/BlueX-Hub/refs/heads/main/Main.lua"))()
+      getgenv().Version = "V2" getgenv().Team = "Marines" loadstring(game:HttpGet("https://raw.githubusercontent.com/TlDinhKhoi/Xeter/refs/heads/main/Main.lua"))()
   end
   })
   v485:AddButton({
-     Name = "Đạt Thg (Hoho)",
-    Calback = function()
-      loadstring(game:HttpGet("https://raw.githubusercontent.com/acsu123/HohoV2/refs/heads/main/BloxFruit/Custom/ThgHub.lua"))()
+     Name = "Xeter V3",
+    Callback = function()
+      getgenv().Version = "V3"
+getgenv().Team = "Marines"
+loadstring(game:HttpGet("https://raw.githubusercontent.com/TlDinhKhoi/Xeter/refs/heads/main/Main.lua"))()
   end
   })
   v485:AddButton({
-     Name = "Rubu Hub (Hoho)",
+     Name = "Xeter V4",
     Callback = function()
-      loadstring(game:HttpGet("https://raw.githubusercontent.com/acsu123/HohoV2/refs/heads/main/BloxFruit/Custom/RubuHub.lua"))()
+      getgenv().Version = "V4"
+getgenv().Team = "Marines"
+loadstring(game:HttpGet("https://raw.githubusercontent.com/TlDinhKhoi/Xeter/refs/heads/main/Main.lua"))()
   end
   })
-local _ = v486:AddSection({"Kaitun Farm"})
-  v486:AddButton({
-     Name = "Teddy Kaitun",
-    Callback = function()
-      loadstring(game:HttpGet("https://pandadevelopment.net/virtual/file/8cffffd967953fe7"))()
-  end
-  })
-  v486:AddButton({
-     Name = "Xero Kaitun",
-    Callback = function()
-      loadstring(game:HttpGet("https://raw.githubusercontent.com/Xero2409/XeroHub/refs/heads/main/kaitun.lua"))() 
-  end
-  })
-  v486:AddButton({
-     Name = "Orange Kaitun",
-    Callback = function()
-      repeat wait() until game:IsLoaded() and game.Players.LocalPlayer getgenv().Config = {  ["Auto Farm"] = true,  ["Settings"] = {  ["FPS Boost"] = true,  } ,  ["Melee"] = {  ["All Melee V1"] = true,  ["Super Huamn"] = true,  ["Dragon Talon"] = true,  ["Sharkman Karate"] = true,  ["Elechic Claw"] = true,  ["GodHuman"] = true,  },  ["Sword"] = {  ["All Sword"] = true,  ["Saber"] = true,  ["Pole"] = true,  ["Rengoku"] = true,  ["Midnight Blade"] = true,  ["Soul Cane"] = true,  ["Gravity Cane"] = true,  ["Dragon Trident"] = true,  ["Legendary Sword"] = true,  ["True Triple Katana"] = true,  ["Twin Hooks"] = true,  ["Canvander"] = true,  ["Buddy Sword"] = true,  ["Hallow Scythe"] = true,  ["Yama"] = true,  ["Tushita"] = true,  ["Cursed Dual Katana"] = true,  },  ["Gun"] = {  ["All Gun"] = true,  ["Acidum Rifle"] = true,  ["Kabucha"] = true,  ["Serpent Bow"] = true,  ["Soul Guitar"] = true,  },  ["Race"] = {  ["Auto V2"] = true,  ["Auto V3"] = true,  }, } loadstring(game:HttpGet("https://raw.githubusercontent.com/HieuDepTrai-Z/Dev_OrangeVip/refs/heads/main/OrangeKaitun.lua"))()
-  end
-  })
-  v486:AddButton({
-     Name = "Night Hub Kaitun",
-    Callback = function()
-      getgenv().Config = {     Team = "Pirates",     FarmConfig = {         ["Out game when done all"] = true,         ["Bypass Teleport"] = true,         ["Double Quest(RISK)"] = true     },     Items = {         ["Saber"] = true,         ["Pole (1st form)"] = true,         ["Skull Guitar"] = true,         ["Cursed Dual Katana"] = true,         ["Godhuman"] = true     },     Webhook = {         ["Enabled"] = false,         ["Url"] = ""     } } loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/d6c7959dcc94cd24467080d82a56dcf9.lua"))()
-  end
-  })
-  v486:AddButton({
-     Name = "Hinishi Hub Kaitun",
-    Callback = function()
-      _G.Hinishi_Hub_Kaitun_Blox_Fruits = {
-    ["Misc"] = {
-        ["Hop If Admin Join"] = true,
-        ["Unlock Dough Chip"] = true,
-        ["Auto Aura RGB"] = true,
-        ["Auto Pull Lever"] = true,
-        ["Big Hitbox"] = true
-    },
-    ["Upgrade Race"] = {
-        ["Race"] = {"Human","Fishman","Skypiea","Mink"},
-        ["Upgrade Race V3"] = true,
-        ["Lock Race Select"] = true
-    },
-    ["Fighting Styles"] = {
-        ["Melee V2"] = true,
-        ["Godhuman"] = true
-    },
-    ["Swords"] = {
-        ["True Triple Katana"] = true,
-        ["Cursed Dual Katana"] = true,
-        ["Shark Anchor"] = true,
-        ["Saber"] = true,
-        ["Midnight Blade"] = true,
-        ["Shisui"] = true,
-        ["Saddi"] = true,
-        ["Wando"] = true,
-        ["Yama"] = true,
-        ["Koko"] = false,
-        ["Rengoku"] = true,
-        ["Canvander"] = true,
-        ["Buddy Sword"] = true,
-        ["Twin Hooks"] = true,
-        ["Spikey Trident"] = true,
-        ["Hallow Scryte"] = true,
-        ["Dark Dagger"] = true,
-        ["Tushita"] = true
-    },
-    ["Guns"] = {
-        ["Soul Guitar"] = true,
-        ["Kabucha"] = true,
-        ["Acidum Rifle"] = true,
-        ["Serpent Bow"] = true
-    },
-    ["BloxFruits"] = {
-        ["Sub Fruits"] = {"Rocket-Rocket","Spin-Spin"},
-        ["Safe Fruits"] = {"Dragon-Dragon","T-Rex-T-Rex","Kitsune-Kitsune"}
-    },
-    ["Mastery"] = {
-        ["Blox Fruit"] = true,
-        ["Fighting Styles"] = true,
-        ["Swords"] = true
-    },
-    ["Settings"] = {
-        ["Tween Speed"] = 300,
-        ["Fix Lag"] = true,
-        ["Safe Mode"] = false
-    }
-}
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Dev-Hinishi/Hinishi-Hub/refs/heads/main/Kaitun"))()
-  end
-  })
-  v486:AddButton({
-     Name = "Arya Hub Kaitun",
-    Callback = function()
-      Config = {
-Team = "Pirates",
-Configuration = {
-HopWhenIdle = true,
-AutoHop = true,
-AutoHopDelay = 60 * 60,
-FpsBoost = false,
-BlackScreen = true
-},
-Items = {
--- Melees
-AutoFullyMelees = true,
--- Swords
-Saber = true,
-CursedDualKatana = false,
--- Guns
-SoulGuitar = false,
--- Upgrades
-RaceV2 = true
-},
-Settings = {
-StayInSea2UntilHaveDarkFragments = false
-}
-}
-loadstring(game:HttpGet("https://raw.githubusercontent.com/hhl29042008-ops/script/refs/heads/main/cac"))()
-  end
-  })
-local _ = v487:AddSection({"Premium"})
-   v487:AddButton({
-      Name = "Banana Hub Premium (Reset Key Mỗi Ngày)",
-     Callback = function()
-       repeat wait() until game:IsLoaded() and game.Players.LocalPlayer 
-getgenv().Key = "vstiaQFAZpIACShSwHMQvbAnQDSdurkY" 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/obiiyeuem/vthangsitink/main/BananaHub.lua"))()
-  end
-  })
-  v487:AddButton({
-     Name = "Maru Hub Premium (Reset Key Mỗi Ngày",
-    Callback = function()
-      getgenv().Key = "MARU-1M54-4bPn-9Mwp-Ta21"
-getgenv().id = "11293710461937282 "
-loadstring(game:HttpGet("https://raw.githubusercontent.com/xshiba/MaruBitkub/main/Mobile.lua"))()
-  end
-  })
-local _ = v488:AddSection({"Script PvP"})
-   v488:AddButton({
-      Name = "Hermanos Dev",
-     Callback = function()
-       loadstring(game:HttpGet("https://raw.githubusercontent.com/hermanos-dev/hermanos-hub/refs/heads/main/Loader.lua"))()
-  end
-  })
-  v488:AddButton({
-     Name = "Lonely Hub PVP",
-    Callback = function()
-      loadstring(game:HttpGet("https://raw.githubusercontent.com/LongHip12/LonelyHub/refs/heads/main/LonelyHub-PVP.lua"))()
-  end
-  })
-  v488:AddButton({
-     Name = "Tobi Hub M1 Fruit",
-    Callback = function()
-      loadstring(game:HttpGet("https://raw.githubusercontent.com/TopiHub1909/TopiHub/refs/heads/main/Attack_Aura_Fruit_M1"))()
-  end
-  })
-  v488:AddButton({
-     Name = "Night M1 Fruit",
-    Callback = function()
-       loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/2ffcdb62773f587bfb9eb0d52bb35b0c.lua"))()
-   end
-   })
-   v488:AddButton({
-      Name = "Tdt Bounty",
-     Callback = function()
-       loadstring(game:HttpGet("https://raw.githubusercontent.com/ThinhNek343/tdthub/refs/heads/main/Autobountytdt.lua", true))()
-   end
-   })
-   v488:AddButton({
-      Name = "Top Bounty",
-     Callback = function()
-       loadstring(game:HttpGet("https://raw.githubusercontent.com/Idontknowbrodontstalk/selene/refs/heads/main/S%20ELENE-obfuscated.lua"))()
-   end
-   })
-   v488:AddButton({
-      Name = "Hiru Bounty",
-     Callback = function()
-       loadstring(game:HttpGet("https://luacrack.site/raw.php/HiruHub/raw/Loader/AutoBountyFree.lua"))()
-   end
-   })
+local _ = v492:AddSection({"Settings Blox Fruits"})
+v492:AddButton({ Name = "Set Pirate Team", Description = "", Callback = function()
+		Pirates();
+	end });
+v492:AddButton({ Name = "Set Marine Team", Description = "", Callback = function()
+		Marines();
+	end });
+v492:AddButton({ Name = "Fps Fix Lag", Description = "Fix Lag", Callback = function()
+		LowCpu();
+	end });
+local V5 = game.Players.LocalPlayer;
+local function y5(I)
+	if not I then
+		return false;
+	end;
+	local e = I:FindFirstChild("Humanoid");
+	return e and e.Health > 0;
+end
+v492:AddToggle({
+	Name = "⚠️ Super Fast Attack",
+	Description = "[ BAN RISK ] Chỉ hỗ trợ trái cây blox",
+	-- 1. Carrega o estado salvo ou inicia como true (padrão original)
+	Default = GetSetting("AutoAttack_Save", true),
+	Callback = function(I)
+		_G.Seriality = I
+        -- 2. Salva
+        _G.SaveData["AutoAttack_Save"] = I
+        SaveSettings()
+	end,
+})
