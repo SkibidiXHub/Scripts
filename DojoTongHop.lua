@@ -1,4 +1,4 @@
-local v466 =chỉadstring(game:HttpGet("https://raw.githubusercontent.com/SkibidiXHub/ui-library/refs/heads/main/Ui-redzlib"))():MakeWindow({
+local v466 = loadstring(game:HttpGet("https://raw.githubusercontent.com/SkibidiXHub/ui-library/refs/heads/main/Ui-redzlib"))():MakeWindow({
     Title = "Dojo Hub [ BETA ] | Tổng Hợp",
     SubTitle = "by realdojo",
     SaveFolder = "DojoHub.lua"
@@ -75,22 +75,22 @@ l_ImageButton_0.MouseButton1Click:Connect(function()
         v466:Minimize(true)
     end
 end)
-local v484 = v466:MakeTab({"Discord", ""})
-local v485 = v466:MakeTab({"Script Farm", ""})
-local v486 = v466:MakeTab({"Kaitun Farm", ""})
-local v487 = v466:MakeTab({"Pemium Script", ""})
-local v488 = v466:MakeTab({"Hop Sever", ""})
-local v489 = v466:MakeTab({"Bounty Hunter", ""})
-local v490 = v466:MakeTab({"Auto Chest", ""})
-local v491 = v466:MakeTab({"Find Fruit", ""})
-local v492 = v466:MakeTab({"Settings", ""})
+local v484 = v466:MakeTab({"🌐 Discord", ""})
+local v485 = v466:MakeTab({"🍒 Script Farm", ""})
+local v486 = v466:MakeTab({"💤 Kaitun Farm", ""})
+local v487 = v466:MakeTab({"👑 Premium Script", ""})
+local v488 = v466:MakeTab({"💎 Hop Sever", ""})
+local v489 = v466:MakeTab({"🏅 Bounty Hunter", ""})
+local v490 = v466:MakeTab({"🥈 Auto Chest", ""})
+local v491 = v466:MakeTab({"🎖️ Find Fruit", ""})
+local v492 = v466:MakeTab({"🏆 Admin", ""})
   v484:AddDiscordInvite({
-    Name = "Dojo Hub | Commubity",
+    Name = "Dojo Hub | Community",
     Description = "https://discord.gg/H19MpeQ0",
     Logo = "rbxassetid://78617112299549",
     Invite = "https://discord.gg/H19MpeQ0"
 })
-local _ = v485:AddSection({"No Key"})
+local _ = v485:AddSection({"Blox Fruits"})
   v485:AddButton({
      Name = "Dojo Hub",
     Callback = function()
@@ -137,33 +137,70 @@ getgenv().Team = "Marines"
 loadstring(game:HttpGet("https://raw.githubusercontent.com/TlDinhKhoi/Xeter/refs/heads/main/Main.lua"))()
   end
   })
-local _ = v492:AddSection({"Settings Blox Fruits"})
-v492:AddButton({ Name = "Set Pirate Team", Description = "", Callback = function()
-		Pirates();
-	end });
-v492:AddButton({ Name = "Set Marine Team", Description = "", Callback = function()
-		Marines();
-	end });
-v492:AddButton({ Name = "Fps Fix Lag", Description = "Fix Lag", Callback = function()
-		LowCpu();
-	end });
-local V5 = game.Players.LocalPlayer;
-local function y5(I)
-	if not I then
-		return false;
-	end;
-	local e = I:FindFirstChild("Humanoid");
-	return e and e.Health > 0;
-end
-v492:AddToggle({
-	Name = "⚠️ Super Fast Attack",
-	Description = "[ BAN RISK ] Chỉ hỗ trợ trái cây blox",
-	-- 1. Carrega o estado salvo ou inicia como true (padrão original)
-	Default = GetSetting("AutoAttack_Save", true),
-	Callback = function(I)
-		_G.Seriality = I
-        -- 2. Salva
-        _G.SaveData["AutoAttack_Save"] = I
-        SaveSettings()
-	end,
-})
+  v485:AddButton({
+     Name = "Orange Hub",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/HieuDepTrai-Z/Dev_Orange/refs/heads/main/OrangeHub.lua"))()
+  end
+  })
+  v485:AddButton({
+     Name = "Omg Hub",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/Omgshit/Scripts/main/MainLoader.lua"))()
+  end
+  })
+  v485:AddButton({
+     Name = "Lemon Hub (Key : Lemon-hub",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/trieu1082/Lemon-hub/refs/heads/main/Lemon-hub-cute.lua"))()
+  end
+  })
+  v485:AddButton({
+     Name = "RealKid Hub",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/trungdao2k4/trauroblox/refs/heads/main/traubluev1"))()
+  end
+  })
+  v485:AddButton({
+     Name = "Min Hub V6",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/LuaCrack/Min/refs/heads/main/MinN"))()
+  end
+  })
+  v485:AddButton({
+     Name = "Leo Hub",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/khanghoang95130-byte/LeoMobile/refs/heads/main/LeoMobile.txt"))()
+  end
+  })
+  v485:AddButton({
+     Name = "Gravity Hub",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/Dev-GravityHub/BloxFruit/main/Main.lua"))()
+  end
+  })
+  v485:AddButton({
+     Name = "Sigma Hub",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/SigmaHubDangCap/BloxFruit/refs/heads/main/MainBloxFruit.lua"))()
+  end
+  })
+  v485:AddButton({
+     Name = "Hdanh Hub",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/hdanhvip/hdanhhub/refs/heads/main/BananaHub.lua.txt"))()
+  end
+  })
+  v485:AddButton({
+     Name = "Blue X Hub",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/Dev-BlueX/BlueX-Hub/refs/heads/main/Main.lua"))()
+  end
+  })
+local _ = v492:AddSection({"Kamui Admin"})
+  v492:AddButton({
+     Name = "Admin Kamui (Từ 1 Đến 6)",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/WhiteX1208/Scripts/refs/heads/main/AdminKamui.luau"))()
+  end
+  })
