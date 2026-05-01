@@ -4571,7 +4571,7 @@ local _ = v485:AddSection({"Auto Farm Chest And Berry"})
 
 v485:AddToggle({
     Name = "Auto Collect Berry",
-    Description = "",
+    Description = "Tự động nhặt berry",
     Default = false,
     Callback = function(v628)
         _G.CollectBerry = v628
@@ -4619,7 +4619,7 @@ spawn(function()
 end)
 v485:AddToggle({
     Name = "Auto Farm Chest [ Tween ]",
-    Description = "",
+    Description = "Tự động rương",
     Default = false,
     Callback = function(v644)
         _G.FarmChest = v644
@@ -4700,6 +4700,249 @@ task.spawn(function()
                 LocalPlayer.Character:BreakJoints()
                 LocalPlayer.CharacterAdded:Wait()
             end
+        end
+    end
+end)
+local _ = v485:AddSection({"Boss Farm"})
+local v657 = v485:AddParagraph({Title = "Boss Spawn Status", Content = "Initializing..."})
+task.spawn(function()
+    while task.wait(1) do
+        pcall(function()
+            if _G.SelectBoss and (game:GetService("ReplicatedStorage"):FindFirstChild(_G.SelectBoss) or game:GetService("Workspace").Enemies:FindFirstChild(_G.SelectBoss)) then
+                v657:Set("Status: Boss Spawn    ")
+            else
+                v657:Set("Status: Boss Not Spawn    ")
+            end
+        end)
+    end
+end)
+local v658 = {}
+if World1 then
+    v658 = {
+        "The Gorilla King",
+        "Bobby",
+        "Yeti",
+        "Mob Leader",
+        "Vice Admiral",
+        "Warden",
+        "Chief Warden",
+        "Swan",
+        "Magma Admiral",
+        "Fishman Lord",
+        "Wysper",
+        "Thunder God",
+        "Cyborg",
+        "Saber Expert"
+    }
+elseif not World2 then
+    if World3 then
+        v658 = {
+            "",
+            "Tyrant of the Skies",
+            "Stone",
+            "Island Empress",
+            "Kilo Admiral",
+            "Captain Elephant",
+            "Beautiful Pirate",
+            "rip_indra True Form",
+            "Longma",
+            "Soul Reaper",
+            "Cake Queen"
+        }
+    end
+else
+    v658 = {
+        "Diamond",
+        "Jeremy",
+        "Fajita",
+        "Don Swan",
+        "Smoke Admiral",
+        "Cursed Captain",
+        "Darkbeard",
+        "Order",
+        "Awakened Ice Admiral",
+        "Tide Keeper"
+    }
+end
+v485:AddDropdown({
+    Name = "Boss List",
+    Description = "Làm lại trang boss list",
+    Options = v658,
+    Default = v658[1],
+    Callback = function(v659)
+        _G.SelectBoss = v659
+    end
+})
+v485:AddToggle({
+    Name = "Auto Kill Boss Selected",
+    Description = "Tự động giết boss chọn",
+    Default = false,
+    Callback = function(v660)
+        _G.AutoBoss = v660
+        StopTween(_G.AutoBoss)
+    end
+})
+task.spawn(function()
+    while task.wait() do
+        if _G.AutoBoss and _G.SelectBoss then
+            pcall(function()
+                if not game:GetService("Workspace").Enemies:FindFirstChild(_G.SelectBoss) then
+                    if game:GetService("ReplicatedStorage"):FindFirstChild(_G.SelectBoss) then
+                        topos(game:GetService("ReplicatedStorage"):FindFirstChild(_G.SelectBoss).HumanoidRootPart.CFrame * CFrame.new(5, 10, 2))
+                    end
+                else
+                    for _, v662 in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                        if v662.Name == _G.SelectBoss and v662:FindFirstChild("Humanoid") and v662:FindFirstChild("HumanoidRootPart") and v662.Humanoid.Health > 0 then
+                            repeat
+                                task.wait()
+                                AutoHaki()
+                                EquipWeapon(_G.SelectWeapon)
+                                v662.HumanoidRootPart.CanCollide = false
+                                v662.Humanoid.WalkSpeed = 0
+                                v662.HumanoidRootPart.Size = Vector3.new(80, 80, 80)
+                                topos(v662.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                                sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
+                            until not _G.AutoBoss or not v662.Parent or v662.Humanoid.Health <= 0
+                        end
+                    end
+                end
+            end)
+        end
+    end
+end)
+local _ = v485:AddSection({"Material"})
+local v664 = {}
+if not World1 then
+    if World2 then
+        v664 = {"Radioactive", "Mystic Droplet", "Magma Ore", "Leather", "Ectoplasm", "Scrap Metal"}
+    elseif World3 then
+        v664 = {"Leather", "Scrap Metal", "Conjured Cocoa", "Dragon Scale", "Gunpowder", "Fish Tail", "Mini Tusk"}
+    end
+else
+    v664 = {"Magma Ore", "Angel Wings", "Leather", "Scrap Metal"}
+end
+function getConfigMaterial(v665)
+    if v665 ~= "Radioactive" or not World2 then
+        if v665 ~= "Mystic Droplet" or not World2 then
+            if v665 == "Magma Ore" and World1 then
+                MaterialMon = {"Military Spy"}
+                MaterialPos = CFrame.new(-5850.28, 77.28, 8848.67)
+            elseif v665 ~= "Magma Ore" or not World2 then
+                if v665 ~= "Angel Wings" or not World1 then
+                    if v665 ~= "Leather" or not World1 then
+                        if v665 ~= "Leather" or not World2 then
+                            if v665 ~= "Leather" or not World3 then
+                                if v665 ~= "Ectoplasm" or not World2 then
+                                    if v665 ~= "Scrap Metal" or not World1 then
+                                        if v665 == "Scrap Metal" and World2 then
+                                            MaterialMon = {"Mercenary"}
+                                            MaterialPos = CFrame.new(-972.3, 73.04, 1419.29)
+                                        elseif v665 == "Scrap Metal" and World3 then
+                                            MaterialMon = {"Pirate Millionaire"}
+                                            MaterialPos = CFrame.new(-289.63, 43.82, 5583.66)
+                                        elseif v665 ~= "Conjured Cocoa" or not World3 then
+                                            if v665 == "Dragon Scale" and World3 then
+                                                MaterialMon = {"Dragon Crew Warrior"}
+                                                MaterialPos = CFrame.new(5824.06, 51.38, -1106.69)
+                                            elseif v665 == "Gunpowder" and World3 then
+                                                MaterialMon = {"Pistol Billionaire"}
+                                                MaterialPos = CFrame.new(-379.61, 73.84, 5928.52)
+                                            elseif v665 ~= "Fish Tail" or not World3 then
+                                                if v665 == "Mini Tusk" and World3 then
+                                                    MaterialMon = {"Mithological Pirate"}
+                                                    MaterialPos = CFrame.new(-13516.04, 469.81, -6899.16)
+                                                end
+                                            else
+                                                MaterialMon = {"Fishman Captain"}
+                                                MaterialPos = CFrame.new(-10961.01, 331.79, -8914.29)
+                                            end
+                                        else
+                                            MaterialMon = {"Chocolate Bar Battler"}
+                                            MaterialPos = CFrame.new(744.79, 24.76, -12637.72)
+                                        end
+                                    else
+                                        MaterialMon = {"Brute"}
+                                        MaterialPos = CFrame.new(-1132.42, 14.84, 4293.3)
+                                    end
+                                else
+                                    MaterialMon = {"Ship Deckhand", "Ship Engineer", "Ship Steward", "Ship Officer"}
+                                    MaterialPos = CFrame.new(911.35, 125.95, 33159.53)
+                                end
+                            else
+                                MaterialMon = {"Jungle Pirate"}
+                                MaterialPos = CFrame.new(-11975.78, 331.77, -10620.03)
+                            end
+                        else
+                            MaterialMon = {"Marine Captain"}
+                            MaterialPos = CFrame.new(-2010.5, 73, -3326.62)
+                        end
+                    else
+                        MaterialMon = {"Pirate"}
+                        MaterialPos = CFrame.new(-1211.87, 4.78, 3916.83)
+                    end
+                else
+                    MaterialMon = {"Royal Soldier"}
+                    MaterialPos = CFrame.new(-7827.15, 5606.91, -1705.58)
+                end
+            else
+                MaterialMon = {"Lava Pirate"}
+                MaterialPos = CFrame.new(-5234.6, 51.95, -4732.27)
+            end
+        else
+            MaterialMon = {"Water Fighter"}
+            MaterialPos = CFrame.new(-3352.9, 285.01, -10534.84)
+        end
+    else
+        MaterialMon = {"Factory Staff"}
+        MaterialPos = CFrame.new(-507.78, 73, -126.45)
+    end
+end
+v485:AddDropdown({
+    Name = "Material List",
+    Description = "",
+    Options = v664,
+    Default = v664[1],
+    Callback = function(v666)
+        _G.SelectMaterial = v666
+    end
+})
+v485:AddToggle({
+    Name = "Auto Farm Material",
+    Description = "",
+    Default = false,
+    Callback = function(v667)
+        _G.AutoFarmMaterial = v667
+        StopTween(_G.AutoFarmMaterial)
+    end
+})
+task.spawn(function()
+    while task.wait(0.2) do
+        if _G.AutoFarmMaterial and _G.SelectMaterial then
+            pcall(function()
+                getConfigMaterial(_G.SelectMaterial)
+                for _, v669 in pairs(MaterialMon) do
+                    if workspace.Enemies:FindFirstChild(v669) then
+                        for _, v671 in pairs(workspace.Enemies:GetChildren()) do
+                            if v671.Name == v669 and v671:FindFirstChild("Humanoid") and v671:FindFirstChild("HumanoidRootPart") and v671.Humanoid.Health > 0 then
+                                repeat
+                                    task.wait()
+                                    AutoHaki()
+                                    EquipWeapon(_G.SelectWeapon)
+                                    PosMon = v671.HumanoidRootPart.CFrame
+                                    MonFarm = v671.Name
+                                    topos(v671.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                                until not _G.AutoFarmMaterial or not v671.Parent or v671.Humanoid.Health <= 0
+                            end
+                        end
+                    else
+                        UnEquipWeapon(_G.SelectWeapon)
+                        if _G.SelectMaterial == "Ectoplasm" and (MaterialPos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 18000 then
+                            game.ReplicatedStorage.Remotes.CommF_:InvokeServer("requestEntrance", Vector3.new(923.21, 126.97, 32852.83))
+                        end
+                        topos(MaterialPos)
+                    end
+                end
+            end)
         end
     end
 end)
