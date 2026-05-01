@@ -5251,8 +5251,8 @@ v487:AddDropdown({
         _G.SelectedRod = v691
     end
 })
-local _ = v491:AddSection({"Fruits"})
-v491:AddToggle({
+local _ = v488:AddSection({"Fruits"})
+v488:AddToggle({
     Name = "Random Fruit",
     Description = "",
     Default = false,
@@ -5269,7 +5269,7 @@ spawn(function()
         end
     end)
 end)
-v491:AddToggle({
+v488:AddToggle({
     Title = "Auto Store Fruits",
     Description = "",
     Value = false,
@@ -5339,8 +5339,8 @@ spawn(function()
         end
     end
 end)
-v491:AddToggle({
-    Name = "Teleport To Fruit Spawn",
+v488:AddToggle({
+    Name = "Teleport To Fruit",
     Description = "",
     Default = false,
     Callback = function(v1084)
@@ -5358,14 +5358,14 @@ spawn(function()
         end
     end
 end)
-local _ = v491:AddSection({"Raid Fruit"})
+local _ = v488:AddSection({"Raid Fruit"})
 
 _G.SelectChip = "Flame"
 _G.AutoBuyChip = false
 _G.StartRaid = false
 _G.Dungeon = false
 
-v491:AddDropdown({
+v488:AddDropdown({
     Name = "Select Chip",
     Options = {
         "Flame","Ice","Sand","Dark","Light","Magma",
@@ -5377,7 +5377,7 @@ v491:AddDropdown({
     end
 })
 
-v491:AddToggle({
+v488:AddToggle({
     Name = "Auto Buy Chip",
     Default = false,
     Callback = function(v)
@@ -5399,7 +5399,7 @@ task.spawn(function()
     end
 end)
 
-v491:AddToggle({
+v488:AddToggle({
     Name = "Auto Start Raid",
     Default = false,
     Callback = function(v)
@@ -5437,7 +5437,7 @@ task.spawn(function()
     end
 end)
 
-v491:AddToggle({
+v488:AddToggle({
     Name = "Auto Farm Raid Next Island",
     Default = false,
     Callback = function(v)
@@ -5505,8 +5505,8 @@ if not World2 then
     })
 else
 
-local _ = v491:AddSection({"Raid Law Sea 2"})
-v491:AddButton({
+local _ = v488:AddSection({"Raid Law Sea 2"})
+v488:AddButton({
     Title = "Auto Buy Chip Law",
     Description = "",
     Value = false,
@@ -5515,14 +5515,14 @@ v491:AddButton({
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(v1069))
     end
 })
-v491:AddButton({
+v488:AddButton({
     Title = "Auto Start Raid Law",
     Value = false,
     Callback = function()
         fireclickdetector(game:GetService("Workspace").Map.CircleIsland.RaidSummon.Button.Main.ClickDetector)
     end
 })
-v491:AddToggle({
+v488:AddToggle({
     Name = "Auto Farm Law Raid",
     Description = "",
     Default = false,
