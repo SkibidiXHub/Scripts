@@ -5242,8 +5242,8 @@ if World1 then
             end
         end
     end)
-local _ = v488:AddSection({"Join Server"})
-v488:AddTextBox({
+local _ = v489:AddSection({"Join Server"})
+v489:AddTextBox({
         Name = "Job ID",
         PlaceholderText = "Paste the Job ID here...",
         Callback = function(p215)
@@ -5252,7 +5252,7 @@ v488:AddTextBox({
             end
         end
     })
-v488:AddButton({
+v489:AddButton({
     Title = "Join Clipboard",
     Description = "Join server from copied JobId",
     Callback = function()
@@ -5270,9 +5270,9 @@ v488:AddButton({
     end
 })
 
-local _ = v488:AddSection({"Fast Attack"})
+local _ = v489:AddSection({"Fast Attack"})
 
-v488:AddToggle({
+v489:AddToggle({
     Name = "Fast Attack",
     Description = "",
     Default = true,
@@ -5412,7 +5412,7 @@ task.spawn(function()
         end
     end
 end)
-v488:AddToggle({
+v489:AddToggle({
     Name = "Bring Mob",
     Description = "",
     Default = true,
