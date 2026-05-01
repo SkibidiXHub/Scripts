@@ -5183,15 +5183,72 @@ task.spawn(function()
         end
     end
 end)
-if World1 then
-local _ = v486:AddSection({"Auto Second Sea"})
-v486:AddToggle({
-    Name = "Auto Quest Sea 2",
+local _ = v487:AddSection({"Auto Fishing"})
+v487:AddToggle({
+    Title = "Auto Fishing",
     Description = "",
     Default = false,
-    Callback = function(v693)
-        _G.AutoSecondSea = v693
-        StopTween(_G.AutoSecondSea)
+    Callback = function(v673)
+        _G.AutoFishing = v673
+    end
+})
+local _ = workspace
+local l_LocalPlayer_10 = game.Players.LocalPlayer
+local l_FishReplicated_0 = game.ReplicatedStorage:WaitForChild("FishReplicated")
+local l_FishingRequest_0 = l_FishReplicated_0:WaitForChild("FishingRequest")
+local l_MaxLaunchDistance_0 = require(l_FishReplicated_0.FishingClient.Config).Rod.MaxLaunchDistance
+local v679 = require(game.ReplicatedStorage.Util.GetWaterHeightAtLocation)
+task.spawn(function()
+    while task.wait() do
+        if _G.AutoFishing then
+            local l_Character_6 = l_LocalPlayer_10.Character
+            local v681 = l_Character_6 and l_Character_6:FindFirstChild("HumanoidRootPart")
+            local v682 = l_Character_6 and l_Character_6:FindFirstChildOfClass("Tool")
+            if _G.SelectedRod and (not v682 or v682.Name ~= _G.SelectedRod) then
+                local l_FirstChild_2 = l_LocalPlayer_10.Backpack:FindFirstChild(_G.SelectedRod)
+                if l_FirstChild_2 then
+                    l_LocalPlayer_10.Character.Humanoid:EquipTool(l_FirstChild_2)
+                    v682 = l_FirstChild_2
+                end
+            end
+            if l_Character_6 and v681 and v682 then
+                local v684 = v679(v681.Position)
+                local _, v686 = workspace:FindPartOnRayWithIgnoreList(Ray.new(l_Character_6.Head.Position, v681.CFrame.LookVector * l_MaxLaunchDistance_0), {l_Character_6, workspace.Characters, workspace.Enemies})
+                local v687 = v686 and Vector3.new(v686.X, math.max(v686.Y, v684), v686.Z)
+                local v688 = v682.GetAttribute(v682, "State")
+                local v689 = v682.GetAttribute(v682, "ServerState")
+                if v688 ~= "ReeledIn" and v689 ~= "ReeledIn" or not v687 then
+                    if v689 == "Biting" then
+                        l_FishingRequest_0:InvokeServer("Catching", true)
+                        task.wait(0.1)
+                        l_FishingRequest_0:InvokeServer("Catch", 1)
+                    end
+                else
+                    l_FishingRequest_0:InvokeServer("StartCasting")
+                    task.wait()
+                    l_FishingRequest_0:InvokeServer("CastLineAtLocation", v687, 100, true)
+                end
+            end
+        end
+    end
+end)
+v487:AddDropdown({
+    Name = "Select Fishing Lure",
+    Description = "",
+    Options = {"Basic Bait", "Kelp Bait", "Good Bait", "Abyssal Bait", "Frozen Bait", "Epic Bait", "Carnivore Bait"},
+    Default = "Basic Bait",
+    Callback = function(v690)
+        _G.SelectedBait = v690
+        l_FishingRequest_0:InvokeServer("SelectBait", v690)
+    end
+})
+v487:AddDropdown({
+    Name = "Select Fishing Rod",
+    Description = "",
+    Options = {"Fishing Rod", "Gold Rod", "Shark Rod", "Shell Rod", "Treasure Rod"},
+    Default = "Fishing Rod",
+    Callback = function(v691)
+        _G.SelectedRod = v691
     end
 })
 local _ = v489:AddSection({"Join Server"})
