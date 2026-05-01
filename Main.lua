@@ -5251,6 +5251,314 @@ v487:AddDropdown({
         _G.SelectedRod = v691
     end
 })
+local _ = v491:AddSection({"Fruits"})
+v491:AddToggle({
+    Name = "Random Fruit",
+    Description = "",
+    Default = false,
+    Callback = function(v1074)
+        _G.RandomAuto = v1074
+    end
+})
+spawn(function()
+    pcall(function()
+        while wait() do
+            if _G.RandomAuto then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Cousin", "Buy")
+            end
+        end
+    end)
+end)
+v491:AddToggle({
+    Title = "Auto Store Fruits",
+    Description = "",
+    Value = false,
+    Callback = function(v1075)
+        getgenv().AutoStoreFruit = v1075
+    end
+})
+spawn(function()
+    while task.wait(0.2) do
+        if getgenv().AutoStoreFruit then
+            pcall(function()
+                local l_LocalPlayer_16 = game:GetService("Players").LocalPlayer
+                local v1077 = l_LocalPlayer_16.Character or l_LocalPlayer_16.CharacterAdded:Wait()
+                local l_Backpack_3 = l_LocalPlayer_16:WaitForChild("Backpack")
+                for _, v1080 in ipairs({
+                    {"Rocket Fruit", "Rocket-Rocket"},
+                    {"Spin Fruit", "Spin-Spin"},
+                    {"Blade Fruit", "Blade-Blade"},
+                    {"Spring Fruit", "Spring-Spring"},
+                    {"Bomb Fruit", "Bomb-Bomb"},
+                    {"Smoke Fruit", "Smoke-Smoke"},
+                    {"Spike Fruit", "Spike-Spike"},
+                    {"Flame Fruit", "Flame-Flame"},
+                    {"Eagle Fruit", "Eagle-Eagle"},
+                    {"Ice Fruit", "Ice-Ice"},
+                    {"Sand Fruit", "Sand-Sand"},
+                    {"Dark Fruit", "Dark-Dark"},
+                    {"Diamond Fruit", "Diamond-Diamond"},
+                    {"Light Fruit", "Light-Light"},
+                    {"Rubber Fruit", "Rubber-Rubber"},
+                    {"Creation Fruit", "Creation-Creation"},
+                    {"Ghost Fruit", "Ghost-Ghost"},
+                    {"Magma Fruit", "Magma-Magma"},
+                    {"Quake Fruit", "Quake-Quake"},
+                    {"Buddha Fruit", "Buddha-Buddha"},
+                    {"Love Fruit", "Love-Love"},
+                    {"Spider Fruit", "Spider-Spider"},
+                    {"Sound Fruit", "Sound-Sound"},
+                    {"Phoenix Fruit", "Phoenix-Phoenix"},
+                    {"Portal Fruit", "Portal-Portal"},
+                    {"Lightning Fruit", "Lightning-Lightning"},
+                    {"Pain Fruit", "Pain-Pain"},
+                    {"Blizzard Fruit", "Blizzard-Blizzard"},
+                    {"Gravity Fruit", "Gravity-Gravity"},
+                    {"Mammoth Fruit", "Mammoth-Mammoth"},
+                    {"T-Rex Fruit", "T-Rex-T-Rex"},
+                    {"Dough Fruit", "Dough-Dough"},
+                    {"Shadow Fruit", "Shadow-Shadow"},
+                    {"Venom Fruit", "Venom-Venom"},
+                    {"Gas Fruit", "Gas-Gas"},
+                    {"Control Fruit", "Control-Control"},
+                    {"Spirit Fruit", "Spirit-Spirit"},
+                    {"Leopard Fruit", "Leopard-Leopard"},
+                    {"Yeti Fruit", "Yeti-Yeti"},
+                    {"Kitsune Fruit", "Kitsune-Kitsune"},
+                    {"Dragon Fruit", "Dragon-Dragon"}
+                }) do
+                    local v1081 = v1080[1]
+                    local v1082 = v1080[2]
+                    local v1083 = l_Backpack_3:FindFirstChild(v1081) or v1077:FindFirstChild(v1081)
+                    if v1083 then
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StoreFruit", v1082, v1083)
+                        break
+                    end
+                end
+            end)
+        end
+    end
+end)
+v491:AddToggle({
+    Name = "Teleport To Fruit Spawn",
+    Description = "",
+    Default = false,
+    Callback = function(v1084)
+        _G.Tweenfruit = v1084
+    end
+})
+spawn(function()
+    while wait(0.1) do
+        if _G.TweenFruit then
+            for _, v1086 in pairs(game.Workspace:GetChildren()) do
+                if string.find(v1086.Name, "Fruit") then
+                    TP1(v1086.Handle.CFrame)
+                end
+            end
+        end
+    end
+end)
+local _ = v491:AddSection({"Raid Fruit"})
+
+_G.SelectChip = "Flame"
+_G.AutoBuyChip = false
+_G.StartRaid = false
+_G.Dungeon = false
+
+v491:AddDropdown({
+    Name = "Select Chip",
+    Options = {
+        "Flame","Ice","Sand","Dark","Light","Magma",
+        "Quake","Buddha","Spider","Phoenix","Lightning","Dough"
+    },
+    Default = "Flame",
+    Callback = function(v)
+        _G.SelectChip = v
+    end
+})
+
+v491:AddToggle({
+    Name = "Auto Buy Chip",
+    Default = false,
+    Callback = function(v)
+        _G.AutoBuyChip = v
+    end
+})
+
+task.spawn(function()
+    while task.wait(1) do
+        if _G.AutoBuyChip and _G.SelectChip then
+            pcall(function()
+                game.ReplicatedStorage.Remotes.CommF_:InvokeServer(
+                    "RaidsNpc",
+                    "Select",
+                    _G.SelectChip
+                )
+            end)
+        end
+    end
+end)
+
+v491:AddToggle({
+    Name = "Auto Start Raid",
+    Default = false,
+    Callback = function(v)
+        _G.StartRaid = v
+    end
+})
+
+task.spawn(function()
+    while task.wait(1) do
+        pcall(function()
+            if not _G.StartRaid then return end
+
+            local lp = game.Players.LocalPlayer
+            local gui = lp.PlayerGui:FindFirstChild("Main")
+            if not gui then return end
+
+            if gui.Timer.Visible then return end
+            if workspace._WorldOrigin.Locations:FindFirstChild("Island 1") then return end
+            if not (lp.Backpack:FindFirstChild("Special Microchip") or lp.Character:FindFirstChild("Special Microchip")) then return end
+
+            if World2 then
+                topos(CFrame.new(-6438.73, 250.64, -4501.5))
+                game.ReplicatedStorage.Remotes.CommF_:InvokeServer("SetSpawnPoint")
+                fireclickdetector(workspace.Map.CircleIsland.RaidSummon2.Button.Main.ClickDetector)
+            elseif World3 then
+                game.ReplicatedStorage.Remotes.CommF_:InvokeServer(
+                    "requestEntrance",
+                    Vector3.new(-5075.5, 314.51, -3150.02)
+                )
+                topos(CFrame.new(-5017.4, 314.84, -2823.01))
+                game.ReplicatedStorage.Remotes.CommF_:InvokeServer("SetSpawnPoint")
+                fireclickdetector(workspace.Map["Boat Castle"].RaidSummon2.Button.Main.ClickDetector)
+            end
+        end)
+    end
+end)
+
+v491:AddToggle({
+    Name = "Auto Farm Raid Next Island",
+    Default = false,
+    Callback = function(v)
+        _G.Dungeon = v
+    end
+})
+
+local function GetIsland(num)
+    local closest, dist = nil, math.huge
+    for _,v in pairs(workspace._WorldOrigin.Locations:GetChildren()) do
+        if v.Name == "Island "..num then
+            local mag = (v.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+            if mag < dist then
+                dist = mag
+                closest = v
+            end
+        end
+    end
+    return closest
+end
+
+local function GetNextIsland()
+    for _,i in ipairs({5,4,3,2,1}) do
+        local isl = GetIsland(i)
+        if isl and (isl.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 4500 then
+            return isl
+        end
+    end
+end
+
+local function FarmRaidEnemies()
+    for _,mob in pairs(workspace.Enemies:GetChildren()) do
+        if mob:FindFirstChild("HumanoidRootPart")
+        and mob:FindFirstChild("Humanoid")
+        and mob.Humanoid.Health > 0
+        and (mob.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1000 then
+            repeat
+                task.wait(0.1)
+                if mob.Humanoid.Health > 0 then
+                    EquipWeapon(_G.SelectWeapon)
+                    topos(mob.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                end
+            until mob.Humanoid.Health <= 0 or not _G.Dungeon
+        end
+    end
+end
+
+task.spawn(function()
+    while task.wait() do
+        if _G.Dungeon then
+            FarmRaidEnemies()
+            local isl = GetNextIsland()
+            if isl then
+                topos(isl.CFrame * CFrame.new(0,60,0))
+            end
+        end
+    end
+end)
+end
+
+if not World2 then
+    v491:AddParagraph({
+        Title = "Raid Law Only Sea 2",
+        Content = ""
+    })
+else
+
+local _ = v491:AddSection({"Raid Law Sea 2"})
+v491:AddButton({
+    Title = "Auto Buy Chip Law",
+    Description = "",
+    Value = false,
+    Callback = function()
+        local v1069 = {[1] = "BlackbeardReward", [2] = "Microchip", [3] = "2"}
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(v1069))
+    end
+})
+v491:AddButton({
+    Title = "Auto Start Raid Law",
+    Value = false,
+    Callback = function()
+        fireclickdetector(game:GetService("Workspace").Map.CircleIsland.RaidSummon.Button.Main.ClickDetector)
+    end
+})
+v491:AddToggle({
+    Name = "Auto Farm Law Raid",
+    Description = "",
+    Default = false,
+    Callback = function(v1070)
+        _G.AutoLawRaid = v1070
+    end
+})
+spawn(function()
+    while wait() do
+        if _G.AutoLawRaid then
+            pcall(function()
+                if game:GetService("Workspace").Enemies:FindFirstChild("Order") then
+                    for _, v1072 in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                        if v1072.Name == "Order" and v1072:FindFirstChild("Humanoid") and v1072:FindFirstChild("HumanoidRootPart") and v1072.Humanoid.Health > 0 then
+                            repeat
+                                task.wait()
+                                AutoHaki()
+                                EquipWeapon(_G.SelectWeapon)
+                                v1072.HumanoidRootPart.CanCollide = false
+                                v1072.Humanoid.WalkSpeed = 0
+                                topos(v1072.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                                sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
+                            until not _G.AutoLawRaid or not v1072.Parent or v1072.Humanoid.Health <= 0
+                        end
+                    end
+                else
+                    NeedAttacking = true
+                    if game:GetService("ReplicatedStorage"):FindFirstChild("Order") then
+                        topos(game:GetService("ReplicatedStorage"):FindFirstChild("Order").HumanoidRootPart.CFrame * CFrame.new(5, 10, 2))
+                    end
+                end
+            end)
+        end
+    end
+end)
+end
 local _ = v489:AddSection({"Join Server"})
 v489:AddTextBox({
         Name = "Job ID",
