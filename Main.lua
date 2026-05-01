@@ -3757,9 +3757,6 @@ v484:AddParagraph({
 Title = "Version : V1",
     Desc = ""
 })
-v484:AddParagraph({
-Title = "Lê Hoàng Anh : By real Dojo",
-    Desc = ""
 _G.SelectWeapon = "Melee"
 task.spawn(function()
     while task.wait() do
