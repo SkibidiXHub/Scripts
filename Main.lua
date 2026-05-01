@@ -5184,16 +5184,16 @@ task.spawn(function()
     end
 end)
 if World1 then
-    local _ = v486:AddSection({"Auto Second Sea"})
-    v486:AddToggle({
-        Name = "Auto Quest Sea 2",
-        Description = "",
-        Default = false,
-        Callback = function(v693)
-            _G.AutoSecondSea = v693
-            StopTween(_G.AutoSecondSea)
-        end
-    })
+local _ = v486:AddSection({"Auto Second Sea"})
+v486:AddToggle({
+    Name = "Auto Quest Sea 2",
+    Description = "",
+    Default = false,
+    Callback = function(v693)
+        _G.AutoSecondSea = v693
+        StopTween(_G.AutoSecondSea)
+    end
+})
 local _ = v489:AddSection({"Join Server"})
 v489:AddTextBox({
         Name = "Job ID",
