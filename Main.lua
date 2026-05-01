@@ -3731,7 +3731,7 @@ local vu32 = loadstring(game:HttpGet("https://pastefy.app/5bk02Q6b/raw"))();
 local v466 = vu32:MakeWindow({
     Title = "Dojo Hub | Blox Fruits",
     SubTitle = "By real Dojo✅",
-    SaveFolder = "redzHub.json | redz lib v5.lua"
+    SaveFolder = "Dojo.json | redz lib v5.lua"
 })
 
 v466:AddMinimizeButton({
@@ -5183,65 +5183,6 @@ task.spawn(function()
         end
     end
 end)
-if World1 then
-    local _ = v486:AddSection({"Auto Sea 2"})
-    v486:AddToggle({
-        Name = "Auto Second Sea",
-        Description = "",
-        Default = false,
-        Callback = function(v693)
-            _G.AutoSecondSea = v693
-            StopTween(_G.AutoSecondSea)
-        end
-    })
-    spawn(function()
-        while wait() do
-            if _G.AutoSecondSea then
-                pcall(function()
-                    if game.Players.LocalPlayer.Data.Level.Value >= 700 and World1 then
-                        _G.AutoFarm = false
-                        if game.Workspace.Map.Ice.Door.CanCollide == true and game.Workspace.Map.Ice.Door.Transparency == 0 then
-                            repeat
-                                wait()
-                                topos(CFrame.new(4851.8720703125, 5.6514348983765, 718.47094726563))
-                            until (CFrame.new(4851.8720703125, 5.6514348983765, 718.47094726563).Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 3 or not _G.AutoSecondSea
-                            wait(1)
-                            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("DressrosaQuestProgress", "Detective")
-                            EquipWeapon("Key")
-                            local v694 = CFrame.new(1347.7124, 37.3751602, -1325.6488)
-                            repeat
-                                wait()
-                                topos(v694)
-                            until (v694.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 3 or not _G.AutoSecondSea
-                            wait(3)
-                        elseif game.Workspace.Map.Ice.Door.CanCollide ~= false or game.Workspace.Map.Ice.Door.Transparency ~= 1 then
-                            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("TravelDressrosa")
-                        elseif game:GetService("Workspace").Enemies:FindFirstChild("Ice Admiral") then
-                            for _, v696 in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                                if v696.Name == "Ice Admiral" and v696.Humanoid.Health > 0 then
-                                    repeat
-                                        wait()
-                                        AutoHaki()
-                                        EquipWeapon(_G.SelectWeapon)
-                                        v696.HumanoidRootPart.CanCollide = false
-                                        StartBring = true
-                                        v696.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-                                        v696.HumanoidRootPart.Transparency = 1
-                                        topos(v696.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
-                                        game:GetService("VirtualUser"):CaptureController()
-                                        game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 870), workspace.CurrentCamera.CFrame)
-                                    until v696.Humanoid.Health <= 0 or not v696.Parent or not _G.AutoSecondSea
-                                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("TravelDressrosa")
-                                end
-                            end
-                        else
-                            topos(CFrame.new(1347.7124, 37.3751602, -1325.6488))
-                        end
-                    end
-                end)
-            end
-        end
-    end)
 local _ = v489:AddSection({"Join Server"})
 v489:AddTextBox({
         Name = "Job ID",
