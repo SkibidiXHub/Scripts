@@ -5184,8 +5184,8 @@ task.spawn(function()
     end
 end)
 if World1 then
-    local _ = v487:AddSection({"Auto Second Sea"})
-    v487:AddToggle({
+    local _ = v486:AddSection({"Auto Second Sea"})
+    v486:AddToggle({
         Name = "Auto Quest Sea 2",
         Description = "",
         Default = false,
