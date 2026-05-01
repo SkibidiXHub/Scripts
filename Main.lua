@@ -5225,6 +5225,18 @@ v488:AddToggle({
         end
     end
 })
+v488:AddToggle({
+	Name = "⚠️ Super Fast Attack",
+	Description = "",
+	-- 1. Carrega o estado salvo ou inicia como true (padrão original)
+	Default = GetSetting("AutoAttack_Save", true),
+	Callback = function(I)
+		_G.Seriality = I
+        -- 2. Salva
+        _G.SaveData["AutoAttack_Save"] = I
+        SaveSettings()
+	end,
+})
 
 local v1 = next
 local v2 = {
