@@ -226,7 +226,45 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Dev-AnhTuansitink/Nat
       loadstring(game:HttpGet("https://raw.githubusercontent.com/RealRyx/DracoMain/refs/heads/main/DracoHubMainV1.txt"))()
   end
   })
-local _ = v485:AddSection({"Kaitun Farm"})
+  v485:AddButton({
+     Name = "Teddy Hub",
+    Callback = function()
+      repeat task.wait() until game:IsLoaded() and game:GetService("Players") and game.Players.LocalPlayer and game.Players.LocalPlayer:FindFirstChild("PlayerGui")
+loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/e86ed284a22672d29e906214e7bbf8b9.lua"))() 
+  end
+  })
+  v485:AddButton({
+     Name = "Dac Cau V3",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/Luongdaynetroi/Testscript/refs/heads/main/DCHub/BloxFruits/V3"))()
+  end
+  })
+  v485:AddButton({
+     Name = "Neji Hub",
+    Callback = function()
+      repeat wait() until game:IsLoaded() and game.Players.LocalPlayer loadstring(game:HttpGet("https://raw.githubusercontent.com/Dev-NejiDepzai/Bloxfruits/refs/heads/main/Main.lua"))()
+  end
+  })
+  v485:AddButton({
+     Name = "Datthg HoHo",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/acsu123/HohoV2/refs/heads/main/BloxFruit/Custom/ThgHub.lua"))()
+  end
+  })
+  v485:AddButton({
+     Name = "Nak Hub V4",
+    Callback = function()
+      getgenv().Team = "Marines"
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Naknohack/NakHubBF/refs/heads/main/NakHubV4.lua"))()
+  end
+  })
+  v485:AddButton({
+     Name = "Min V5 Hub",
+    Callback = function()
+      getgenv().Team = "Marines" loadstring(game:HttpGet("https://github.com/LuaCrack/Min/raw/refs/heads/main/MinVnV5"))()
+  end
+  })
+local _ = v485:AddSection({"Kaitun All"})
   v485:AddButton({
      Name = "Gravity Hub Kaitun",
     Callback = function()
@@ -234,3 +272,294 @@ local _ = v485:AddSection({"Kaitun Farm"})
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Dev-GravityHub/BloxFruit/refs/heads/main/Kaitun.lua"))()
   end
   })
+  v485:AddButton({
+     Name = "Blue Hub Kaitun",
+    Callback = function()
+      getgenv().Config = {
+    ["Setting"] = {
+        ["UiCheckItem"] = false,
+        ["White Screen"] = false
+    },       
+    ["MainItem"] = {
+        ["Saber"] = true,         
+        ["Hallow Scythe"] = true,
+        ["GodHuman"] = true,
+        ["Skull Guitar"] = true,
+        ["Cursed Dual Katana"] = true
+    },
+    ["MiscItem"] = {
+        ["Feathered Visage"] = true,
+        ["Pole1st"] = true,
+        ["Dragon Trident"] = true,
+        ["Spikey Trident"] = true,
+        ["Buddy"] = true,
+        ["Cavender"] = true,
+        ["Twin Hooks"] = true,
+        ["Gravity Blade"] = true,
+        ["Venom Bow"] = true
+    },
+    ["Quest"] = {
+        ["Race V2"] = true,
+        ["Race V3"] = true,
+        ["Haki Rainbow"] = true
+    },
+    ["Webhook"] = {
+        ["Enable"] = false,
+        ["UrlWebhook"] = "",
+    }
+}
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Dev-BlueX/BlueX-Hub/refs/heads/main/KaitunBloxFruits.lua"))()
+  end
+  })
+  v485:AddButton({
+     Name = "Night Hub Kaitun",
+    Callback = function()
+      getgenv().Config = {
+    Team = "Pirates",
+    FarmConfig = {
+        ["Out game when done all"] = true,
+        ["Bypass Teleport"] = true,
+        ["Double Quest(RISK)"] = true
+    },
+    Items = {
+        ["Saber"] = true,
+        ["Pole (1st form)"] = true,
+        ["Skull Guitar"] = true,
+        ["Cursed Dual Katana"] = true,
+        ["Godhuman"] = true
+    },
+    Webhook = {
+        ["Enabled"] = false,
+        ["Url"] = ""
+    }
+}
+loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/d6c7959dcc94cd24467080d82a56dcf9.lua"))()
+  end
+  })
+  v485:AddButton({
+     Name = "Gravity Find Fruit",
+    Callback = function()
+      getgenv().Team = "Marines"
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Dev-GravityHub/BloxFruit/refs/heads/main/FindFruit.lua"))()
+  end
+  })
+  v485:AddButton({
+     Name = "HNC Find Fruit",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/hnc-roblox/HNC_Roblox/refs/heads/main/AutoCollectFruit.lua"))()
+  end
+  })
+  v485:AddButton({
+     Name = "Kaitun Cyborg",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/mizuharasup/free/refs/heads/main/cy.lua"))()
+  end
+  })
+  v485:AddButton({
+     Name = "Kaitun Ghoul",
+    Callback = function()
+      repeat wait() until game:IsLoaded() and game.Players.LocalPlayer
+getgenv().Team = "Marines"
+getgenv().Hide_UI = false
+_G.Config = {
+    Main = {
+        ["Auto Start"] = true,
+        ["Choose Mode"] = "Auto Ghoul", --// Auto Cyborg
+        ["Buy Sword Legendary"] = true,
+        ["Buy Haki Color"] = true
+    },
+    Misc = {
+        ["Select Weapon"] = "Melee",
+        ["Tweem Speed"] = 350,
+        ["FPS Boost"] = false,
+        ["Auto Rejoin"] = true,
+        ["White Screen"] = false
+    }
+}
+
+loadstring(game:HttpGet("https://pandadevelopment.net/virtual/file/6fed5ee0756a1754"))()
+  end
+  })
+  v485:AddButton({
+     Name = "Teddy Hub Kaitun V4",
+    Callback = function()
+      getgenv().TeddyHub = {
+    ["Allies"] = {
+        "Name1","Name2", 
+        "Name3"
+    },
+    ["Method"] = "Kill Players After Trial", -- Kill Players After Trial, Reset Player After Trial
+    ["MainAccount"] = "Name Main", -- for teleport to server of main account
+    ["Team"] = "Marines",
+    ["Gear"] = "A-B-B", -- "A-A-B" or ""  NOT GEAR 1 and 5
+    ["ResetAfterTrial"] = true
+}
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Teddyseetink/Haidepzai/refs/heads/main/TeddyHub-KaitunV4.lua"))()
+  end
+  })
+  v485:AddButton({
+     Name = "Night Hub Auto Pull Lever",
+    Callback = function()
+      getgenv().Config = {
+    Team = "Pirates", -- uh not work now
+    Settings = {
+        ToolFarm = "Melee",
+        HopDelay = 2
+    }
+}
+loadstring(game:HttpGet("https://raw.githubusercontent.com/WhiteX1208/Scripts/refs/heads/main/PullLever.luau"))()
+  end
+  })
+local _ = v485:AddSection({"Hop Sever"})
+  v485:AddButton({
+     Name = "Night Hub Hop Sever",
+    Callback = function()
+      getgenv().Team = "Pirates" -- Marnies
+loadstring(game:HttpGet("https://raw.githubusercontent.com/WhiteX1208/Scripts/refs/heads/main/HopScript.luau"))()
+  end
+  })
+  v485:AddButton({
+     Name = "Ok Hub Hop Sever",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/fakekuri/Okhubhere/refs/heads/main/Hopserver.lua"))()
+  end
+  })
+  v485:AddButton({
+     Name = "Teddy Hub Hop Sever",
+    Callback = function()
+      repeat task.wait() until game:IsLoaded() and game:GetService("Players") and game.Players.LocalPlayer and game.Players.LocalPlayer:FindFirstChild("PlayerGui")
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Teddyseetink/Haidepzai/refs/heads/main/TEDDYHUB-FREEMIUM"))()
+  end
+  })
+  v485:AddButton({
+     Name = "Hop Sever Vip",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/anuragaming1/Meow_gaming/refs/heads/main/Servervip.lua.txt"))()
+  end
+  })
+local _ = v485:AddSection({"Farm Bounty And PvP"})
+  v485:AddButton({
+     Name = "Lonely Hub PVP",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/LongHip12/LonelyHub/refs/heads/main/LonelyHub-PVP.lua"))()
+  end
+  })
+  v485:AddButton({
+     Name = "Hermanos PVP",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/hermanos-dev/hermanos-hub/refs/heads/main/Loader.lua"))()
+  end
+  })
+  v485:AddButton({
+     Name = "Teddy Hub Farm Bounty",
+    Callback = function()
+      getgenv().Config = {
+    ["Team"] = "Pirates",
+    ["Safe Health"] = { 40, 50 }, ---health dodge run,health back %
+    ["Skip"] = {
+        ["Fruit"] = {
+            ["Enabled"] = true,
+            ["Avoid Fruit"] = { "Portal", "Kitsune", "Tiger", "Dragon" }
+        },
+        ["Avoid V4"] = true
+    },
+    ["Hunt Method"] = {
+        ["Use Move Predict"] = true,
+        ["Hit and Run"] = true
+    },
+    ["Spam All Skill On V4"] = {
+        ["Enabled"] = true,
+        ["Weapons"] = { "Melee", "Gun", "Sword", "Blox Fruit" }
+    },
+    ["Chat"] = {
+        ["Enabled"] = false,
+        ["Message"] = { "ez", "bounty pls", "teddy hub" }
+    },
+    ["Custom Y Run"] = {
+        ["Enabled"] = true,
+        ["Y Run"] = 500
+    },
+    ["Misc"] = {
+        ["Turn On V3"] = true,
+        ["Turn On V4"] = true,
+        ["Delete Map"] = false,
+        ["FPS BOOST"] = false,
+        ["White Screen"] = false,
+        ["Click Delay"] = 0.5,
+        ["Spin Bot"] = {
+            ["Enable"] = true,
+            ["Spin Speed"] = 15,
+            ["Spin Radius"] = 10,
+        }
+        
+    },
+    ["Items"] = {
+        ["Use"] = { "Melee", "Gun", "Sword", "Blox Fruit" },
+        ["Melee"] = {
+            ["Enable"] = true,
+            ["Skills"] = {
+                ["Z"] = { ["Enable"] = true, ["HoldTime"] = 0.6 },
+                ["X"] = { ["Enable"] = true, ["HoldTime"] = 0.3 },
+                ["C"] = { ["Enable"] = true, ["HoldTime"] = 0.5 }
+            }
+        },
+        ["Blox Fruit"] = {
+            ["Enable"] = true,
+            ["Skills"] = {
+                ["Z"] = { ["Enable"] = true, ["HoldTime"] = 0 },
+                ["X"] = { ["Enable"] = true, ["HoldTime"] = 0 },
+                ["C"] = { ["Enable"] = true, ["HoldTime"] = 0 },
+                ["V"] = { ["Enable"] = false, ["HoldTime"] = 0 },
+                ["F"] = { ["Enable"] = false, ["HoldTime"] = 0 }
+            }
+        },
+        ["Sword"] = {
+            ["Enable"] = true,
+            ["Skills"] = {
+                ["Z"] = { ["Enable"] = true, ["HoldTime"] = 0.8 },
+                ["X"] = { ["Enable"] = true, ["HoldTime"] = 0.5 }
+            }
+        },
+        ["Gun"] = {
+            ["Enable"] = true,
+            ["Skills"] = {
+                ["Z"] = { ["Enable"] = true, ["HoldTime"] = 0 },
+                ["X"] = { ["Enable"] = true, ["HoldTime"] = 0 }
+            }
+        }
+    },
+    ["Webhook"] = {
+        ["Enabled"] = false, 
+        ["Url"] = ""---input webhook 
+    }
+}
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Teddyseetink/Haidepzai/refs/heads/main/TeddyHub-BountyEzz.lua"))()
+  end
+  })
+  v485:AddButton({
+     Name = "Night Hub Farm Bounty",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/WhiteX1208/Scripts/refs/heads/main/Auto-Bounty.luau"))()
+  end
+  })
+  v485:AddButton({
+     Name = "Night M1 Fruit Bounty",
+    Callback = function()
+      getgenv().Config = {
+    Team = "Pirates",
+    HideUI = true,
+    HuntConfig = {
+        ["Earned Notification Enabled"] = true,
+        ["Reset Farm (New)"] = false,
+        ["Chat"] = false,
+        ["Farm Delay"] = 0.22, -- 0.15 - Super Fast(Risk - Kick) | 0.22 Fast | 0.35 Medium | Max 0.5
+        ["Webhook"] = {
+            Enabled = false,
+            Url = ""
+        }
+    }
+}
+loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/2ffcdb62773f587bfb9eb0d52bb35b0c.lua"))()
+  end
+  })
+local _ = v485:AddSection({"Script Premium"})
