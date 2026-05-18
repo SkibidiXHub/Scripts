@@ -152,3 +152,85 @@ getgenv().Key = "XyZpQrStUvWxYzAbCdEfGhIjKl"
 loadstring(game:HttpGet("https://raw.githubusercontent.com/obiiyeuemmm/vthangsiitink/refs/heads/main/BananaHub.lua"))()
   end
   })
+  v485:AddButton({
+     Name = "MeoLazy Hub",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/MeoLazy/Script/refs/heads/main/V1.lua"))()
+  end
+  })
+  v485:AddButton({
+     Name = "Nataov Hub",
+    Callback = function()
+      repeat wait() until game:IsLoaded() and game.Players.LocalPlayer
+getgenv().Team =  "Marines"
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Dev-AnhTuansitink/NatAov-Hub/refs/heads/main/ILoveYou.lua"))()
+  end
+  })
+  v485:AddButton({
+     Name = "Hoho Hub",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/acsu123/HOHO_H/main/Loading_UI"))()
+  end
+  })
+  v485:AddButton({
+     Name = "Speed Hub",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua", true))()
+  end
+  })
+  v485:AddButton({
+     Name = "Banana Hub (Fake 2)",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/longhihilonghihi-hub/BananaHub/refs/heads/main/CombackVersion"))()
+  end
+  })
+  v485:AddButton({
+     Name = "RealKid Hub",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/trungdao2k4/trauroblox/refs/heads/main/traubluev1"))()
+  end
+  })
+  v485:AddButton({
+     Name = "Nht X Hub",
+    Callback = function()
+      getgenv().Team = "Pirates"  loadstring(game:HttpGet("https://raw.githubusercontent.com/trongdeptraihucscript/Main/refs/heads/main/Hoangtrongdepzai.lua"))()
+  end
+  })
+  v485:AddButton({
+     Name = "Xeter V1",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/TlDinhKhoi/Xeter/refs/heads/main/Main.lua"))()
+  end
+  })
+  v485:AddButton({
+     Name = "Xeter V2",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/TlDinhKhoi/Xeter/refs/heads/main/Main.lua"))()
+  end
+  })
+  v485:AddButton({
+     Name = "Xeter V3",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/TlDinhKhoi/Xeter/refs/heads/main/Main.lua"))()
+  end
+  })
+  v485:AddButton({
+     Name = "Xeter V4",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/TlDinhKhoi/Xeter/refs/heads/main/Main.lua"))()
+  end
+  })
+  v485:AddButton({
+     Name = "Draco Hub",
+    Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/RealRyx/DracoMain/refs/heads/main/DracoHubMainV1.txt"))()
+  end
+  })
+local _ = v485:AddSection({"Kaitun Farm"})
+  v485:AddButton({
+     Name = "Gravity Hub Kaitun",
+    Callback = function()
+      repeat wait() until game:IsLoaded() and game.Players.LocalPlayer
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Dev-GravityHub/BloxFruit/refs/heads/main/Kaitun.lua"))()
+  end
+  })
