@@ -1,5 +1,5 @@
 local v466 = loadstring(game:HttpGet("https://raw.githubusercontent.com/SkibidiXHub/ui-library/refs/heads/main/Ui-redzlib"))():MakeWindow({
-    Title = "Dojo Hub : Tổng Hợp",
+    Title = "Dojo Hub [ BETA VERSION ] | Tổng Hợp",
     SubTitle = "By realdojo✅",
     SaveFolder = "AllScript.lua"
 })
@@ -91,8 +91,8 @@ local v496 = v466:MakeTab({"Fix Lag", ""})
   v484:AddDiscordInvite({
     Name = "Dojo Hub | Community",
     Description = "https://discord.gg/UcoW71G",
-    Logo = "rbxassetid://122221348374368",
-    Invite = "PhongIDK On Top"
+    Logo = "rbxassetid://78617112299549",
+    Invite = "https://discord.gg/UcoW71G"
 })
 local _ = v485:AddSection({"Main Farm"})
   v485:AddButton({
