@@ -3733,7 +3733,7 @@ function CheckItemBPCRBPCR(v463)
         end
     end
 end
-local vu32 = loadstring(game:HttpGet("https://raw.githubusercontent.com/PlockScripts/Library-ui/refs/heads/main/redz-V5-remake/main.luau"))()
+local vu32 = loadstring(game:HttpGet("https://pastefy.app/5bk02Q6b/raw"))();
 local v466 = vu32:MakeWindow({
     Title = "Dojo Hub V2 [ BETA ] | Blox Fruits",
     SubTitle = "By real_Dojo",
@@ -3741,7 +3741,7 @@ local v466 = vu32:MakeWindow({
 })
 
 v466:AddMinimizeButton({
-    Button = { Image = "rbxassetid://78617112299549", BackgroundTransparency = 0 },
+    Button = { Image = "rbxassetid://102240262607234", BackgroundTransparency = 0 },
     Size = UDim2.new(0, 35, 0, 35),
     Corner = { CornerRadius = UDim.new(0.25, 0) },
 })
