@@ -3735,10 +3735,10 @@ function CheckItemBPCRBPCR(v463)
 end
 local vu32 = loadstring(game:HttpGet("https://pastefy.app/5bk02Q6b/raw"))();
 local v466 = vu32:MakeWindow({
-    Title = "Dojo Hub [ BETA V2 ] | Blox Fruits",
-    SubTitle = "By realdojo",
-    SaveFolder = "BloxFruits | redz lib v5.lua"
-})
+    Title = "Dojo Hub V2 [ BETA ] | Blox Fruits",
+    SubTitle = "By real_dojo",
+    SaveFolder = "BloxFruits | redz lib v5.lua
+}) 
 
 v466:AddMinimizeButton({
     Button = { Image = "rbxassetid://78617112299549", BackgroundTransparency = 0 },
@@ -3747,19 +3747,14 @@ v466:AddMinimizeButton({
 })
 
 local v484 = v466:MakeTab({"Discord", "info"})
-local v485 = v466:MakeTab({"Farming", "home"})
+local v485 = v466:MakeTab({"Main Farm", "home"})
 local v486 = v466:MakeTab({"Stack Farm", "swords"})
-local v487 = v466:MakeTab({"Fishing", "rbxassetid://127664059821666"})
 
 v484:AddDiscordInvite({
     Name = "Dojo Hub | Community",
-    Description = "Vào máy chủ để nhận thông báo mới nhất",
+    Description = "Vào để nhận các thông báo mới nhất",
     Logo = "rbxassetid://78617112299549",
-    Invite = "https://discord.gg/H6maP2f8"
-})
-v484:AddParagraph({
-Title = "Name Real : Lê Hoàng Anh",
-    Description = ""
+    Invite = "https://discord.gg/T1mYa71h"
 })
 _G.SelectWeapon = "Melee"
 task.spawn(function()
@@ -3807,7 +3802,7 @@ local _ = v485:AddDropdown({
         _G.SelectWeapon = v506
     end
 })
-local _ = v485:AddSection({"Main"})
+local _ = v485:AddSection({"Farm"})
 
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
@@ -4094,7 +4089,7 @@ spawn(function()
 end)
 v485:AddToggle({
     Name = "Auto Farm Nearest",
-    Description = "Tự động kẻ địch ở gần",
+    Description = "Tự động farm kẻ địch gần",
     Default = false,
     Callback = function(v520)
         _G.AutoNear = v520
@@ -4128,3 +4123,81 @@ spawn(function()
         end
     end
 end)
+
+if World3 then
+v485:AddToggle({
+    Name = "Auto Pirates Sea",
+    Description = "Tự động farm hải tặc",
+    Default = false,
+    Callback = function(v543)
+        _G.AutoRaidPirate = v543
+        StopTween(_G.AutoRaidPirate)
+    end
+})
+spawn(function()
+    while wait() do
+        if _G.AutoRaidPirate then
+            pcall(function()
+                local v544 = CFrame.new(-5496.17432, 313.768921, -2841.53027, 0.924894512, 7.37058015E-9, 0.380223751, 3.5881019E-8, 1, -1.06665446E-7, -0.380223751, 1.12297109E-7, 0.924894512)
+                if (CFrame.new(-5539.3115234375, 313.800537109375, -2972.372314453125).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 500 then
+                    for _, v546 in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                        if _G.AutoRaidPirate and v546:FindFirstChild("HumanoidRootPart") and v546:FindFirstChild("Humanoid") and v546.Humanoid.Health > 0 and (v546.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 2000 then
+                            repeat
+                                wait()
+                                AutoHaki()
+                                EquipWeapon(_G.SelectWeapon)
+                                NeedAttacking = true
+                                StartMagnet = true
+                                v546.HumanoidRootPart.CanCollide = false
+                                v546.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+                                topos(v546.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                            until v546.Humanoid.Health <= 0 or not v546.Parent or _G.AutoRaidPirate == false
+                            NeedAttacking = false
+                            StartMagnet = false
+                        end
+                    end
+                elseif (v544.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 1500 then
+                    TP1(v544)
+                else
+                    TP1(v544)
+                end
+            end)
+        end
+    end
+end)
+end
+if World2 then
+    v485:AddToggle({
+        Name = "Auto Factory",
+        Description = "Tự động đánh nhà máy",
+        Default = false,
+        Callback = function(v732)
+            _G.AutoFactory = v732
+            StopTween(_G.AutoFactory)
+        end
+    })
+    spawn(function()
+        while wait() do
+            spawn(function()
+                if _G.AutoFactory then
+                    if game:GetService("Workspace").Enemies:FindFirstChild("Core") then
+                        for _, v734 in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                            if v734.Name == "Core" and v734.Humanoid.Health > 0 then
+                                repeat
+                                    task.wait()
+                                    AutoHaki()
+                                    EquipWeapon(_G.SelectWeapon)
+                                    topos(CFrame.new(448.46756, 199.356781, -441.389252))
+                                    game:GetService("VirtualUser"):CaptureController()
+                                    game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
+                                until v734.Humanoid.Health <= 0 or _G.AutoFactory == false
+                            end
+                        end
+                    else
+                        topos(CFrame.new(448.46756, 199.356781, -441.389252))
+                    end
+                end
+            end)
+        end
+    end)
+ end
